@@ -243,9 +243,9 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                               fontWeight: FontWeight.w500,
                               shadows: [
                                 Shadow(
-                                  color: Colors.black.withOpacity(0.7),
-                                  offset: const Offset(1, 1),
-                                  blurRadius: 3,
+                                  color: Colors.white.withOpacity(0.9),
+                                  offset: const Offset(0, 0),
+                                  blurRadius: 6,
                                 ),
                               ],
                             ),
