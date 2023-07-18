@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pokemon_list/logic/pokemon_name_checker.dart';
-import 'package:pokemon_list/navigationActions/navigationActions.dart';
+import '../screens/pokemon_details_screen.dart';
+import '../screens/pokemon_details_screen_error.dart';
 
 class BuildPokemonSearcher extends StatelessWidget{
 
-  final List<dynamic> allPokemonList;
+  final List<dynamic> regionPokemonList;
   final _textEditingController = TextEditingController();
-
   final PokemonNameChecker pokemonChecker = PokemonNameChecker();
-  final NavigateTo navigateTo = NavigateTo();
 
-  BuildPokemonSearcher(this.allPokemonList , {super.key});
+  BuildPokemonSearcher(context, this.regionPokemonList , {super.key});
   @override
   Widget build(BuildContext context){
     return Column(
@@ -54,14 +53,24 @@ class BuildPokemonSearcher extends StatelessWidget{
               // URL Gif 2
               final imageUrl2 = pokemonFinalData[2];
               // Comparacion de Nombre con Lista de Pokemon
-              final isFound = pokemonChecker.pokemonListComparison(allPokemonList, pokemonFinalName);
+              final isFound = pokemonChecker.pokemonListComparison(regionPokemonList, pokemonFinalName);
               if(isFound==true){
                 // Coincide va a llevar al Pokemon Details
-                navigateTo.PokemonDetails(context, pokemonFinalName, imageUrl, imageUrl2);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PokemonDetailsScreen(pokemon: pokemonFinalName, imageUrl : imageUrl, imageUrl2: imageUrl2,),
+                  ),
+                );
               }
               else{
                 // NO Coincide va a llevar al Pokemon Details Error
-                navigateTo.PokemonDetailsError(context, pokemonFinalName,);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PokemonDetailsScreenError(pokemonName: pokemonFinalName,),
+                  ),
+                );
               }
             },
             decoration: const InputDecoration(

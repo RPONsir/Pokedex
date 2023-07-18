@@ -65,7 +65,7 @@ class PokemonListScreenState extends State<PokemonListScreen> {
         bottom: PreferredSize(
           preferredSize:
           const Size.fromHeight(80.0),
-          child: BuildPokemonSearcher(allPokemonList,),
+          child: BuildPokemonSearcher(context, allPokemonList,),
         ),
 
       ),
@@ -79,7 +79,6 @@ class PokemonListScreenState extends State<PokemonListScreen> {
             BuildPokemonSlider('Sinnoh', pokemonList4, 387),
             BuildPokemonSlider('Teselia', pokemonList5, 494),
             BuildPokemonSlider('Kalos', pokemonList6, 650),
-            SeparatingSpaceSliders(''),
             // _buildPokemonSlider('Alola', pokemonList7, 722),
             // _buildPokemonSlider('Galar', pokemonList8, 810),
           ],
