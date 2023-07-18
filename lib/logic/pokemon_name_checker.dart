@@ -8,31 +8,36 @@ class PokemonNameChecker {
     if (pokemonName == ('mr-mime')) {
       const pokemonFinalName = 'mr-mime';
       const imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/mr._mime.gif';
-      return [pokemonFinalName, imageUrl];
+      const imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+      return [pokemonFinalName, imageUrl, imageUrl2];
     }
     // Special Case Mime Jr
     if (pokemonName == ('mime-jr')) {
       const pokemonFinalName = 'mime-jr';
       const imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/mime_jr.gif';
-      return [pokemonFinalName, imageUrl];
+      const imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+      return [pokemonFinalName, imageUrl, imageUrl2];
     }
     // Special case Nidoran male
     else if (pokemonName == ('nidoran-m')) {
       const pokemonFinalName = 'nidoran-m';
       const imageUrl = 'https://professorlotus.com/Sprites/Nidoran_M.gif';
-      return [pokemonFinalName, imageUrl];
+      const imageUrl2 = 'https://professorlotus.com/Sprites/Nidoran_M.gif';
+      return [pokemonFinalName, imageUrl, imageUrl2];
     }
     // Special case Nidoran female
     else if (pokemonName == ('nidoran-f')) {
       const pokemonFinalName = 'nidoran-f';
       const imageUrl = 'https://professorlotus.com/Sprites/Nidoran_F.gif';
-      return [pokemonFinalName, imageUrl];
+      const imageUrl2 = 'https://professorlotus.com/Sprites/Nidoran_F.gif';
+      return [pokemonFinalName, imageUrl, imageUrl2];
     }
     // Special case Ho-Oh that does not need to be removed the name after the "-"
     else if (pokemonName == ('ho-oh')) {
       const pokemonFinalName = 'ho-oh';
       const imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
-      return [pokemonFinalName, imageUrl];
+      const imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+      return [pokemonFinalName, imageUrl, imageUrl2];
     }
     else {
       final pokemonLine = pokemonName.indexOf("-");
@@ -41,14 +46,16 @@ class PokemonNameChecker {
         final pokemonFinalName = pokemonName.substring(0, pokemonLine);
         //final imageUrl = 'https://professorlotus.com/Sprites/$pokemonFinalName.gif';
         final imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
-        return [pokemonFinalName, imageUrl];
+        final imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+        return [pokemonFinalName, imageUrl, imageUrl2];
       }
       // No "-" was found - name remains the same
       else{
         final pokemonFinalName = pokemonName;
         //final imageUrl = 'https://professorlotus.com/Sprites/$pokemonFinalName.gif';
         final imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
-        return [pokemonFinalName, imageUrl];
+        final imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+        return [pokemonFinalName, imageUrl, imageUrl2];
       }
     }
   }
@@ -71,4 +78,18 @@ class PokemonNameChecker {
       // If no match found after navigating all pokemon names on list, return False
     }return isFound;
   }
+
+  /*pokemonSuggestionNameList(List<dynamic> allPokemonList){
+    var pokemonNameSuggestion = StringBuffer();
+
+    for (int i = 0; i < 721; i++) {
+      // Retrieve Pokemon name as String from API
+      final pokemon = allPokemonList[i];
+      final String pokemonNameOnList= pokemon['name'].toString();
+      final pokemonEditedName = lineChecker(pokemonNameOnList);
+      pokemonNameSuggestion.write(pokemonEditedName[0]);
+      // If no match found after navigating all pokemon names on list, return False
+    }
+    print(pokemonNameSuggestion);
+  }*/
 }

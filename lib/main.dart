@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon_list/pokemonListScreen.dart';
+import 'screens/pokemon_list_screen.dart';
 
 void main() {
-  runApp(PokemonApp());
+  runApp(const PokemonApp());
 }
 
 class PokemonApp extends StatelessWidget {
+  const PokemonApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
         title: 'Pokemon App',
         home: PokemonListScreen(),
     );
