@@ -3,11 +3,11 @@ import '../screens/pokemon_region_list_screen.dart';
 
 class SeparatingTitleSpaceSliders extends StatelessWidget{
 
-  String sliderTitle;
-  List<dynamic> regionPokemonList = [];
-  int addValue;
+  final String sliderTitle;
+  final List<dynamic> regionPokemonList;
+  final int addValue;
 
-  SeparatingTitleSpaceSliders(this. regionPokemonList, this.sliderTitle, this.addValue, {super.key});
+  const SeparatingTitleSpaceSliders(this. regionPokemonList, this.sliderTitle, this.addValue, {super.key});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

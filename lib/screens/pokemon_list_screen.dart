@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pokemon_list/widgets/build_pokemon_searcher.dart';
 import 'package:pokemon_list/widgets/build_pokemon_slider.dart';
 import 'package:pokemon_list/obtainData/pokemon_api_service.dart';
-import 'package:pokemon_list/widgets/separate_sliders.dart';
 
 class PokemonListScreen extends StatefulWidget {
   const PokemonListScreen({super.key});

@@ -5,11 +5,11 @@ import 'package:pokemon_list/widgets/text_title_with_shadow.dart';
 
 class PokemonRegionList extends StatelessWidget{
 
-  List<dynamic> regionPokemonList = [];
-  String regionName;
-  int addValue;
+  final List<dynamic> regionPokemonList;
+  final String regionName;
+  final int addValue;
 
-  PokemonRegionList({Key? key, required this.regionPokemonList, required this.regionName, required this.addValue}) : super(key: key);
+  const PokemonRegionList({Key? key, required this.regionPokemonList, required this.regionName, required this.addValue}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
