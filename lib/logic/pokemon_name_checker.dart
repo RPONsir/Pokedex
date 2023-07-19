@@ -60,10 +60,10 @@ class PokemonNameChecker {
     }
   }
 
-  pokemonListComparison(List<dynamic> allPokemonList, String pokemonName){
+  pokemonListComparison(List<dynamic> allPokemonList, String pokemonName, int initPokemonValue, int finalPokemonValue){
     bool isFound=false;
     // Search if the received name matches with the Api Pokemon List name
-    for (int i = 0; i < 721; i++) {
+    for (int i = initPokemonValue; i < finalPokemonValue; i++) {
       // Retrieve Pokemon name as String from API
       final pokemon = allPokemonList[i];
       String pokemonNameOnList= pokemon['name'].toString();

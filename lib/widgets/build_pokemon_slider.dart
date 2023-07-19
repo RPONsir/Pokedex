@@ -8,29 +8,30 @@ import '../screens/pokemon_details_screen.dart';
 class BuildPokemonSlider extends StatelessWidget{
 
   final String sliderTitle;
-  final List<dynamic> pokemonList;
+  final List<dynamic> allpokemonList;
+  final List<dynamic> regionalPokemonList;
   final int addValueList;
 
   final PokemonNameChecker pokemonChecker = PokemonNameChecker();
 
-  BuildPokemonSlider(this.sliderTitle , this.pokemonList, this.addValueList, {super.key});
+  BuildPokemonSlider(this.sliderTitle , this.allpokemonList, this.regionalPokemonList, this.addValueList, {super.key});
   @override
 
   Widget build(BuildContext context){
     return Column(
       // Separador con nombre de Region
       children: [
-        SeparatingTitleSpaceSliders(pokemonList, sliderTitle, addValueList),
+        SeparatingTitleSpaceSliders(allpokemonList, regionalPokemonList, sliderTitle, addValueList),
         // Generaxion recuadros con Imagen y Nombre del Slider
         Container(
           color: Colors.black,
           height: 180,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: pokemonList.length,
+            itemCount: regionalPokemonList.length,
             itemBuilder: (context, index) {
               // Del API se pokemon que proviene con 2 valores
-              final pokemon = pokemonList[index];
+              final pokemon = regionalPokemonList[index];
               // ID de POKEMON
               final pokemonId = index+addValueList;
               // Obtenemos el Nombre

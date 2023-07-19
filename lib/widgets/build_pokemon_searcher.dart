@@ -6,11 +6,13 @@ import '../screens/pokemon_details_screen_error.dart';
 
 class BuildPokemonSearcher extends StatelessWidget{
 
-  final List<dynamic> regionPokemonList;
+  final List<dynamic> allPokemonList;
+  final int regionPokemonListLength;
   final _textEditingController = TextEditingController();
   final PokemonNameChecker pokemonChecker = PokemonNameChecker();
+  final int initialListPokemonValue;
 
-  BuildPokemonSearcher(context, this.regionPokemonList , {super.key});
+  BuildPokemonSearcher(context, this.allPokemonList, this.regionPokemonListLength , this.initialListPokemonValue, {super.key});
   @override
   Widget build(BuildContext context){
     return Column(
@@ -52,8 +54,10 @@ class BuildPokemonSearcher extends StatelessWidget{
               final imageUrl = pokemonFinalData[1];
               // URL Gif 2
               final imageUrl2 = pokemonFinalData[2];
+              // agregar tamaño de listado , sumando el valor inicial del listado con el largo del listado pokemon
+              final finalPokemonValue = regionPokemonListLength + initialListPokemonValue - 1;
               // Comparacion de Nombre con Lista de Pokemon
-              final isFound = pokemonChecker.pokemonListComparison(regionPokemonList, pokemonFinalName);
+              final isFound = pokemonChecker.pokemonListComparison(allPokemonList, pokemonFinalName, (initialListPokemonValue - 1), finalPokemonValue);
               if(isFound==true){
                 // Coincide va a llevar al Pokemon Details
                 Navigator.push(
