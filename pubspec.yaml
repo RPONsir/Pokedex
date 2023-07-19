@@ -71,6 +71,7 @@ flutter:
     - images/errorPsyduckOut.jpeg
     - images/whosThatPokemon.png
     - images/Poke_Ball.webp
+    - images/backgroundPokemongrass.png.webp
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

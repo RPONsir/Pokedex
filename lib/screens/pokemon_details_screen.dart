@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_list/widgets/pokemon_stats_bar.dart';
 import 'package:pokemon_list/widgets/text_title_with_shadow.dart';
 import 'package:pokemon_list/widgets/pokemon_gif.dart';
 import 'package:pokemon_list/widgets/horizontal_list_data.dart';
@@ -17,7 +18,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   final ObtainData obtainPokemonData = ObtainData();
 
   List<dynamic> types = ["Type 1", "Type 2",];
-  List<dynamic> bodyStatus = ["Height: 85",];
+  List<dynamic> bodyStatus1 = ["Height:", "85"];
+  List<dynamic> bodyStatus2 = ["Weight:", "30"];
   bool imageFrontDisplayed = true;
 
   @override
@@ -37,25 +39,11 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
           ],
         ),
         actions: [
-          GestureDetector(
-            onTap: () => {
-              if(imageFrontDisplayed == true){
-                setState(() {
-                  imageFrontDisplayed = false;
-                }),
-              }
-              else{
-                setState(() {
-                  imageFrontDisplayed = true;
-                }),
-              }
-              },
-            child: Container(
+          Container(
             alignment: Alignment.centerRight,
             width: 70,
-            child: PokemonGif(widget.imageUrl, widget.imageUrl2, 70, 60, imageFrontDisplayed),
+            child: Image.asset('images/Poke_Ball.webp', width:60, height:50,),
             ),
-          ),
         ]
       ),
 
@@ -63,11 +51,48 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         child: Center(
             child: Column(
                 children: [
-                  const SizedBox(height: 50,),
+                  const SizedBox(height: 30,),
+                  GestureDetector(
+                    onTap: () => {
+                      if(imageFrontDisplayed == true){
+                      setState(() {
+                      imageFrontDisplayed = false;
+                      }),
+                      }
+                      else{
+                        setState(() {
+                          imageFrontDisplayed = true;
+                        }),
+                      }
+                      },
+                    child: Container(
+                      color: Colors.black,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(10),
+                      width: 300,
+                      height: 180,
+                      child: Stack(
+                        children:[
+                          Image.asset('images/backgroundPokemongrass.png.webp', width:280, height:160,fit: BoxFit.fitHeight,),
+                          PokemonGif(widget.imageUrl, widget.imageUrl2, 280, 140, imageFrontDisplayed),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30,),
                   HorizontalDataDisplay(types),
-                  const SizedBox(height: 50,),
-                  HorizontalDataDisplay(bodyStatus),
-                  const SizedBox(height: 50,),
+                  const SizedBox(height: 20,),
+                  HorizontalDataDisplay(bodyStatus1),
+                  const SizedBox(height: 20,),
+                  HorizontalDataDisplay(bodyStatus2),
+                  const SizedBox(height: 20,),
+                  PokemonStatsBar("HP", 50),
+                  PokemonStatsBar("ATTACK", 50),
+                  PokemonStatsBar("DEFENSE", 100),
+                  PokemonStatsBar("SP. ATK", 35),
+                  PokemonStatsBar("SP. DEF", 2),
+                  PokemonStatsBar("SPEED", 18),
+                  const SizedBox(height: 30,),
                 ])
         ),
       ),

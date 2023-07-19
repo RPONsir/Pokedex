@@ -10,9 +10,9 @@ class HorizontalDataDisplay extends StatelessWidget{
     return Container(
             height: 70,
             width: 300,
-            color: Colors.black,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            color: Colors.lightBlueAccent,
+            alignment: Alignment.topCenter,
+            padding: const EdgeInsets.fromLTRB(0,0,0,5),
       child: GridView.count(
           scrollDirection: Axis.vertical,
           physics: const NeverScrollableScrollPhysics(),
@@ -20,6 +20,7 @@ class HorizontalDataDisplay extends StatelessWidget{
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
           shrinkWrap: true,
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
           children:
           List.generate(data.length, (index) {
             return Container(

@@ -78,6 +78,7 @@ class PokemonListScreenState extends State<PokemonListScreen> {
             BuildPokemonSlider('Sinnoh', allPokemonList, pokemonList4, 387),
             BuildPokemonSlider('Teselia', allPokemonList, pokemonList5, 494),
             BuildPokemonSlider('Kalos', allPokemonList, pokemonList6, 650),
+            Container(height: 40, width: double.infinity,color: Colors.black,),
             // _buildPokemonSlider('Alola', pokemonList7, 722),
             // _buildPokemonSlider('Galar', pokemonList8, 810),
           ],
