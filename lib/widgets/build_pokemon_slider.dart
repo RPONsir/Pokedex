@@ -2,26 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:pokemon_list/logic/pokemon_name_checker.dart';
 import 'package:pokemon_list/widgets/pokemon_box_image.dart';
 import 'package:pokemon_list/widgets/separate_sliders.dart';
-
 import '../screens/pokemon_details_screen.dart';
 
 class BuildPokemonSlider extends StatelessWidget{
 
   final String sliderTitle;
-  final List<dynamic> allpokemonList;
+  final List<dynamic> allPokemonList;
   final List<dynamic> regionalPokemonList;
   final int addValueList;
 
   final PokemonNameChecker pokemonChecker = PokemonNameChecker();
 
-  BuildPokemonSlider(this.sliderTitle , this.allpokemonList, this.regionalPokemonList, this.addValueList, {super.key});
+  BuildPokemonSlider(this.sliderTitle , this.allPokemonList, this.regionalPokemonList, this.addValueList, {super.key});
   @override
 
   Widget build(BuildContext context){
     return Column(
       // Separador con nombre de Region
       children: [
-        SeparatingTitleSpaceSliders(allpokemonList, regionalPokemonList, sliderTitle, addValueList),
+        SeparatingTitleSpaceSliders(allPokemonList, regionalPokemonList, sliderTitle, addValueList),
         // Generaxion recuadros con Imagen y Nombre del Slider
         Container(
           color: Colors.black,
@@ -54,9 +53,12 @@ class BuildPokemonSlider extends StatelessWidget{
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          PokemonDetailsScreen(pokemon: pokemonFinalName,
+                          PokemonDetailsScreen(
+                            pokemon: pokemonFinalName,
                             imageUrl: imageUrl,
-                            imageUrl2: imageUrl2,),
+                            imageUrl2: imageUrl2,
+                            pokemonId: pokemonId,
+                          ),
                     ),
                   ),
                 child: PokemonBoxImage(pokemonFinalName, imageUrl, imageUrl2, pokemonId),

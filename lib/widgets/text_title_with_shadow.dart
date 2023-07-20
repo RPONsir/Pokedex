@@ -9,7 +9,7 @@ class TitleWithShadow extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Text(
-      title.toUpperCase(),
+      title.toUpperCase().toString(),
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: fontSize,

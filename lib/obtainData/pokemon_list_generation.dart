@@ -15,9 +15,9 @@ class PokemonListGeneration{
 
   final PokemonApiService apiService = PokemonApiService();
 
-  Future fetchPokemonList() async {
+  Future fetchPokemonData() async {
     try {
-      final pokemonData = await apiService.fetchPokemonList(url: 'https://pokeapi.co/api/v2/pokemon?limit=898');
+      final pokemonData = await apiService.fetchPokemonData(url: 'https://pokeapi.co/api/v2/pokemon?limit=898', characteristics: 'results');
       allPokemonList = pokemonData;
       pokemonList1 = allPokemonList.sublist(0, 151);
       pokemonList2 = allPokemonList.sublist(151, 251);

@@ -3,24 +3,48 @@ import 'package:pokemon_list/widgets/pokemon_stats_bar.dart';
 import 'package:pokemon_list/widgets/text_title_with_shadow.dart';
 import 'package:pokemon_list/widgets/pokemon_gif.dart';
 import 'package:pokemon_list/widgets/horizontal_list_data.dart';
-import '../obtainData/obtain_data.dart';
+import '../obtainData/pokemon_api_service.dart';
 
 class PokemonDetailsScreen extends StatefulWidget {
   final dynamic pokemon;
   final dynamic imageUrl;
   final dynamic imageUrl2;
-  const PokemonDetailsScreen({Key? key, required this.pokemon, required this.imageUrl, required this.imageUrl2}) : super(key: key);
+  final dynamic pokemonId;
+
+  const PokemonDetailsScreen({Key? key, required this.pokemon, required this.imageUrl, required this.imageUrl2, required this.pokemonId,}) : super(key: key);
   @override
   State<PokemonDetailsScreen> createState() => _PokemonDetailsScreenState();
 }
 
 class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
-  final ObtainData obtainPokemonData = ObtainData();
+  final PokemonApiService apiService = PokemonApiService();
 
-  List<dynamic> types = ["Type 1", "Type 2",];
-  List<dynamic> bodyStatus1 = ["Height:", "85"];
-  List<dynamic> bodyStatus2 = ["Weight:", "30"];
+  List<dynamic> types = [];
+  List<dynamic> pokemonHeight = ["Height"];
+  List<dynamic> pokemonWeight = ["Weight"];
   bool imageFrontDisplayed = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPokemonData();
+  }
+
+  Future<void> fetchPokemonData() async {
+    try {
+      final pokemonWeightData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'weight');
+      final pokemonHeightData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'height');
+      setState(() {
+        final double pokemonWeightData2ble = pokemonWeightData.toDouble() / 10;
+        final double pokemonHeightData2ble = pokemonHeightData.toDouble() / 10;
+        pokemonWeight.add('${pokemonWeightData2ble} kg');
+        pokemonHeight.add('${pokemonHeightData2ble} m');
+      });
+    } catch (e) {
+      // Handle error
+      print('Failed to fetch Pokemon list: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +64,35 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         ),
         actions: [
           Container(
-            alignment: Alignment.centerRight,
-            width: 70,
-            child: Image.asset('images/Poke_Ball.webp', width:60, height:50,),
+            alignment: Alignment.center,
+            width: 80,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                /*Image.asset(
+                  'images/Poke_Ball.webp',
+                  width: 80,
+                  height: 80,
+                ),
+                */
+                Text("#${widget.pokemonId.toString()}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.yellow,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(0.7),
+                        offset: const Offset(3, 3),
+                        blurRadius: 5,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
+          ),
         ]
       ),
 
@@ -80,11 +129,11 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                     ),
                   ),
                   const SizedBox(height: 30,),
-                  HorizontalDataDisplay(types),
+                  //HorizontalDataDisplay(types),
                   const SizedBox(height: 20,),
-                  HorizontalDataDisplay(bodyStatus1),
+                  HorizontalDataDisplay(pokemonWeight),
                   const SizedBox(height: 20,),
-                  HorizontalDataDisplay(bodyStatus2),
+                  HorizontalDataDisplay(pokemonHeight),
                   const SizedBox(height: 20,),
                   PokemonStatsBar("HP", 50),
                   PokemonStatsBar("ATTACK", 50),

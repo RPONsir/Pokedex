@@ -57,13 +57,20 @@ class BuildPokemonSearcher extends StatelessWidget{
               // agregar tamaño de listado , sumando el valor inicial del listado con el largo del listado pokemon
               final finalPokemonValue = regionPokemonListLength + initialListPokemonValue - 1;
               // Comparacion de Nombre con Lista de Pokemon
-              final isFound = pokemonChecker.pokemonListComparison(allPokemonList, pokemonFinalName, (initialListPokemonValue - 1), finalPokemonValue);
+              final pokemonChecked = pokemonChecker.pokemonListComparison(allPokemonList, pokemonFinalName, (initialListPokemonValue - 1), finalPokemonValue);
+              final isFound = pokemonChecked[0];
+              final int pokemonId = pokemonChecked[1];
               if(isFound==true){
                 // Coincide va a llevar al Pokemon Details
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PokemonDetailsScreen(pokemon: pokemonFinalName, imageUrl : imageUrl, imageUrl2: imageUrl2,),
+                    builder: (context) => PokemonDetailsScreen(
+                      pokemon: pokemonFinalName,
+                      imageUrl : imageUrl,
+                      imageUrl2: imageUrl2,
+                      pokemonId: pokemonId,
+                    ),
                   ),
                 );
               }

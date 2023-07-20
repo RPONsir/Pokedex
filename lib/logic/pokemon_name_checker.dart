@@ -62,6 +62,7 @@ class PokemonNameChecker {
 
   pokemonListComparison(List<dynamic> allPokemonList, String pokemonName, int initPokemonValue, int finalPokemonValue){
     bool isFound=false;
+    int currentPokemonId=0;
     // Search if the received name matches with the Api Pokemon List name
     for (int i = initPokemonValue; i < finalPokemonValue; i++) {
       // Retrieve Pokemon name as String from API
@@ -73,10 +74,11 @@ class PokemonNameChecker {
       // Compare - if matches return True
       if(pokemonName==pokemonNameOnList){
         isFound = true;
-        return isFound;
+        currentPokemonId = initPokemonValue+i+1;
+        return [isFound, currentPokemonId];
       }
       // If no match found after navigating all pokemon names on list, return False
-    }return isFound;
+    }return [isFound, currentPokemonId];
   }
 
   /*pokemonSuggestionNameList(List<dynamic> allPokemonList){

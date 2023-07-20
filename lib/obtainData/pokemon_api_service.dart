@@ -2,24 +2,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class PokemonApiService {
-  fetchPokemonList({required String url}) async {
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final results = data['results'] as List<dynamic>;
-      return results;
-    } else {
-      throw Exception('Failed to fetch data');
-    }
-  }
 
-  fetchPokemonData({required String url}) async {
+  fetchPokemonData({required String url, required String characteristics}) async {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final results = data['types'];
-      //print(results);
-      return results;
+      final data2 = jsonDecode(response.body);
+      final result = data2[characteristics];
+      return result;
     } else {
       throw Exception('Failed to fetch data');
     }

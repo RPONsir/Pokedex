@@ -27,12 +27,12 @@ class PokemonListScreenState extends State<PokemonListScreen> {
   @override
   void initState() {
     super.initState();
-    fetchPokemonList();
+    fetchPokemonData();
   }
 
-  Future<void> fetchPokemonList() async {
+  Future<void> fetchPokemonData() async {
     try {
-      final pokemonData = await apiService.fetchPokemonList(url: 'https://pokeapi.co/api/v2/pokemon?limit=898');
+      final pokemonData = await apiService.fetchPokemonData(url: 'https://pokeapi.co/api/v2/pokemon?limit=898', characteristics: 'results',);
       setState(() {
         allPokemonList = pokemonData;
         pokemonList1 = allPokemonList.sublist(0, 151);

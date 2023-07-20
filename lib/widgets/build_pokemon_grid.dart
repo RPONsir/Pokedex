@@ -47,7 +47,9 @@ class BuildPokemonGrid extends StatelessWidget{
                   builder: (context) =>
                       PokemonDetailsScreen(pokemon: pokemonFinalName,
                         imageUrl: imageUrl,
-                        imageUrl2: imageUrl2,),
+                        imageUrl2: imageUrl2,
+                        pokemonId: pokemonId,
+                      ),
                 ),
               ),
             child: PokemonBoxImage(pokemonFinalName, imageUrl, imageUrl2, pokemonId),
