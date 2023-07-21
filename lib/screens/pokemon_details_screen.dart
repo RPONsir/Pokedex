@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_list/logic/api_data_logic.dart';
-import 'package:pokemon_list/widgets/pokemon_stats_bar.dart';
+import 'package:pokemon_list/widgets/pokemom_front_back_display_box_with_background.dart';
+import 'package:pokemon_list/widgets/pokemon_details_base_stats_data.dart';
 import 'package:pokemon_list/widgets/text_title_with_shadow.dart';
-import 'package:pokemon_list/widgets/pokemon_gif.dart';
 import 'package:pokemon_list/widgets/horizontal_list_data.dart';
 import '../obtainData/pokemon_api_service.dart';
 
@@ -18,6 +18,7 @@ class PokemonDetailsScreen extends StatefulWidget {
 }
 
 class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
+
   final PokemonApiService apiService = PokemonApiService();
   final TypesLogic typesLogic = TypesLogic();
 
@@ -116,49 +117,21 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                   child: Column(
                       children: [
                         const SizedBox(height: 30,),
-                        GestureDetector(
-                          onTap: () => {
-                            if(imageFrontDisplayed == true){
-                            setState(() {
-                            imageFrontDisplayed = false;
-                            }),
-                            }
-                            else{
-                              setState(() {
-                                imageFrontDisplayed = true;
-                              }),
-                            }
-                            },
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(10),
-                            width: 300,
-                            height: 180,
-                            decoration: const BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                            ),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children:[
-                                Image.asset(
-                                  'images/background${types[0]}.jpeg',
-                                  width:260,
-                                  height:155,
-                                  fit: BoxFit.fill,
-                                ),
-                                PokemonGif(widget.imageUrl, widget.imageUrl2, 280, 140, imageFrontDisplayed,),
-                              ],
-                            ),
-                          ),
+                        PokemonGifVisualWithBackground(
+                          imageFrontDisplayed: imageFrontDisplayed,
+                          types: types, imageUrl: widget.imageUrl,
+                          imageUrl2: widget.imageUrl2,
+                          boxWidth: 300,
+                          boxHeight: 180,
                         ),
-                        const SizedBox(height: 10,),
+                        const SizedBox(height: 20,),
                         HorizontalDataDisplay(types),
-                        const SizedBox(height: 30,),
+                        const SizedBox(height: 10,),
                         HorizontalDataDisplay(pokemonWeight),
                         const SizedBox(height: 10,),
                         HorizontalDataDisplay(pokemonHeight),
                         const SizedBox(height: 30,),
+                        PokemonStatsBaseAll(stats),
                         Container(
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(5),
@@ -172,25 +145,35 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                             borderRadius: const BorderRadius.all(Radius.circular(10),),
                             color: Colors.grey,
                           ),
-                          child: const Text('Base Stats',
+                          child: const Text('Evolutions',
                             style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
                         ),
-                        const SizedBox(height: 10,),
-                        PokemonStatsBar("HP", stats[0]),
-                        const SizedBox(height: 10,),
-                        PokemonStatsBar("ATTACK", stats[1]),
-                        const SizedBox(height: 10,),
-                        PokemonStatsBar("DEFENSE", stats[2]),
-                        const SizedBox(height: 10,),
-                        PokemonStatsBar("SP. ATK", stats[3]),
-                        const SizedBox(height: 10,),
-                        PokemonStatsBar("SP. DEF", stats[4]),
-                        const SizedBox(height: 10,),
-                        PokemonStatsBar("SPEED", stats[5]),
+                        const SizedBox(height: 20,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            PokemonGifVisualWithBackground(
+                              imageFrontDisplayed: imageFrontDisplayed,
+                              types: types, imageUrl: widget.imageUrl,
+                              imageUrl2: widget.imageUrl2,
+                              boxWidth: 160,
+                              boxHeight: 100,
+                            ),
+                            const SizedBox(width: 30,),
+                            PokemonGifVisualWithBackground(
+                              imageFrontDisplayed: imageFrontDisplayed,
+                              types: types, imageUrl: widget.imageUrl,
+                              imageUrl2: widget.imageUrl2,
+                              boxWidth: 160,
+                              boxHeight: 100,
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 30,),
                       ])
               ),
@@ -200,13 +183,14 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
             return Center(
               widthFactor: double.infinity,
               child: Image.asset('images/loader1.gif',
+                alignment: Alignment.center,
                 width: double.infinity,
                 fit: BoxFit.fitHeight,
+                filterQuality: FilterQuality.high,
               ),
             );
           }
         }
-
       )
     );
   }

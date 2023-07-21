@@ -39,6 +39,9 @@ class BuildPokemonSearcher extends StatelessWidget{
                 fontSize: 24.0,
                 fontWeight: FontWeight.w500,
                 backgroundColor: Color.fromRGBO(255, 255, 255, 0)),
+            onTapOutside: (value){
+              FocusScope.of(context).unfocus();
+            },
             onSubmitted: (value) {
               // Deseleccionar Keyboard
               FocusScope.of(context).unfocus();

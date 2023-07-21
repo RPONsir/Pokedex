@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class PokemonStatsBar extends StatelessWidget{
+class PokemonStatsBarSingle extends StatelessWidget{
   final String statsName;
   final int statsValue;
 
-  const PokemonStatsBar(this.statsName, this.statsValue, {super.key});
+  const PokemonStatsBarSingle(this.statsName, this.statsValue, {super.key});
 
   @override
   Widget build(BuildContext context) {

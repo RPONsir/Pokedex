@@ -25,7 +25,7 @@ class PokemonGif extends StatelessWidget{
         placeholderFilterQuality: FilterQuality.high,
         filterQuality: FilterQuality.high,
         placeholder: const AssetImage("images/pokeLoader.gif"), alignment: Alignment.bottomCenter,
-        image: NetworkImage(imageDisplayed,
+        image: NetworkImage(imageDisplayed, scale: 0.9,
         ),
     );
   }
