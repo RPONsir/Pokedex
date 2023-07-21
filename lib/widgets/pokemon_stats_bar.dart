@@ -12,29 +12,44 @@ class PokemonStatsBar extends StatelessWidget{
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          color: Colors.blueAccent,
           alignment: Alignment.center,
           padding: const EdgeInsets.all(5),
-          width: 120,
+          width: 130,
           height: 50,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.black,
+              width: 5,
+            ),
+            borderRadius: const BorderRadius.horizontal(left: Radius.circular(30),),
+            color: Colors.redAccent,
+          ),
           child: Text(statsName,
             style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.white),
+                color: Colors.black),
           ),
         ),
         Container(
-          color: Colors.lightBlueAccent,
           alignment: Alignment.center,
           padding: const EdgeInsets.all(5),
-          width: 180,
+          width: 170,
           height: 50,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.black,
+              width: 5,
+            ),
+            borderRadius: const BorderRadius.horizontal(right: Radius.circular(30),),
+            color: Colors.white,
+
+          ),
           child: Text(statsValue.toString(),
             style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.white),
+                color: Colors.black),
           ),
         )
       ],

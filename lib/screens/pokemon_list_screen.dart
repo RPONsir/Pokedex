@@ -32,7 +32,7 @@ class PokemonListScreenState extends State<PokemonListScreen> {
 
   Future<void> fetchPokemonData() async {
     try {
-      final pokemonData = await apiService.fetchPokemonData(url: 'https://pokeapi.co/api/v2/pokemon?limit=898', characteristics: 'results',);
+      final pokemonData = await apiService.fetchPokemonData(url: 'https://pokeapi.co/api/v2/pokemon?limit=721', characteristics: 'results',);
       setState(() {
         allPokemonList = pokemonData;
         pokemonList1 = allPokemonList.sublist(0, 151);

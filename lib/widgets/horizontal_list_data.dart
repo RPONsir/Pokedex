@@ -1,39 +1,53 @@
 import 'package:flutter/material.dart';
+import '../logic/api_data_logic.dart';
 
 class HorizontalDataDisplay extends StatelessWidget{
+
+  final TypesLogic typesLogic = TypesLogic();
+
   final List<dynamic> data;
-  const HorizontalDataDisplay(this.data, {super.key});
+
+  HorizontalDataDisplay(this.data, {super.key});
 
   @override
   Widget build(BuildContext context) {
 
     return Container(
-            height: 70,
-            width: 300,
-            color: Colors.lightBlueAccent,
-            alignment: Alignment.topCenter,
-            padding: const EdgeInsets.fromLTRB(0,0,0,5),
+      height: 70,
+      width: 300,
+      alignment: Alignment.topCenter,
+      padding: const EdgeInsets.fromLTRB(0,0,0,10),
+      decoration: const BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
       child: GridView.count(
           scrollDirection: Axis.vertical,
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: data.length,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 0,
+          mainAxisSpacing: 0,
           shrinkWrap: true,
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
           children:
           List.generate(data.length, (index) {
+            final Color typeColor = typesLogic.textToColor(data[index]);
             return Container(
-              height: 20,
-              color: Colors.white,
               alignment: Alignment.topCenter,
               margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: typeColor,
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+              ),
               child: Center(
-                heightFactor: 1,
+                heightFactor: 1.8,
                 child:  Text(
-                  data[index].toString().toUpperCase(),
+                  data[index].toString(),
                   textAlign: TextAlign.center,
                   textScaleFactor: 2,
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
                 ),
               ),
             );

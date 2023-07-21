@@ -71,9 +71,26 @@ flutter:
     - images/errorPsyduckOut.jpeg
     - images/whosThatPokemon.png
     - images/Poke_Ball.webp
-    - images/backgroundPokemongrass.png.webp
+    - images/backgroundGeneric.png
     - images/loader1.gif
-
+    - images/backgroundBUG.jpeg
+    - images/backgroundDARK.jpeg
+    - images/backgroundDRAGON.jpeg
+    - images/backgroundELECTRIC.jpeg
+    - images/backgroundFAIRY.jpeg
+    - images/backgroundFIGHTING.jpeg
+    - images/backgroundFIRE.jpeg
+    - images/backgroundFLYING.jpeg
+    - images/backgroundGHOST.jpeg
+    - images/backgroundGRASS.jpeg
+    - images/backgroundGROUND.jpeg
+    - images/backgroundICE.jpeg
+    - images/backgroundNORMAL.jpeg
+    - images/backgroundPOISON.jpeg
+    - images/backgroundPSYCHIC.jpeg
+    - images/backgroundROCK.jpeg
+    - images/backgroundSTEEL.jpeg
+    - images/backgroundWATER.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

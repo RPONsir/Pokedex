@@ -60,6 +60,7 @@ class PokemonNameChecker {
     }
   }
 
+  // Compares Name to si if the Searched Pokemon matches to any on the Pokemon DB
   pokemonListComparison(List<dynamic> allPokemonList, String pokemonName, int initPokemonValue, int finalPokemonValue){
     bool isFound=false;
     int currentPokemonId=0;

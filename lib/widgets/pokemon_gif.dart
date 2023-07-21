@@ -22,8 +22,11 @@ class PokemonGif extends StatelessWidget{
     return FadeInImage(
         width: width,
         height: height,
+        placeholderFilterQuality: FilterQuality.high,
+        filterQuality: FilterQuality.high,
         placeholder: const AssetImage("images/pokeLoader.gif"), alignment: Alignment.bottomCenter,
-        image: NetworkImage(imageDisplayed,),
+        image: NetworkImage(imageDisplayed,
+        ),
     );
   }
 }

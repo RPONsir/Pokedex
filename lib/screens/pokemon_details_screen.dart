@@ -44,12 +44,12 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
       final double pokemonWeightData2ble = pokemonWeightData.toDouble() / 10;
       final double pokemonHeightData2ble = pokemonHeightData.toDouble() / 10;
+
       pokemonWeight.add('$pokemonWeightData2ble kg');
       pokemonHeight.add('$pokemonHeightData2ble m');
       types = typesLogic.typesData(pokemonTypesData);
       stats = typesLogic.statsData(pokemonStatsData);
       return;
-
     } catch (e) {
       // Handle error
       print('Failed to fetch Pokemon list: $e');
@@ -130,31 +130,66 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                             }
                             },
                           child: Container(
-                            color: Colors.black,
                             alignment: Alignment.center,
                             padding: const EdgeInsets.all(10),
                             width: 300,
                             height: 180,
+                            decoration: const BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                            ),
                             child: Stack(
+                              alignment: Alignment.center,
                               children:[
-                                Image.asset('images/backgroundPokemongrass.png.webp', width:280, height:160,fit: BoxFit.fitHeight,),
-                                PokemonGif(widget.imageUrl, widget.imageUrl2, 280, 140, imageFrontDisplayed),
+                                Image.asset(
+                                  'images/background${types[0]}.jpeg',
+                                  width:260,
+                                  height:155,
+                                  fit: BoxFit.fill,
+                                ),
+                                PokemonGif(widget.imageUrl, widget.imageUrl2, 280, 140, imageFrontDisplayed,),
                               ],
                             ),
                           ),
                         ),
-                        const SizedBox(height: 30,),
+                        const SizedBox(height: 10,),
                         HorizontalDataDisplay(types),
-                        const SizedBox(height: 20,),
+                        const SizedBox(height: 30,),
                         HorizontalDataDisplay(pokemonWeight),
-                        const SizedBox(height: 20,),
+                        const SizedBox(height: 10,),
                         HorizontalDataDisplay(pokemonHeight),
-                        const SizedBox(height: 20,),
+                        const SizedBox(height: 30,),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(5),
+                          width: 300,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 5,
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(10),),
+                            color: Colors.grey,
+                          ),
+                          child: const Text('Base Stats',
+                            style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ),
+                        const SizedBox(height: 10,),
                         PokemonStatsBar("HP", stats[0]),
+                        const SizedBox(height: 10,),
                         PokemonStatsBar("ATTACK", stats[1]),
+                        const SizedBox(height: 10,),
                         PokemonStatsBar("DEFENSE", stats[2]),
+                        const SizedBox(height: 10,),
                         PokemonStatsBar("SP. ATK", stats[3]),
+                        const SizedBox(height: 10,),
                         PokemonStatsBar("SP. DEF", stats[4]),
+                        const SizedBox(height: 10,),
                         PokemonStatsBar("SPEED", stats[5]),
                         const SizedBox(height: 30,),
                       ])
@@ -165,76 +200,14 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
             return Center(
               widthFactor: double.infinity,
               child: Image.asset('images/loader1.gif',
-                width: 300,
-                height: 300,
-                fit: BoxFit.fitHeight,),
+                width: double.infinity,
+                fit: BoxFit.fitHeight,
+              ),
             );
           }
         }
 
       )
-      /*
-      SingleChildScrollView(
-        child: Center(
-            child: Column(
-                children: [
-                  const SizedBox(height: 30,),
-                  GestureDetector(
-                    onTap: () => {
-                      if(imageFrontDisplayed == true){
-                      setState(() {
-                      imageFrontDisplayed = false;
-                      }),
-                      }
-                      else{
-                        setState(() {
-                          imageFrontDisplayed = true;
-                        }),
-                      }
-                      },
-                    child: Container(
-                      color: Colors.black,
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(10),
-                      width: 300,
-                      height: 180,
-                      child: Stack(
-                        children:[
-                          Image.asset('images/backgroundPokemongrass.png.webp', width:280, height:160,fit: BoxFit.fitHeight,),
-                          PokemonGif(widget.imageUrl, widget.imageUrl2, 280, 140, imageFrontDisplayed),
-                        ],
-                      ),
-                    ),
-                  ),
-                  FutureBuilder(
-        builder: (context, snapshot){
-          if(snapshot.connectionState == ConnectionState.done){
-            return
-                  const SizedBox(height: 30,),
-                  HorizontalDataDisplay(types),
-                  const SizedBox(height: 20,),
-                  HorizontalDataDisplay(pokemonWeight),
-                  const SizedBox(height: 20,),
-                  HorizontalDataDisplay(pokemonHeight),
-                  const SizedBox(height: 20,),
-                  PokemonStatsBar("HP", stats[0]),
-                  PokemonStatsBar("ATTACK", stats[1]),
-                  PokemonStatsBar("DEFENSE", stats[2]),
-                  PokemonStatsBar("SP. ATK", stats[3]),
-                  PokemonStatsBar("SP. DEF", stats[4]),
-                  PokemonStatsBar("SPEED", stats[5]),
-                  const SizedBox(height: 30,),
-                  }
-          else{
-            return const CircularProgressIndicator();
-          }
-        }
-
-      )
-                ])
-        ),
-      ),
-      */
     );
   }
 }
