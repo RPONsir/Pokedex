@@ -31,7 +31,7 @@ class HorizontalDataDisplay extends StatelessWidget{
               child: Center(
                 heightFactor: 1,
                 child:  Text(
-                  data[index].toString(),
+                  data[index].toString().toUpperCase(),
                   textAlign: TextAlign.center,
                   textScaleFactor: 2,
                 ),

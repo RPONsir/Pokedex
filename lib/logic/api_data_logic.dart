@@ -1,4 +1,23 @@
-class ElementTypeColor{
+class TypesLogic{
+  statsData(data){
+    final List stats = [];
+    for (int i = 0; i < data.length; i++) {
+      final data1 = data[i];
+      final statsToAdd = data1['base_stat'];
+      stats.add(statsToAdd);
+    }
+    return stats;
+  }
+  typesData(data){
+    final List types = [];
+    for (int i = 0; i < data.length; i++) {
+      final data1 = data[i];
+      final data2 = data1["type"];
+      final data3 = data2["name"];
+      types.add(data3);
+    }
+    return types;
+  }
   textToColor(String type){
     String color;
     if(type=='normal'){

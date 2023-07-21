@@ -80,18 +80,4 @@ class PokemonNameChecker {
       // If no match found after navigating all pokemon names on list, return False
     }return [isFound, currentPokemonId];
   }
-
-  /*pokemonSuggestionNameList(List<dynamic> allPokemonList){
-    var pokemonNameSuggestion = StringBuffer();
-
-    for (int i = 0; i < 721; i++) {
-      // Retrieve Pokemon name as String from API
-      final pokemon = allPokemonList[i];
-      final String pokemonNameOnList= pokemon['name'].toString();
-      final pokemonEditedName = lineChecker(pokemonNameOnList);
-      pokemonNameSuggestion.write(pokemonEditedName[0]);
-      // If no match found after navigating all pokemon names on list, return False
-    }
-    print(pokemonNameSuggestion);
-  }*/
 }
