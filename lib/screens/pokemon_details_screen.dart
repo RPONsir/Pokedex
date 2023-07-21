@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_list/logic/api_data_logic.dart';
-import 'package:pokemon_list/widgets/pokemom_front_back_display_box_with_background.dart';
+import 'package:pokemon_list/widgets/pokemon_Evolution_chain.dart';
+import 'package:pokemon_list/widgets/pokemon_front_back_display_box_with_background.dart';
 import 'package:pokemon_list/widgets/pokemon_details_base_stats_data.dart';
 import 'package:pokemon_list/widgets/text_title_with_shadow.dart';
 import 'package:pokemon_list/widgets/horizontal_list_data.dart';
+import '../logic/pokemon_name_checker.dart';
 import '../obtainData/pokemon_api_service.dart';
 
 class PokemonDetailsScreen extends StatefulWidget {
@@ -20,15 +22,28 @@ class PokemonDetailsScreen extends StatefulWidget {
 class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   final PokemonApiService apiService = PokemonApiService();
-  final TypesLogic typesLogic = TypesLogic();
+  final PokemonDataFetchLogic pokemonDataFetchLogic = PokemonDataFetchLogic();
+  final PokemonNameChecker pokemonChecker = PokemonNameChecker();
 
   late Future<dynamic> pokemonData;
 
-  List<dynamic> types = [];
-  List<dynamic> pokemonHeight = ["Height"];
+  List<dynamic> pokemonTypes = [];
   List<dynamic> pokemonWeight = ["Weight"];
+  List<dynamic> pokemonHeight = ["Height"];
   List<dynamic> stats = [];
   bool imageFrontDisplayed = true;
+  late bool hasPokemonEvolutionChain;
+  List<dynamic> pokemonEvolutionsChain = [];
+
+  late int pokemonId1;
+  List<dynamic> pokemonName1WithUrl =[];
+  List<dynamic> pokemon1Types =[];
+
+  late int pokemonId2;
+  List<dynamic> pokemonName2WithUrl =[];
+  List<dynamic> pokemon2Types =[];
+
+  late String pokeEvolutionTitle;
 
   @override
   void initState() {
@@ -38,19 +53,64 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   Future<void> fetchPokemonData() async {
     try {
+      //Fetch Data
       final pokemonWeightData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'weight');
       final pokemonHeightData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'height');
       final pokemonTypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'types');
       final pokemonStatsData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'stats');
+      final pokemonEvolutionURL = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon-species/${widget.pokemonId}", characteristics: 'evolution_chain');
+      final pokemonEvolutionData = await apiService.fetchPokemonData(url: pokemonEvolutionURL["url"], characteristics: 'chain');
 
       final double pokemonWeightData2ble = pokemonWeightData.toDouble() / 10;
       final double pokemonHeightData2ble = pokemonHeightData.toDouble() / 10;
 
+      //Values Logic - data Obtained to be worked with
+      pokemonTypes = pokemonDataFetchLogic.dataFetchTwoLayers(pokemonTypesData,"type","name");
       pokemonWeight.add('$pokemonWeightData2ble kg');
       pokemonHeight.add('$pokemonHeightData2ble m');
-      types = typesLogic.typesData(pokemonTypesData);
-      stats = typesLogic.statsData(pokemonStatsData);
-      return;
+      stats = pokemonDataFetchLogic.dataFetchOneLayer(pokemonStatsData,"base_stat");
+      hasPokemonEvolutionChain = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[0];
+      pokemonEvolutionsChain = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[1];
+
+      //Pokemon Has NO Evolution Function
+      if(hasPokemonEvolutionChain==false){
+        pokemonId1 = widget.pokemonId-1;
+        final pokemonName1 = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon/$pokemonId1", characteristics: 'name');
+        pokemonName1WithUrl = pokemonChecker.lineChecker(pokemonName1);
+        final pokemon1TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId1", characteristics: 'types');
+        pokemon1Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon1TypesData,"type","name");
+
+        pokemonId2 = widget.pokemonId+1;
+        if(pokemonId2 > 721){
+          pokemonId2 = 721;
+        }
+        final pokemonName2 = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon/$pokemonId2", characteristics: 'name');
+        pokemonName2WithUrl = pokemonChecker.lineChecker(pokemonName2);
+        final pokemon2TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId2", characteristics: 'types');
+        pokemon2Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon2TypesData,"type","name");
+        pokeEvolutionTitle = "Prev/Next Pokemon";
+      }
+      //Pokemon Has Evolution Function
+      else{
+        pokemonId1 = widget.pokemonId-1;
+        if(pokemonId1==0){
+          pokemonId1 = 1;
+        }
+        final pokemonName1 = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon/$pokemonId1", characteristics: 'name');
+        pokemonName1WithUrl = pokemonChecker.lineChecker(pokemonName1);
+        final pokemon1TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId1", characteristics: 'types');
+        pokemon1Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon1TypesData,"type","name");
+
+        pokemonId2 = widget.pokemonId+1;
+        final pokemonName2 = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon/$pokemonId2", characteristics: 'name');
+        pokemonName2WithUrl = pokemonChecker.lineChecker(pokemonName2);
+        final pokemon2TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId2", characteristics: 'types');
+        pokemon2Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon2TypesData,"type","name");
+
+        pokeEvolutionTitle = "Prev/Next Pokemon";
+        return;
+      }
+
     } catch (e) {
       // Handle error
       print('Failed to fetch Pokemon list: $e');
@@ -119,61 +179,27 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                         const SizedBox(height: 30,),
                         PokemonGifVisualWithBackground(
                           imageFrontDisplayed: imageFrontDisplayed,
-                          types: types, imageUrl: widget.imageUrl,
+                          types: pokemonTypes, imageUrl: widget.imageUrl,
                           imageUrl2: widget.imageUrl2,
                           boxWidth: 300,
                           boxHeight: 180,
                         ),
                         const SizedBox(height: 20,),
-                        HorizontalDataDisplay(types),
+                        HorizontalDataDisplay(pokemonTypes),
                         const SizedBox(height: 10,),
                         HorizontalDataDisplay(pokemonWeight),
                         const SizedBox(height: 10,),
                         HorizontalDataDisplay(pokemonHeight),
                         const SizedBox(height: 30,),
                         PokemonStatsBaseAll(stats),
-                        Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(5),
-                          width: 300,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 5,
-                            ),
-                            borderRadius: const BorderRadius.all(Radius.circular(10),),
-                            color: Colors.grey,
-                          ),
-                          child: const Text('Evolutions',
-                            style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                        ),
-                        const SizedBox(height: 20,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            PokemonGifVisualWithBackground(
-                              imageFrontDisplayed: imageFrontDisplayed,
-                              types: types, imageUrl: widget.imageUrl,
-                              imageUrl2: widget.imageUrl2,
-                              boxWidth: 160,
-                              boxHeight: 100,
-                            ),
-                            const SizedBox(width: 30,),
-                            PokemonGifVisualWithBackground(
-                              imageFrontDisplayed: imageFrontDisplayed,
-                              types: types, imageUrl: widget.imageUrl,
-                              imageUrl2: widget.imageUrl2,
-                              boxWidth: 160,
-                              boxHeight: 100,
-                            ),
-                          ],
-                        ),
+                        PokemonEvolutionChainImages(
+                            pokemonId1,
+                            pokemonName1WithUrl,
+                            pokemon1Types,
+                            pokemonId2,
+                            pokemonName2WithUrl,
+                            pokemon2Types,
+                            pokeEvolutionTitle,),
                         const SizedBox(height: 30,),
                       ])
               ),

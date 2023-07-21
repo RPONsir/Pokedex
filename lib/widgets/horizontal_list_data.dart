@@ -3,7 +3,7 @@ import '../logic/api_data_logic.dart';
 
 class HorizontalDataDisplay extends StatelessWidget{
 
-  final TypesLogic typesLogic = TypesLogic();
+  final PokemonDataFetchLogic typesLogic = PokemonDataFetchLogic();
 
   final List<dynamic> data;
 
