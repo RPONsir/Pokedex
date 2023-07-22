@@ -9,9 +9,10 @@ class PokemonApp extends StatelessWidget {
   const PokemonApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
         title: 'Pokemon App',
-        home: PokemonListScreen(),
+        home: const PokemonListScreen(),
+        routes: {"/homeScreen":(_) => const PokemonListScreen(),},
     );
   }
 }

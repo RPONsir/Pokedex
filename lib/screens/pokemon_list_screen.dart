@@ -54,6 +54,7 @@ class PokemonListScreenState extends State<PokemonListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: null,
         toolbarHeight: 70,
         elevation: 10,
         centerTitle: true,
@@ -84,7 +85,9 @@ class PokemonListScreenState extends State<PokemonListScreen> {
           ],
         ),
       ),
-      /*bottomNavigationBar: BottomNavigationBar (
+      bottomNavigationBar: BottomNavigationBar (
+        selectedItemColor: Colors.redAccent,
+        unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home_filled),
@@ -94,9 +97,8 @@ class PokemonListScreenState extends State<PokemonListScreen> {
           icon: Icon(Icons.catching_pokemon),
           label: 'Pokemon',
         ),
-        ]
+        ],
       ),
-    */
     );
   }
 }

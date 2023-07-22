@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_list/widgets/pokemon_details_info_title.dart';
 import 'package:pokemon_list/widgets/pokemon_stats_bar.dart';
 
 class PokemonStatsBaseAll extends StatelessWidget{
@@ -11,26 +12,7 @@ class PokemonStatsBaseAll extends StatelessWidget{
   Widget build(BuildContext context ){
     return Column(
       children: [
-        Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(5),
-          width: 300,
-          height: 50,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-              width: 5,
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(10),),
-            color: Colors.grey,
-          ),
-          child: const Text('Base Stats',
-            style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black),
-          ),
-        ),
+        const PokemonDetailsInfoTitle("BASE STATS"),
         const SizedBox(height: 20,),
         PokemonStatsBarSingle("HP", stats[0]),
         const SizedBox(height: 10,),

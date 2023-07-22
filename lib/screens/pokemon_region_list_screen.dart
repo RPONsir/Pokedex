@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/build_pokemon_grid.dart';
 import 'package:pokemon_list/widgets/build_pokemon_searcher.dart';
 import 'package:pokemon_list/widgets/text_title_with_shadow.dart';
@@ -48,6 +49,34 @@ class PokemonRegionList extends StatelessWidget{
               BuildPokemonGrid(regionPokemonList, addValue),
             ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar (
+          selectedItemColor: Colors.grey,
+          unselectedItemColor: Colors.grey,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_filled),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.catching_pokemon),
+              label: 'Pokemon',
+            ),
+          ],
+        onTap: (index) {
+          if(index==0){
+            Navigator.pushAndRemoveUntil(
+              context, MaterialPageRoute(
+              builder: (context) =>
+              const PokemonListScreen(),
+              maintainState: false,
+            ),
+                  (Route<dynamic> route) => false,
+            );
+          }
+          else if(index==1){
+          }
+        },
       ),
     );
   }
