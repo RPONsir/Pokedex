@@ -75,7 +75,7 @@ class PokemonNameChecker {
       // Compare - if matches return True
       if(pokemonName==pokemonNameOnList){
         isFound = true;
-        currentPokemonId = initPokemonValue+i+1;
+        currentPokemonId = i+1;
         return [isFound, currentPokemonId];
       }
       // If no match found after navigating all pokemon names on list, return False
