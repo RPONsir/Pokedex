@@ -18,8 +18,9 @@ class BuildPokemonGrid extends StatelessWidget{
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate:
-        const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 205,
+        const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisExtent: 200,
             childAspectRatio: 1,
             crossAxisSpacing: 5,
             mainAxisSpacing: 10),

@@ -10,8 +10,9 @@ class PokemonGifVisualWithBackground extends StatefulWidget{
   final String imageUrl2;
   final double boxWidth;
   final double boxHeight;
+  final double edgeSpacing;
 
-  PokemonGifVisualWithBackground({Key? key, required this.imageFrontDisplayed, required this.types, required this.imageUrl, required this.imageUrl2, required this.boxWidth, required this.boxHeight}) : super(key: key);
+  PokemonGifVisualWithBackground({Key? key, required this.imageFrontDisplayed, required this.types, required this.imageUrl, required this.imageUrl2, required this.boxWidth, required this.boxHeight, required this.edgeSpacing}) : super(key: key);
 
   @override
   State<PokemonGifVisualWithBackground> createState() => _PokemonGifVisualWithBackground();
@@ -36,7 +37,7 @@ class _PokemonGifVisualWithBackground extends State<PokemonGifVisualWithBackgrou
       },
       child: Container(
         alignment: Alignment.center,
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(widget.edgeSpacing),
         width: widget.boxWidth,
         height: widget.boxHeight,
         decoration: const BoxDecoration(

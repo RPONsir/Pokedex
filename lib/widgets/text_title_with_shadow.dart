@@ -8,21 +8,23 @@ class TitleWithShadow extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title.toUpperCase().toString(),
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: fontSize,
-        fontWeight: FontWeight.bold,
-        color: Colors.yellow,
-        shadows: [
-          Shadow(
-            color: Colors.black.withOpacity(0.7),
-            offset: const Offset(3, 3),
-            blurRadius: 5,
+    return Expanded(
+        child: Text(
+          title.toUpperCase().toString(),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.bold,
+            color: Colors.yellow,
+            shadows: [
+              Shadow(
+                color: Colors.black.withOpacity(0.7),
+                offset: const Offset(3, 3),
+                blurRadius: 5,
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
     );
   }
 }

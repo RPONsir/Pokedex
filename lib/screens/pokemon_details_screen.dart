@@ -110,7 +110,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         elevation: 10,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TitleWithShadow(widget.pokemon, 32),
@@ -137,6 +137,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                           imageUrl2: widget.imageUrl2,
                           boxWidth: 300,
                           boxHeight: 180,
+                          edgeSpacing: 10,
                         ),
                         const SizedBox(height: 20,),
                         HorizontalDataDisplay(pokemonTypes),
@@ -154,7 +155,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                             pokemonName2WithUrl,
                             pokemon2Types,
                             pokePrevNextTitle,),
-                        const SizedBox(height: 30,),
+                        const SizedBox(height: 10,),
                       ])
               ),
               );

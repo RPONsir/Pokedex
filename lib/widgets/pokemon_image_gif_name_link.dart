@@ -8,10 +8,11 @@ class PokemonGifWithNameLink extends StatelessWidget{
   final List pokemonName;
   final List pokemonType;
 
-  const PokemonGifWithNameLink(this.pokemonId, this.pokemonName, this.pokemonType,{super.key});
+  const PokemonGifWithNameLink(this.pokemonId, this.pokemonName, this.pokemonType, {super.key});
 
   final imageFrontDisplayed = true;
 
+  @override
   Widget build(BuildContext context){
     return Column(
       children: [
@@ -19,8 +20,9 @@ class PokemonGifWithNameLink extends StatelessWidget{
           imageFrontDisplayed: imageFrontDisplayed,
           types: pokemonType, imageUrl: pokemonName[1].toString(),
           imageUrl2: pokemonName[2].toString(),
-          boxWidth: 160,
-          boxHeight: 110,
+          boxWidth: 150,
+          boxHeight: 100,
+          edgeSpacing: 0,
         ),
         const SizedBox(height: 20,),
         GestureDetector(
@@ -39,7 +41,7 @@ class PokemonGifWithNameLink extends StatelessWidget{
           child: Text('#$pokemonId : ${pokemonName[0].toString().toUpperCase()}',
             style: const TextStyle(
               color: Colors.lightBlueAccent,
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
           ),

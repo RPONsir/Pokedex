@@ -30,7 +30,7 @@ class PokemonPrevNextImagesWithTitleAndLink extends StatelessWidget{
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             PokemonGifWithNameLink(pokemonId1, pokemonName1, pokemonType1,),
-            const SizedBox(width: 30,),
+            const SizedBox(width: 10,),
             PokemonGifWithNameLink(pokemonId2, pokemonName2, pokemonType2,),
           ],
         ),
