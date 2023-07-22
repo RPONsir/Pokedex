@@ -93,7 +93,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       final pokemon2TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId2", characteristics: 'types');
       pokemon2Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon2TypesData,"type","name");
       pokePrevNextTitle = "Prev/Next Pokemon";
-
     } catch (e) {
       // Handle error
       print('Failed to fetch Pokemon list: $e');
@@ -113,11 +112,11 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TitleWithShadow(widget.pokemon, 32),
+            TitleWithShadow(widget.pokemon, 26),
           ],
         ),
         actions: [
-          PokemonIdWithShadow(widget.pokemonId.toString()),
+          PokemonIdWithShadow(widget.pokemonId.toString(),22),
         ]
       ),
 

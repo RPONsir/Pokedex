@@ -58,7 +58,7 @@ class PokemonListScreenState extends State<PokemonListScreen> {
         toolbarHeight: 70,
         elevation: 10,
         centerTitle: true,
-        title: Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pokémon_logo.svg/1200px-International_Pokémon_logo.svg.png',
+        title: Image.asset('images/International_Pokémon_logo.svg.png',
           height: 65,
           fit: BoxFit.fitHeight,),
         backgroundColor: Colors.redAccent,
