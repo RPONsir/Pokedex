@@ -35,19 +35,21 @@ class PokemonListScreenState extends State<PokemonListScreen> {
   Future<void> fetchPokemonData() async {
     try {
       final pokemonData = await apiService.fetchPokemonData(url: 'https://pokeapi.co/api/v2/pokemon?limit=721', characteristics: 'results',);
-      allPokemonList = pokemonData;
-      pokemonList1 = allPokemonList.sublist(0, 151);
-      pokemonList2 = allPokemonList.sublist(151, 251);
-      pokemonList3 = allPokemonList.sublist(251, 386);
-      pokemonList4 = allPokemonList.sublist(386, 493);
-      pokemonList5 = allPokemonList.sublist(493, 649);
-      pokemonList6 = allPokemonList.sublist(649, 721);
-      // pokemonList7 = allPokemonList.sublist(721, 809);
-      // pokemonList8 = allPokemonList.sublist(809, 898);
+      setState(() {
+        allPokemonList = pokemonData;
+        pokemonList1 = allPokemonList.sublist(0, 151);
+        pokemonList2 = allPokemonList.sublist(151, 251);
+        pokemonList3 = allPokemonList.sublist(251, 386);
+        pokemonList4 = allPokemonList.sublist(386, 493);
+        pokemonList5 = allPokemonList.sublist(493, 649);
+        pokemonList6 = allPokemonList.sublist(649, 721);
+        // pokemonList7 = allPokemonList.sublist(721, 809);
+        // pokemonList8 = allPokemonList.sublist(809, 898);
+      });
       return;
     } catch (e) {
       // Handle error
-      //print('Failed to fetch Pokemon list: $e');
+      print('Failed to fetch Pokemon list: $e');
     }
   }
 
@@ -59,9 +61,12 @@ class PokemonListScreenState extends State<PokemonListScreen> {
         toolbarHeight: 70,
         elevation: 10,
         centerTitle: true,
-        title: Image.asset('images/International_Pokémon_logo.svg.png',
+        title:
+        Image.asset(
+          'images/International_Pokémon_logo.svg.png',
           height: 65,
-          fit: BoxFit.fitHeight,),
+          fit: BoxFit.fitHeight,
+        ),
         backgroundColor: Colors.redAccent,
         bottom: PreferredSize(
           preferredSize:
