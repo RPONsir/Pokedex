@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_list/logic/pokemon_name_checker.dart';
 import 'package:pokemon_list/widgets/pokemon_box_image.dart';
-import 'package:pokemon_list/widgets/separate_sliders.dart';
+import 'package:pokemon_list/widgets/pokemon_sliders_title_redirect_regionlist.dart';
 import '../screens/pokemon_details_screen.dart';
 
 class BuildPokemonSlider extends StatelessWidget{

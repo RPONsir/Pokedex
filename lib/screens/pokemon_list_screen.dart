@@ -30,7 +30,6 @@ class PokemonListScreenState extends State<PokemonListScreen> {
   void initState() {
     super.initState();
     pokemonFirstData = fetchPokemonData();
-    print(pokemonFirstData);
   }
 
   Future<void> fetchPokemonData() async {

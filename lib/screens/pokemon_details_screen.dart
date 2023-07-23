@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:pokemon_list/logic/api_data_logic.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/pokemon_id_with_shadow.dart';
-import 'package:pokemon_list/widgets/pokemon_prev_next_images_link.dart';
+import 'package:pokemon_list/widgets/build_pokemon_prev_next_images_link.dart';
 import 'package:pokemon_list/widgets/pokemon_front_back_display_box_with_background.dart';
-import 'package:pokemon_list/widgets/pokemon_details_base_stats_data.dart';
-import 'package:pokemon_list/widgets/text_title_with_shadow.dart';
-import 'package:pokemon_list/widgets/horizontal_list_data.dart';
+import 'package:pokemon_list/widgets/build_pokemon_details_base_stats_data.dart';
+import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
+import 'package:pokemon_list/widgets/pokemon_horizontal_list_data.dart';
 import '../logic/pokemon_name_checker.dart';
 import '../obtainData/pokemon_api_service.dart';
 

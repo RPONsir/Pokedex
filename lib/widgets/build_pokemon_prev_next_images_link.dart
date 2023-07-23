@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_list/widgets/pokemon_details_info_title.dart';
-import 'package:pokemon_list/widgets/pokemon_image_gif_name_link.dart';
+import 'package:pokemon_list/widgets/build_pokemon_image_gif_name_link.dart';
 import '../logic/pokemon_name_checker.dart';
 
 // ignore: must_be_immutable

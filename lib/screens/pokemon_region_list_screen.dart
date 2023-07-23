@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/build_pokemon_grid.dart';
 import 'package:pokemon_list/widgets/build_pokemon_searcher.dart';
-import 'package:pokemon_list/widgets/text_title_with_shadow.dart';
+import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
 
 class PokemonRegionList extends StatelessWidget{
 

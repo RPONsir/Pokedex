@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
-import 'package:pokemon_list/widgets/error_screen_image.dart';
-import 'package:pokemon_list/widgets/text_title_with_shadow.dart';
+import 'package:pokemon_list/widgets/pokemon_error_screen_image.dart';
+import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
 
 class PokemonDetailsScreenError extends StatelessWidget {
 
