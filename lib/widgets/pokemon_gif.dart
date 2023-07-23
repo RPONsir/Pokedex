@@ -24,6 +24,36 @@ class PokemonGif extends StatelessWidget{
         height: height,
         placeholderFilterQuality: FilterQuality.high,
         filterQuality: FilterQuality.high,
+        imageErrorBuilder: (c, o, s) =>
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset(
+            'images/pokeErrorIcon.png',
+            height: height,
+            width: width,
+            fit: BoxFit.fitHeight,
+            alignment: Alignment.center,
+            ),
+            Text('Unable to Load',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 2
+                  ..color = Colors.red,
+              ),
+            ),
+            const Text('Unable to Load',
+              style: TextStyle(
+                color: Colors.yellow,
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+            )
+          ]
+        ),
         placeholder: const AssetImage("images/pokeLoader.gif"), alignment: Alignment.bottomCenter,
         image: NetworkImage(imageDisplayed, scale: 0.9,
         ),
