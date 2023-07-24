@@ -32,6 +32,8 @@ dependencies:
     sdk: flutter
   http: ^0.13.4
   flutter_bloc: ^7.0.0
+  internet_connection_checker: ^0.0.1+4
+  connectivity_plus: ^2.3.5
 
 
 

@@ -24,6 +24,8 @@ class PokemonGif extends StatelessWidget{
         height: height,
         placeholderFilterQuality: FilterQuality.high,
         filterQuality: FilterQuality.high,
+        fadeInDuration: const Duration(seconds: 1),
+        fadeInCurve: Curves.linear,
         imageErrorBuilder: (c, o, s) =>
         Stack(
           alignment: Alignment.center,

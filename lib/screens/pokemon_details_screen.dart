@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon_list/logic/api_data_logic.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/pokemon_id_with_shadow.dart';
@@ -47,6 +50,10 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   late String pokePrevNextTitle;
 
+  late StreamSubscription subscription;
+  bool isDeviceConnected = false;
+  late bool isAlertSet = false;
+
   @override
   void initState() {
     super.initState();
@@ -55,44 +62,52 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   Future<void> fetchPokemonData() async {
     try {
+
+      isDeviceConnected = await InternetConnectionChecker().hasConnection;
+      if(isDeviceConnected == true){
+        final pokemonWeightData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'weight');
+        final pokemonHeightData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'height');
+        final pokemonTypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'types');
+        final pokemonStatsData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'stats');
+        final pokemonEvolutionURL = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon-species/${widget.pokemonId}", characteristics: 'evolution_chain');
+        final pokemonEvolutionData = await apiService.fetchPokemonData(url: pokemonEvolutionURL["url"], characteristics: 'chain');
+
+        final double pokemonWeightData2ble = pokemonWeightData.toDouble() / 10;
+        final double pokemonHeightData2ble = pokemonHeightData.toDouble() / 10;
+
+        //Values Logic - data Obtained to be worked with
+        pokemonTypes = pokemonDataFetchLogic.dataFetchTwoLayers(pokemonTypesData,"type","name");
+        pokemonWeight.add('$pokemonWeightData2ble kg');
+        pokemonHeight.add('$pokemonHeightData2ble m');
+        stats = pokemonDataFetchLogic.dataFetchOneLayer(pokemonStatsData,"base_stat");
+
+        hasPokemonEvolutionChain = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[0];
+        pokemonEvolutionsChain = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[1];
+
+        pokemonId1 = widget.pokemonId-1;
+        if(pokemonId1==0){
+          pokemonId1 = 1;
+        }
+        final pokemonName1 = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon/$pokemonId1", characteristics: 'name');
+        pokemonName1WithUrl = pokemonChecker.lineChecker(pokemonName1);
+        final pokemon1TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId1", characteristics: 'types');
+        pokemon1Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon1TypesData,"type","name");
+
+        pokemonId2 = widget.pokemonId+1;
+        if(pokemonId2 > 721){
+          pokemonId2 = 721;
+        }
+        final pokemonName2 = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon/$pokemonId2", characteristics: 'name');
+        pokemonName2WithUrl = pokemonChecker.lineChecker(pokemonName2);
+        final pokemon2TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId2", characteristics: 'types');
+        pokemon2Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon2TypesData,"type","name");
+        pokePrevNextTitle = "Prev/Next Pokemon";
+      }
+      else{
+        setState(() => isAlertSet = true);
+      }
       //Fetch Data
-      final pokemonWeightData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'weight');
-      final pokemonHeightData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'height');
-      final pokemonTypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'types');
-      final pokemonStatsData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'stats');
-      final pokemonEvolutionURL = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon-species/${widget.pokemonId}", characteristics: 'evolution_chain');
-      final pokemonEvolutionData = await apiService.fetchPokemonData(url: pokemonEvolutionURL["url"], characteristics: 'chain');
 
-      final double pokemonWeightData2ble = pokemonWeightData.toDouble() / 10;
-      final double pokemonHeightData2ble = pokemonHeightData.toDouble() / 10;
-
-      //Values Logic - data Obtained to be worked with
-      pokemonTypes = pokemonDataFetchLogic.dataFetchTwoLayers(pokemonTypesData,"type","name");
-      pokemonWeight.add('$pokemonWeightData2ble kg');
-      pokemonHeight.add('$pokemonHeightData2ble m');
-      stats = pokemonDataFetchLogic.dataFetchOneLayer(pokemonStatsData,"base_stat");
-
-      hasPokemonEvolutionChain = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[0];
-      pokemonEvolutionsChain = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[1];
-
-      pokemonId1 = widget.pokemonId-1;
-      if(pokemonId1==0){
-        pokemonId1 = 1;
-      }
-      final pokemonName1 = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon/$pokemonId1", characteristics: 'name');
-      pokemonName1WithUrl = pokemonChecker.lineChecker(pokemonName1);
-      final pokemon1TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId1", characteristics: 'types');
-      pokemon1Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon1TypesData,"type","name");
-
-      pokemonId2 = widget.pokemonId+1;
-      if(pokemonId2 > 721){
-        pokemonId2 = 721;
-      }
-      final pokemonName2 = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon/$pokemonId2", characteristics: 'name');
-      pokemonName2WithUrl = pokemonChecker.lineChecker(pokemonName2);
-      final pokemon2TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId2", characteristics: 'types');
-      pokemon2Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon2TypesData,"type","name");
-      pokePrevNextTitle = "Prev/Next Pokemon";
     } catch (e) {
       // Handle error
       print('Failed to fetch Pokemon list: $e');
@@ -123,7 +138,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       body: FutureBuilder(
         future: pokemonData,
         builder: (context, snapshot){
-          if(snapshot.connectionState == ConnectionState.done){
+          if((snapshot.connectionState == ConnectionState.done)&&(isAlertSet==false)){
             return
               SingleChildScrollView(
               child: Center(
@@ -158,6 +173,19 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                       ])
               ),
               );
+          }
+          else if(isAlertSet==true){
+            return const Center(
+                child:Text("No internet Connection Detected",
+                maxLines: 2,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  letterSpacing: 2,
+                ),),
+            );
+
           }
           else{
             return Center(

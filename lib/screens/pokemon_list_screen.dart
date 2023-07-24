@@ -49,7 +49,7 @@ class PokemonListScreenState extends State<PokemonListScreen> {
       return;
     } catch (e) {
       // Handle error
-      print('Failed to fetch Pokemon list: $e');
+      //print('Failed to fetch Pokemon list: $e');
     }
   }
 
@@ -103,6 +103,7 @@ class PokemonListScreenState extends State<PokemonListScreen> {
               width: double.infinity,
               fit: BoxFit.fitHeight,
               filterQuality: FilterQuality.high,
+
               ),
             );
           }
