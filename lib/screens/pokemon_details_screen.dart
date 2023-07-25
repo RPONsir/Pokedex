@@ -1,15 +1,16 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon_list/logic/api_data_logic.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
+import 'package:pokemon_list/widgets/error_message_no_internet.dart';
 import 'package:pokemon_list/widgets/pokemon_id_with_shadow.dart';
 import 'package:pokemon_list/widgets/build_pokemon_prev_next_images_link.dart';
 import 'package:pokemon_list/widgets/pokemon_front_back_display_box_with_background.dart';
 import 'package:pokemon_list/widgets/build_pokemon_details_base_stats_data.dart';
 import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
 import 'package:pokemon_list/widgets/pokemon_horizontal_list_data.dart';
+import 'package:pokemon_list/widgets/screen_loader.dart';
 import '../logic/pokemon_name_checker.dart';
 import '../obtainData/pokemon_api_service.dart';
 
@@ -50,9 +51,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   late String pokePrevNextTitle;
 
-  late StreamSubscription subscription;
-  bool isDeviceConnected = false;
-  late bool isAlertSet = false;
+  late bool isDeviceConnected;
+  late String isAlertSet = 'unknown';
 
   @override
   void initState() {
@@ -62,7 +62,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   Future<void> fetchPokemonData() async {
     try {
-
       isDeviceConnected = await InternetConnectionChecker().hasConnection;
       if(isDeviceConnected == true){
         final pokemonWeightData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/${widget.pokemonId}", characteristics: 'weight');
@@ -102,9 +101,10 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         final pokemon2TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId2", characteristics: 'types');
         pokemon2Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon2TypesData,"type","name");
         pokePrevNextTitle = "Prev/Next Pokemon";
+        setState(() => isAlertSet = 'false');
       }
       else{
-        setState(() => isAlertSet = true);
+        setState(() => isAlertSet = 'true');
       }
       //Fetch Data
 
@@ -138,7 +138,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       body: FutureBuilder(
         future: pokemonData,
         builder: (context, snapshot){
-          if((snapshot.connectionState == ConnectionState.done)&&(isAlertSet==false)){
+          if((snapshot.connectionState == ConnectionState.done)&&(isAlertSet=='false')){
             return
               SingleChildScrollView(
               child: Center(
@@ -174,29 +174,11 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
               ),
               );
           }
-          else if(isAlertSet==true){
-            return const Center(
-                child:Text("No internet Connection Detected",
-                maxLines: 2,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  letterSpacing: 2,
-                ),),
-            );
-
+          else if(isAlertSet=='true'){
+            return const InternetErrorMessage();
           }
           else{
-            return Center(
-              widthFactor: double.infinity,
-              child: Image.asset('images/loader1.gif',
-                alignment: Alignment.center,
-                width: double.infinity,
-                fit: BoxFit.fitHeight,
-                filterQuality: FilterQuality.high,
-              ),
-            );
+            return const ScreenLoader();
           }
         }
       ),

@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon_list/widgets/build_pokemon_searcher.dart';
 import 'package:pokemon_list/widgets/build_pokemon_slider.dart';
 import 'package:pokemon_list/obtainData/pokemon_api_service.dart';
+import 'package:pokemon_list/widgets/error_message_no_internet.dart';
+import 'package:pokemon_list/widgets/screen_loader.dart';
 
 class PokemonListScreen extends StatefulWidget {
   const PokemonListScreen({super.key});
@@ -14,6 +19,9 @@ class PokemonListScreenState extends State<PokemonListScreen> {
   final PokemonApiService apiService = PokemonApiService();
 
   late Future<dynamic> pokemonFirstData;
+
+  late bool isDeviceConnected = false;
+  late String isAlertSet = 'unknown';
 
   //Listado total y subsecciones por regiones
   List<dynamic> allPokemonList = [];
@@ -34,19 +42,27 @@ class PokemonListScreenState extends State<PokemonListScreen> {
 
   Future<void> fetchPokemonData() async {
     try {
-      final pokemonData = await apiService.fetchPokemonData(url: 'https://pokeapi.co/api/v2/pokemon?limit=721', characteristics: 'results',);
-      setState(() {
-        allPokemonList = pokemonData;
-        pokemonList1 = allPokemonList.sublist(0, 151);
-        pokemonList2 = allPokemonList.sublist(151, 251);
-        pokemonList3 = allPokemonList.sublist(251, 386);
-        pokemonList4 = allPokemonList.sublist(386, 493);
-        pokemonList5 = allPokemonList.sublist(493, 649);
-        pokemonList6 = allPokemonList.sublist(649, 721);
-        // pokemonList7 = allPokemonList.sublist(721, 809);
-        // pokemonList8 = allPokemonList.sublist(809, 898);
-      });
-      return;
+      isDeviceConnected = await InternetConnectionChecker().hasConnection;
+      if(isDeviceConnected == true){
+        final pokemonData = await apiService.fetchPokemonData(url: 'https://pokeapi.co/api/v2/pokemon?limit=721', characteristics: 'results',);
+        setState(() {
+          allPokemonList = pokemonData;
+          pokemonList1 = allPokemonList.sublist(0, 151);
+          pokemonList2 = allPokemonList.sublist(151, 251);
+          pokemonList3 = allPokemonList.sublist(251, 386);
+          pokemonList4 = allPokemonList.sublist(386, 493);
+          pokemonList5 = allPokemonList.sublist(493, 649);
+          pokemonList6 = allPokemonList.sublist(649, 721);
+          // pokemonList7 = allPokemonList.sublist(721, 809);
+          // pokemonList8 = allPokemonList.sublist(809, 898);
+          isAlertSet = 'false';
+        });
+        return;
+      }
+      else{
+        setState(() => isAlertSet = 'true');
+      }
+
     } catch (e) {
       // Handle error
       //print('Failed to fetch Pokemon list: $e');
@@ -78,7 +94,7 @@ class PokemonListScreenState extends State<PokemonListScreen> {
       body: FutureBuilder(
         future: pokemonFirstData,
         builder: (context, snapshot){
-          if(snapshot.connectionState == ConnectionState.done){
+          if((snapshot.connectionState == ConnectionState.done)&&(isAlertSet=='false')){
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,17 +111,11 @@ class PokemonListScreenState extends State<PokemonListScreen> {
               ),
             );
           }
+          else if(isAlertSet=='true'){
+            return const InternetErrorMessage();
+          }
           else{
-            return Center(
-              widthFactor: double.infinity,
-              child: Image.asset('images/loader1.gif',
-              alignment: Alignment.center,
-              width: double.infinity,
-              fit: BoxFit.fitHeight,
-              filterQuality: FilterQuality.high,
-
-              ),
-            );
+            return const ScreenLoader();
           }
         }
       ),

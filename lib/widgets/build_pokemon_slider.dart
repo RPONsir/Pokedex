@@ -15,7 +15,6 @@ class BuildPokemonSlider extends StatelessWidget{
 
   BuildPokemonSlider(this.sliderTitle , this.allPokemonList, this.regionalPokemonList, this.addValueList, {super.key});
   @override
-
   Widget build(BuildContext context){
     return Column(
       // Separador con nombre de Region

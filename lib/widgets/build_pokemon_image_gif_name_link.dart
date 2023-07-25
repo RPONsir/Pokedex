@@ -26,7 +26,7 @@ class PokemonGifWithNameLink extends StatelessWidget{
         ),
         const SizedBox(height: 20,),
         GestureDetector(
-          onTap: () => Navigator.push(
+          onTap: () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) =>
