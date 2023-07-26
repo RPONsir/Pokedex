@@ -7,7 +7,7 @@ import 'package:pokemon_list/widgets/build_pokemon_grid.dart';
 import 'package:pokemon_list/widgets/build_pokemon_searcher.dart';
 import 'package:pokemon_list/widgets/error_message_no_internet.dart';
 import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
-import 'package:pokemon_list/widgets/screen_loader.dart';
+import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
 
 class PokemonRegionList extends StatefulWidget{
 
@@ -26,6 +26,7 @@ class _PokemonRegionList extends State<PokemonRegionList>{
 
   late bool isDeviceConnected;
   late String isAlertSet = 'unknown';
+  final ScreenLoader screenLoader = const ScreenLoader();
 
   @override
   void initState() {

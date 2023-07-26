@@ -10,9 +10,10 @@ import 'package:pokemon_list/widgets/pokemon_front_back_display_box_with_backgro
 import 'package:pokemon_list/widgets/build_pokemon_details_base_stats_data.dart';
 import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
 import 'package:pokemon_list/widgets/pokemon_horizontal_list_data.dart';
-import 'package:pokemon_list/widgets/screen_loader.dart';
+import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
 import '../logic/pokemon_name_checker.dart';
 import '../obtainData/pokemon_api_service.dart';
+import '../widgets/pokemon_details_info_title.dart';
 
 class PokemonDetailsScreen extends StatefulWidget {
   final dynamic pokemon;
@@ -39,7 +40,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   List<dynamic> stats = [];
   bool imageFrontDisplayed = true;
   late bool hasPokemonEvolutionChain;
-  List<dynamic> pokemonEvolutionsChain = [];
+  late List<dynamic> pokemonEvolutionsChain = [];
+  late String pokemonEvolutionChainTitle;
 
   late int pokemonId1;
   List<dynamic> pokemonName1WithUrl =[];
@@ -80,8 +82,10 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         pokemonHeight.add('$pokemonHeightData2ble m');
         stats = pokemonDataFetchLogic.dataFetchOneLayer(pokemonStatsData,"base_stat");
 
+        // Pokemon Evolution parameters and logic
         hasPokemonEvolutionChain = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[0];
         pokemonEvolutionsChain = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[1];
+        pokemonEvolutionChainTitle = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[2];
 
         pokemonId1 = widget.pokemonId-1;
         if(pokemonId1==0){
@@ -110,7 +114,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
     } catch (e) {
       // Handle error
-      print('Failed to fetch Pokemon list: $e');
+      //print('Failed to fetch Pokemon list: $e');
     }
   }
 
@@ -170,6 +174,10 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                             pokemon2Types,
                             pokePrevNextTitle,),
                         const SizedBox(height: 10,),
+                        PokemonDetailsInfoTitle(pokemonEvolutionChainTitle.toString()),
+                        const SizedBox(height: 30,),
+                        Text(pokemonEvolutionsChain.join(', ').toString().toUpperCase()),
+                        const SizedBox(height: 30,),
                       ])
               ),
               );

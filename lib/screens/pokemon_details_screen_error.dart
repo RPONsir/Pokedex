@@ -4,7 +4,7 @@ import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/error_message_no_internet.dart';
 import 'package:pokemon_list/widgets/pokemon_error_screen_image.dart';
 import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
-import 'package:pokemon_list/widgets/screen_loader.dart';
+import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
 
 class PokemonDetailsScreenError extends StatefulWidget{
   final dynamic pokemonName;
@@ -16,7 +16,7 @@ class PokemonDetailsScreenError extends StatefulWidget{
 class _PokemonDetailsScreenError extends State<PokemonDetailsScreenError> {
 
   late bool isDeviceConnected;
-  late String isAlertSet = 'unknown';
+  late String isAlertSet = 'true';
 
   @override
   void initState() {

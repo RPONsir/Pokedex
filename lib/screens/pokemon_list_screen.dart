@@ -6,7 +6,7 @@ import 'package:pokemon_list/widgets/build_pokemon_searcher.dart';
 import 'package:pokemon_list/widgets/build_pokemon_slider.dart';
 import 'package:pokemon_list/obtainData/pokemon_api_service.dart';
 import 'package:pokemon_list/widgets/error_message_no_internet.dart';
-import 'package:pokemon_list/widgets/screen_loader.dart';
+import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
 
 class PokemonListScreen extends StatefulWidget {
   const PokemonListScreen({super.key});
