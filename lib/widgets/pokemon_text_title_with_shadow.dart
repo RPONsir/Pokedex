@@ -8,8 +8,7 @@ class TitleWithShadow extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Text(
+    return Text(
           title.toUpperCase().toString(),
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -24,7 +23,6 @@ class TitleWithShadow extends StatelessWidget{
               ),
             ],
           ),
-        ),
     );
   }
 }

@@ -1,13 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/build_pokemon_grid.dart';
 import 'package:pokemon_list/widgets/build_pokemon_searcher.dart';
-import 'package:pokemon_list/widgets/error_message_no_internet.dart';
 import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
-import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
 
 class PokemonRegionList extends StatefulWidget{
 
@@ -24,30 +19,9 @@ class PokemonRegionList extends StatefulWidget{
 
 class _PokemonRegionList extends State<PokemonRegionList>{
 
-  late bool isDeviceConnected;
-  late String isAlertSet = 'unknown';
-  final ScreenLoader screenLoader = const ScreenLoader();
-
   @override
   void initState() {
     super.initState();
-    internetConnection();
-  }
-
-  Future<void> internetConnection() async {
-    isDeviceConnected = await InternetConnectionChecker().hasConnection;
-    if(isDeviceConnected == true){
-      setState(() {
-        isAlertSet = 'false';
-        return;
-      });
-    }
-    else{
-      setState(() {
-        isAlertSet = 'true';
-        return;
-      });
-    }
   }
 
   @override
@@ -79,25 +53,13 @@ class _PokemonRegionList extends State<PokemonRegionList>{
             ),
           ],
         ),
-      body: FutureBuilder(
-        builder: (context, snapshot){
-          if(isAlertSet=='false'){
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BuildPokemonGrid(widget.regionPokemonList, widget.addValue),
-                  ],
-                ),
-              );
-          }
-          else if(isAlertSet=='true'){
-            return const InternetErrorMessage();
-          }
-          else{
-            return const ScreenLoader();
-          }
-        }
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BuildPokemonGrid(widget.regionPokemonList, widget.addValue),
+          ],
+        ),
       ),
 
       bottomNavigationBar: BottomNavigationBar (
