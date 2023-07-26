@@ -25,25 +25,25 @@ class PokemonDataFetchLogic{
 
   dataFetchSecondEvolutionIsAvailable(data , String layer1, String layer2, String pokemonName){
     final List obtainedData = [];
-    //eevee special case of 2nd grade evolutions
-    if(pokemonName=="eevee"){
-      for (int i = 0; i < 8; i++) {
-        final data1 = data[i];
-        final data2 = data1[layer1];
-        final data3 = data2[layer2];
+    List pokemonsUrl = dataFetchTwoLayers(data,'species',"url");
+    int pokemonQuantity = pokemonsUrl.length;
+    for (int i = 0; i < pokemonQuantity; i++) {
+      final data1 = data[i];
+      final data2 = data1[layer1];
+      final data3 = data2[layer2];
+      // E.g https://pokeapi.co/api/v2/pokemon-species/
+      // Remove first 42 char and Remove last char "/" from URL to obtain a number
+      String obtainedUrl = pokemonsUrl[i].toString().substring(42, (pokemonsUrl[i].length-1));
+      int pokemonId = int.parse(obtainedUrl);
+      if(pokemonId>721){
+        //Do Nothing
+      }
+      else{
         obtainedData.add(data3);
       }
-      return obtainedData;
     }
-    else{
-      for (int i = 0; i < data.length; i++) {
-        final data1 = data[i];
-        final data2 = data1[layer1];
-        final data3 = data2[layer2];
-        obtainedData.add(data3);
-      }
-      return obtainedData;
-    }
+    return obtainedData;
+
   }
   // Obtains data 3 layer of jsonFile
   dataFetchThirdEvolutionIsAvailable(data , String layer1, String layer2, String layer3){
@@ -193,10 +193,19 @@ class PokemonDataFetchLogic{
           // as an empty value is coming do nothing
         }
         else{
-          //Third evolution found, add to list
-          pokemonEvolutionChain.add(pokemonName3[0].toString());
+          List url2 = dataFetchThirdEvolutionIsAvailable(data['evolves_to'],'evolves_to','species',"url");
+          // E.g https://pokeapi.co/api/v2/pokemon-species/
+          // Remove first 42 char and Remove last char "/" from URL to obtain a number
+          String obtainedUrl2 = url2[0].toString().substring(42, (url2[0].length-1));
+          int pokemonId2 = int.parse(obtainedUrl2);
+          if(pokemonId2>721){
+            // Do Nothing
+          }
+          else{
+            //Third evolution found, add to list
+            pokemonEvolutionChain.add(pokemonName3[0].toString());
+          }
         }
-
         return[hasPokemonEvolutionChain, pokemonEvolutionChain, "See Evolution Chain"];
       }
     }
