@@ -176,7 +176,28 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                         const SizedBox(height: 10,),
                         PokemonDetailsInfoTitle(pokemonEvolutionChainTitle.toString()),
                         const SizedBox(height: 30,),
-                        Text(pokemonEvolutionsChain.join(', ').toString().toUpperCase()),
+                        Container(
+                          width: 300,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.lime,
+                            borderRadius: const BorderRadius.all(Radius.circular(20)),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 3,
+                            ),
+                          ),
+                          child: Text(pokemonEvolutionsChain.join(', ').toString().toUpperCase(),
+                              textWidthBasis: TextWidthBasis.parent,
+                              maxLines: 3,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              )),
+                        ),
                         const SizedBox(height: 30,),
                       ])
               ),

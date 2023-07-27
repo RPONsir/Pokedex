@@ -19,28 +19,38 @@ class SeparatingTitleSpaceSliders extends StatelessWidget{
               builder: (context) => PokemonRegionList(allPokemonList: allPokemonList, regionPokemonList: regionPokemonList, regionName: sliderTitle, addValue: addValue,),
             ),
           ),
-      child: Container(
-          height: 55,
-          width: double.infinity,
-          color: Colors.black,
-          alignment: Alignment.center,
-          child:
-          Text(
-            sliderTitle, textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 34.0,
-              fontWeight: FontWeight.w500,
-              shadows: [
-                Shadow(
-                  color: Colors.white.withOpacity(0.7),
-                  offset: const Offset(2, 2),
-                  blurRadius: 3,
-                ),
-              ],
+      child: Stack(
+        alignment: Alignment.centerRight,
+        children: [
+          Container(
+            height: 55,
+            width: double.infinity,
+            color: Colors.black,
+            alignment: Alignment.center,
+            child:
+            Text(
+              sliderTitle, textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 34.0,
+                fontWeight: FontWeight.w500,
+                shadows: [
+                  Shadow(
+                    color: Colors.white.withOpacity(0.7),
+                    offset: const Offset(2, 2),
+                    blurRadius: 3,
+                  ),
+                ],
+              ),
             ),
           ),
-      ),
+          Image.asset(
+            'images/arrowIcon.png',
+            height: 50,
+            fit: BoxFit.fitHeight,
+          )
+        ],
+      )
     );
   }
 }
