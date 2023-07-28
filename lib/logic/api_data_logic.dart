@@ -27,7 +27,7 @@ class PokemonDataFetchLogic{
     final List obtainedData = [];
     List pokemonsUrl = dataFetchTwoLayers(data,'species',"url");
     int pokemonQuantity = pokemonsUrl.length;
-    for (int i = 0; i < pokemonQuantity; i++) {
+    for(int i = 0; i < pokemonQuantity; i++) {
       final data1 = data[i];
       final data2 = data1[layer1];
       final data3 = data2[layer2];
@@ -48,10 +48,13 @@ class PokemonDataFetchLogic{
   // Obtains data 3 layer of jsonFile
   dataFetchThirdEvolutionIsAvailable(data , String layer1, String layer2, String layer3){
     final List obtainedData = [];
-    for (int i = 0; i < data.length; i++) {
-      final data1 = data[i];
+    final datalayer = data[0];
+    List pokemonsUrl = dataFetchTwoLayers(datalayer[layer1],'species',"url");
+    int pokemonQuantity = pokemonsUrl.length;
+    for(int i = 0; i < pokemonQuantity; i++) {
+      final data1 = data[0];
       final data2 = data1[layer1];
-      if((data2==null)||(data2?.isEmpty ?? true)){
+      if((data2?.isEmpty ?? true)){
         return obtainedData;
       }
       else{
@@ -203,7 +206,7 @@ class PokemonDataFetchLogic{
           }
           else{
             //Third evolution found, add to list
-            pokemonEvolutionChain.add(pokemonName3[0].toString());
+            pokemonEvolutionChain.add(pokemonName3.join(', ').toString());
           }
         }
         return[hasPokemonEvolutionChain, pokemonEvolutionChain, "See Evolution Chain"];
