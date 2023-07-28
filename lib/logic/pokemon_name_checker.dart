@@ -1,5 +1,4 @@
 class PokemonNameChecker {
-
   // Checks if the name has no more text after an "-" and removes it
   // For special pokemon name cases vs GIF URL - Name fas fixed to match Database
   lineChecker(pokemon) {
@@ -59,7 +58,6 @@ class PokemonNameChecker {
       }
     }
   }
-
   // Compares Name to si if the Searched Pokemon matches to any on the Pokemon DB
   pokemonListComparison(List<dynamic> allPokemonList, String pokemonName, int initPokemonValue, int finalPokemonValue){
     bool isFound=false;

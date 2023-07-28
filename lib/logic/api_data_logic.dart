@@ -22,7 +22,7 @@ class PokemonDataFetchLogic{
     }
     return obtainedData;
   }
-
+  // Obtains data for second evolution(s) that is/are available and id is not above 721 limit
   dataFetchSecondEvolutionIsAvailable(data , String layer1, String layer2, String pokemonName){
     final List obtainedData = [];
     List pokemonsUrl = dataFetchTwoLayers(data,'species',"url");
@@ -45,7 +45,7 @@ class PokemonDataFetchLogic{
     return obtainedData;
 
   }
-  // Obtains data 3 layer of jsonFile
+  // Obtains data for third evolution(s) that is/are available and id is not above 721 limit
   dataFetchThirdEvolutionIsAvailable(data , String layer1, String layer2, String layer3){
     final List obtainedData = [];
     final datalayer = data[0];
@@ -163,7 +163,6 @@ class PokemonDataFetchLogic{
       return typeColor;
     }
   }
-
   // Function Check if the pokemon has Valid EvolutionsChain until the 6th Generation (721 pokemonList)
   dataFetchPokemonEvolution(data){
     bool hasPokemonEvolutionChain;
