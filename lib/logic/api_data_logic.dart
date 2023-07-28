@@ -28,9 +28,6 @@ class PokemonDataFetchLogic{
     List pokemonsUrl = dataFetchTwoLayers(data,'species',"url");
     int pokemonQuantity = pokemonsUrl.length;
     for(int i = 0; i < pokemonQuantity; i++) {
-      final data1 = data[i];
-      final data2 = data1[layer1];
-      final data3 = data2[layer2];
       // E.g https://pokeapi.co/api/v2/pokemon-species/
       // Remove first 42 char and Remove last char "/" from URL to obtain a number
       String obtainedUrl = pokemonsUrl[i].toString().substring(42, (pokemonsUrl[i].length-1));
@@ -39,6 +36,9 @@ class PokemonDataFetchLogic{
         //Do Nothing
       }
       else{
+        final data1 = data[i];
+        final data2 = data1[layer1];
+        final data3 = data2[layer2];
         obtainedData.add(data3);
       }
     }
@@ -58,10 +58,19 @@ class PokemonDataFetchLogic{
         return obtainedData;
       }
       else{
-        final data3 = data2[i];
-        final data4 = data3[layer2];
-        final data5 = data4[layer3];
-        obtainedData.add(data5);
+        // E.g https://pokeapi.co/api/v2/pokemon-species/
+        // Remove first 42 char and Remove last char "/" from URL to obtain a number
+        String obtainedUrl = pokemonsUrl[i].toString().substring(42, (pokemonsUrl[i].length-1));
+        int pokemonId = int.parse(obtainedUrl);
+        if(pokemonId>721){
+          //Do Nothing
+        }
+        else {
+          final data3 = data2[i];
+          final data4 = data3[layer2];
+          final data5 = data4[layer3];
+          obtainedData.add(data5);
+        }
       }
     }
     return obtainedData;
@@ -191,23 +200,12 @@ class PokemonDataFetchLogic{
 
         // Look into the 3rd evolution if available
         List pokemonName3 = dataFetchThirdEvolutionIsAvailable(data['evolves_to'],'evolves_to','species','name');
-
         if(pokemonName3.isEmpty){
           // as an empty value is coming do nothing
         }
         else{
-          List url2 = dataFetchThirdEvolutionIsAvailable(data['evolves_to'],'evolves_to','species',"url");
-          // E.g https://pokeapi.co/api/v2/pokemon-species/
-          // Remove first 42 char and Remove last char "/" from URL to obtain a number
-          String obtainedUrl2 = url2[0].toString().substring(42, (url2[0].length-1));
-          int pokemonId2 = int.parse(obtainedUrl2);
-          if(pokemonId2>721){
-            // Do Nothing
-          }
-          else{
             //Third evolution found, add to list
             pokemonEvolutionChain.add(pokemonName3.join(', ').toString());
-          }
         }
         return[hasPokemonEvolutionChain, pokemonEvolutionChain, "See Evolution Chain"];
       }
