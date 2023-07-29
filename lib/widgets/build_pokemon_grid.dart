@@ -26,34 +26,30 @@ class BuildPokemonGrid extends StatelessWidget{
             mainAxisSpacing: 10),
           itemCount: pokemonList.length,
           itemBuilder: (context, index) {
+          // Obtain Pokemon Data
           final pokemon = pokemonList[index];
-          // ID de POKEMON
+          // Obtain Pokemon ID
           final pokemonId = index+addValueList;
-          // Obtenemos el Nombre
+          // Obtain pokemon Name
           final pokemonName = pokemon['name'].toString();
-          // Validamos el Nombre que este bien escrito y se edita de ser necesario
-          final pokemonFinalData = pokemonChecker.lineChecker(pokemonName);
-          // Obtenemos nombre final del pokemon
-          final pokemonFinalName = pokemonFinalData[0];
-          // Obtenemos URL del GIF
-          final imageUrl = pokemonFinalData[1];
-          // Obtenemos URL del Segundo GIF
-          final imageUrl2 = pokemonFinalData[2];
+          // Correct pokemon name if necessary and returns pokemon images/gifs URLs
+          final pokemonFinalData = pokemonChecker.nameCheckerGetImageURL(pokemonName);
+
           return GestureDetector(
-              // Al hacer click navegara al Pokemon Details
               onTap: () =>
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      PokemonDetailsScreen(pokemon: pokemonFinalName,
-                        imageUrl: imageUrl,
-                        imageUrl2: imageUrl2,
+                      PokemonDetailsScreen(
+                        pokemon: pokemonFinalData[0],
+                        imageUrl: pokemonFinalData[1],
+                        imageUrl2: pokemonFinalData[2],
                         pokemonId: pokemonId,
                       ),
                 ),
               ),
-            child: PokemonBoxImage(pokemonFinalName, imageUrl, imageUrl2, pokemonId),
+            child: PokemonBoxImage(pokemonFinalData[0], pokemonFinalData[1], pokemonFinalData[2], pokemonId),
           );
         }
     );

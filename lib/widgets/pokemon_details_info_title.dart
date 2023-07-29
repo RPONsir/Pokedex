@@ -20,7 +20,8 @@ class PokemonDetailsInfoTitle extends StatelessWidget{
         borderRadius: const BorderRadius.all(Radius.circular(10),),
         color: Colors.grey,
       ),
-      child: Text(pokeTitle,
+      child: Text(
+        pokeTitle,
         style: const TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,

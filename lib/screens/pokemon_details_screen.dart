@@ -92,7 +92,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
           pokemonId1 = 1;
         }
         final pokemonName1 = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon/$pokemonId1", characteristics: 'name');
-        pokemonName1WithUrl = pokemonChecker.lineChecker(pokemonName1);
+        pokemonName1WithUrl = pokemonChecker.nameCheckerGetImageURL(pokemonName1);
         final pokemon1TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId1", characteristics: 'types');
         pokemon1Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon1TypesData,"type","name");
 
@@ -101,7 +101,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
           pokemonId2 = 721;
         }
         final pokemonName2 = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v2/pokemon/$pokemonId2", characteristics: 'name');
-        pokemonName2WithUrl = pokemonChecker.lineChecker(pokemonName2);
+        pokemonName2WithUrl = pokemonChecker.nameCheckerGetImageURL(pokemonName2);
         final pokemon2TypesData = await apiService.fetchPokemonData(url: "https://pokeapi.co/api/v1/pokemon/$pokemonId2", characteristics: 'types');
         pokemon2Types = pokemonDataFetchLogic.dataFetchTwoLayers(pokemon2TypesData,"type","name");
         pokePrevNextTitle = "Prev/Next Pokemon";
@@ -190,7 +190,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                           ),
                           child: Text(pokemonEvolutionsChain.join(', ').toString().toUpperCase(),
                               textWidthBasis: TextWidthBasis.parent,
-                              maxLines: 3,
+                              maxLines: 4,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 color: Colors.black,
@@ -236,6 +236,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
             );
           }
           else if(index==1){
+            // To be Included to add Favorites Page
           }
         },
       ),

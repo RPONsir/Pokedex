@@ -33,6 +33,7 @@ class BuildPokemonSearcher extends StatelessWidget{
             keyboardType: TextInputType.streetAddress,
             keyboardAppearance: Brightness.dark,
             inputFormatters: [
+              // Limit Available Char to be Typed - Only Letters and the "-" symbol
               FilteringTextInputFormatter.allow(RegExp("[a-zA-Z-]")),
             ],
             style: const TextStyle(color: Colors.black,
@@ -40,49 +41,46 @@ class BuildPokemonSearcher extends StatelessWidget{
                 fontWeight: FontWeight.w500,
                 backgroundColor: Color.fromRGBO(255, 255, 255, 0)),
             onTapOutside: (value){
+              // Control Unfocused KeyBoard
               FocusScope.of(context).unfocus();
             },
             onSubmitted: (value) {
-              // Deseleccionar Keyboard
+              // Control Unfocused KeyBoard
               FocusScope.of(context).unfocus();
-              // Limpiar Text Textfield
+              // // Control Clean Text os Textfield
               _textEditingController.clear();
-              // Convertir Value a lowercase para hacer match con Listado Pokemons
+              // LowerCase Value for any Input
               final searchText = value.toLowerCase();
-              // Conversor de Nombres y obtencion de imagenes de Pokemons
-              final pokemonFinalData = pokemonChecker.lineChecker(searchText);
-              // Nombre en String
-              final pokemonFinalName = pokemonFinalData[0];
-              // URL Gif
-              final imageUrl = pokemonFinalData[1];
-              // URL Gif 2
-              final imageUrl2 = pokemonFinalData[2];
-              // agregar tamaño de listado , sumando el valor inicial del listado con el largo del listado pokemon
+              // Correct pokemon name if necessary and returns pokemon images/gifs URLs
+              final pokemonFinalData = pokemonChecker.nameCheckerGetImageURL(searchText);
+              // Add total length of Pokemon List (All or Per Region)
               final finalPokemonValue = regionPokemonListLength + initialListPokemonValue - 1;
-              // Comparacion de Nombre con Lista de Pokemon
-              final pokemonChecked = pokemonChecker.pokemonListComparison(allPokemonList, pokemonFinalName, (initialListPokemonValue - 1), finalPokemonValue);
+              // Check if the Name is found on the Pokemon List
+              final pokemonChecked = pokemonChecker.pokemonListComparison(allPokemonList, pokemonFinalData[0], (initialListPokemonValue - 1), finalPokemonValue);
+              // Bool if pokemon is Found
               final isFound = pokemonChecked[0];
+              // Included PokemonID
               final int pokemonId = pokemonChecked[1];
+              // Is Found is true - proceed to go to the Details Screen
               if(isFound==true){
-                // Coincide va a llevar al Pokemon Details
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => PokemonDetailsScreen(
-                      pokemon: pokemonFinalName,
-                      imageUrl : imageUrl,
-                      imageUrl2: imageUrl2,
+                      pokemon: pokemonFinalData[0],
+                      imageUrl : pokemonFinalData[1],
+                      imageUrl2: pokemonFinalData[2],
                       pokemonId: pokemonId,
                     ),
                   ),
                 );
               }
+              // Is Found is false - proceed to go to the Details Error Screen
               else{
-                // NO Coincide va a llevar al Pokemon Details Error
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PokemonDetailsScreenError(pokemonName: pokemonFinalName,),
+                    builder: (context) => PokemonDetailsScreenError(pokemonName: pokemonFinalData[0],),
                   ),
                 );
               }

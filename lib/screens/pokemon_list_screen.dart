@@ -19,11 +19,9 @@ class PokemonListScreenState extends State<PokemonListScreen> {
   final PokemonApiService apiService = PokemonApiService();
 
   late Future<dynamic> pokemonFirstData;
-
   late bool isDeviceConnected = false;
   late String isAlertSet = 'unknown';
 
-  //Listado total y subsecciones por regiones
   List<dynamic> allPokemonList = [];
   List<dynamic> pokemonList1 = [];
   List<dynamic> pokemonList2 = [];
@@ -31,8 +29,6 @@ class PokemonListScreenState extends State<PokemonListScreen> {
   List<dynamic> pokemonList4 = [];
   List<dynamic> pokemonList5 = [];
   List<dynamic> pokemonList6 = [];
-  // List<dynamic> pokemonList7 = [];
-  // List<dynamic> pokemonList8 = [];
 
   @override
   void initState() {
@@ -46,6 +42,7 @@ class PokemonListScreenState extends State<PokemonListScreen> {
       if(isDeviceConnected == true){
         final pokemonData = await apiService.fetchPokemonData(url: 'https://pokeapi.co/api/v2/pokemon?limit=721', characteristics: 'results',);
         setState(() {
+          // Obtain Entire Pokemon List and Divide Per Region
           allPokemonList = pokemonData;
           pokemonList1 = allPokemonList.sublist(0, 151);
           pokemonList2 = allPokemonList.sublist(151, 251);
@@ -53,8 +50,6 @@ class PokemonListScreenState extends State<PokemonListScreen> {
           pokemonList4 = allPokemonList.sublist(386, 493);
           pokemonList5 = allPokemonList.sublist(493, 649);
           pokemonList6 = allPokemonList.sublist(649, 721);
-          // pokemonList7 = allPokemonList.sublist(721, 809);
-          // pokemonList8 = allPokemonList.sublist(809, 898);
           isAlertSet = 'false';
         });
         return;
@@ -62,7 +57,6 @@ class PokemonListScreenState extends State<PokemonListScreen> {
       else{
         setState(() => isAlertSet = 'true');
       }
-
     } catch (e) {
       // Handle error
       //print('Failed to fetch Pokemon list: $e');
@@ -133,6 +127,11 @@ class PokemonListScreenState extends State<PokemonListScreen> {
           label: 'Pokemon',
         ),
         ],
+        onTap: (index) {
+          if(index==1){
+            // To be Included to add Favorites Page
+          }
+        },
       ),
     );
   }

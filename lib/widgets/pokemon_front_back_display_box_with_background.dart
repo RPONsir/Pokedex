@@ -53,11 +53,16 @@ class _PokemonGifVisualWithBackground extends State<PokemonGifVisualWithBackgrou
               height:(widget.boxHeight-25),
               fit: BoxFit.fill,
             ),
-            PokemonGif(widget.imageUrl, widget.imageUrl2, (widget.boxWidth-20), (widget.boxHeight-40), widget.imageFrontDisplayed,),
+            PokemonGif(
+              widget.imageUrl,
+              widget.imageUrl2,
+              (widget.boxWidth-20),
+              (widget.boxHeight-40),
+              widget.imageFrontDisplayed,
+            ),
           ],
         ),
       ),
     );
   }
-
 }

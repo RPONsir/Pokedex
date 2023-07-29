@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class PokemonDataFetchLogic{
   // Obtains data 1 layer of jsonFile
   dataFetchOneLayer(data, String layer1){
@@ -25,16 +23,20 @@ class PokemonDataFetchLogic{
   // Obtains data for second evolution(s) that is/are available and id is not above 721 limit
   dataFetchSecondEvolutionIsAvailable(data , String layer1, String layer2, String pokemonName){
     final List obtainedData = [];
+    // Obtain length of available Pokemon 2nd Evolution
     List pokemonsUrl = dataFetchTwoLayers(data,'species',"url");
     int pokemonQuantity = pokemonsUrl.length;
+    // Navigate for each available Pokemon
     for(int i = 0; i < pokemonQuantity; i++) {
       // E.g https://pokeapi.co/api/v2/pokemon-species/
       // Remove first 42 char and Remove last char "/" from URL to obtain a number
       String obtainedUrl = pokemonsUrl[i].toString().substring(42, (pokemonsUrl[i].length-1));
       int pokemonId = int.parse(obtainedUrl);
+      // Filter Pokemon up to the Limit 721
       if(pokemonId>721){
         //Do Nothing
       }
+      // Add Pokemon Name to list
       else{
         final data1 = data[i];
         final data2 = data1[layer1];
@@ -48,12 +50,16 @@ class PokemonDataFetchLogic{
   // Obtains data for third evolution(s) that is/are available and id is not above 721 limit
   dataFetchThirdEvolutionIsAvailable(data , String layer1, String layer2, String layer3){
     final List obtainedData = [];
+    // Data found on the First Position
     final datalayer = data[0];
+    // Obtain length of available Pokemon 3rd Evolution
     List pokemonsUrl = dataFetchTwoLayers(datalayer[layer1],'species',"url");
     int pokemonQuantity = pokemonsUrl.length;
+    // Navigate for each available Pokemon
     for(int i = 0; i < pokemonQuantity; i++) {
       final data1 = data[0];
       final data2 = data1[layer1];
+      // If theres no data - Return Information
       if((data2?.isEmpty ?? true)){
         return obtainedData;
       }
@@ -62,9 +68,11 @@ class PokemonDataFetchLogic{
         // Remove first 42 char and Remove last char "/" from URL to obtain a number
         String obtainedUrl = pokemonsUrl[i].toString().substring(42, (pokemonsUrl[i].length-1));
         int pokemonId = int.parse(obtainedUrl);
+        // Filter Pokemon up to the Limit 721
         if(pokemonId>721){
           //Do Nothing
         }
+        // Add Pokemon Name to list
         else {
           final data3 = data2[i];
           final data4 = data3[layer2];
@@ -74,94 +82,6 @@ class PokemonDataFetchLogic{
       }
     }
     return obtainedData;
-  }
-  // Idea to change color based on Type
-  textToColor(String type){
-    final Color typeColor;
-    if(type=='NORMAL'){
-      typeColor = Colors.amberAccent;
-      return typeColor;
-    }
-    else if(type=='FIRE'){
-      typeColor = Colors.red;
-      return typeColor;
-    }
-    else if(type=='FIGHTING'){
-      typeColor = Colors.amber;
-      return typeColor;
-    }
-    else if(type=='WATER'){
-      typeColor = Colors.blue;
-      return typeColor;
-    }
-    else if(type=='FLYING'){
-      typeColor = Colors.white70;
-      return typeColor;
-    }
-    else if(type=='GRASS'){
-      typeColor = Colors.green;
-      return typeColor;
-    }
-    else if(type=='POISON'){
-      typeColor = Colors.purple;
-      return typeColor;
-    }
-    else if(type=='ELECTRIC'){
-      typeColor = Colors.yellow;
-      return typeColor;
-    }
-    else if(type=='GROUND'){
-      typeColor = Colors.brown;
-      return typeColor;
-    }
-    else if(type=='PSYCHIC'){
-      typeColor = Colors.pink;
-      return typeColor;
-    }
-    else if(type=='ROCK'){
-      typeColor = Colors.grey;
-      return typeColor;
-    }
-    else if(type=='ICE'){
-      typeColor = Colors.cyanAccent;
-      return typeColor;
-    }
-    else if(type=='BUG'){
-      typeColor = Colors.lightGreen;
-      return typeColor;
-    }
-    else if(type=='DRAGON'){
-      typeColor = Colors.deepPurpleAccent;
-      return typeColor;
-    }
-    else if(type=='GHOST'){
-      typeColor = Colors.deepPurple;
-      return typeColor;
-    }
-    else if(type=='DARK'){
-      typeColor = Colors.indigo;
-      return typeColor;
-    }
-    else if(type=='STEEL'){
-      typeColor = Colors.blueGrey;
-      return typeColor;
-    }
-    else if(type=='FAIRY'){
-      typeColor = Colors.pinkAccent;
-      return typeColor;
-    }
-    else if(type=='Weight'){
-      typeColor = Colors.redAccent;
-      return typeColor;
-    }
-    else if(type=='Height'){
-      typeColor = Colors.redAccent;
-      return typeColor;
-    }
-    else{
-      typeColor = Colors.white;
-      return typeColor;
-    }
   }
   // Function Check if the pokemon has Valid EvolutionsChain until the 6th Generation (721 pokemonList)
   dataFetchPokemonEvolution(data){
@@ -180,7 +100,7 @@ class PokemonDataFetchLogic{
       // Remove first 42 char and Remove last char "/" from URL to obtain a number
       String obtainedUrl = url[0].toString().substring(42, (url[0].length-1));
       int pokemonId = int.parse(obtainedUrl);
-      // Limit is 721 , for new generation evolution will not be added to this app
+      // Filter Pokemon up to the Limit 721
       if(pokemonId>721){
         hasPokemonEvolutionChain=false;
         pokemonEvolutionChain.add("No Evolution Chain");
@@ -191,20 +111,20 @@ class PokemonDataFetchLogic{
         //Obtain First Pokemon Evolution
         var pokemonChain1 = data['species'];
         String pokemonName1 = pokemonChain1['name'];
-        pokemonEvolutionChain.add(pokemonName1);
+        pokemonEvolutionChain.add([1, pokemonName1]);
 
-        // Check Second Evolution
+        // Check and Add 2nd Evolution(s)
         List pokemonName2 = dataFetchSecondEvolutionIsAvailable(data['evolves_to'],'species',"name",pokemonName1);
-        pokemonEvolutionChain.add(pokemonName2.join(', ').toString());
+        pokemonEvolutionChain.add([2,pokemonName2.join(', ').toString()]);
 
-        // Look into the 3rd evolution if available
+        // Check and Add 3rd Evolution(s) if available
         List pokemonName3 = dataFetchThirdEvolutionIsAvailable(data['evolves_to'],'evolves_to','species','name');
         if(pokemonName3.isEmpty){
           // as an empty value is coming do nothing
         }
         else{
             //Third evolution found, add to list
-            pokemonEvolutionChain.add(pokemonName3.join(', ').toString());
+            pokemonEvolutionChain.add([3,pokemonName3.join(', ').toString()]);
         }
         return[hasPokemonEvolutionChain, pokemonEvolutionChain, "See Evolution Chain"];
       }

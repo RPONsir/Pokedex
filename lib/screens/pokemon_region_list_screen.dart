@@ -87,6 +87,7 @@ class _PokemonRegionList extends State<PokemonRegionList>{
             );
           }
           else if(index==1){
+            // To be Included to add Favorites Page
           }
         },
       ),

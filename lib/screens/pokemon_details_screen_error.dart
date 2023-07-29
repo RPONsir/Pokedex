@@ -66,6 +66,7 @@ class _PokemonDetailsScreenError extends State<PokemonDetailsScreenError> {
             );
           }
           else if(index==1){
+            // To be Included to add Favorites Page
           }
         },
       ),

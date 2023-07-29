@@ -11,15 +11,7 @@ class SeparatingTitleSpaceSliders extends StatelessWidget{
   const SeparatingTitleSpaceSliders(this.allPokemonList, this.regionPokemonList, this.sliderTitle, this.addValue, {super.key});
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () =>
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PokemonRegionList(allPokemonList: allPokemonList, regionPokemonList: regionPokemonList, regionName: sliderTitle, addValue: addValue,),
-            ),
-          ),
-      child: Stack(
+    return Stack(
         alignment: Alignment.centerRight,
         children: [
           Container(
@@ -44,13 +36,25 @@ class SeparatingTitleSpaceSliders extends StatelessWidget{
               ),
             ),
           ),
-          Image.asset(
-            'images/arrowIcon.png',
-            height: 50,
-            fit: BoxFit.fitHeight,
-          )
+          GestureDetector(
+            onTap: () =>
+                Navigator.push(
+                  context, MaterialPageRoute(
+                  builder: (context) => PokemonRegionList(
+                    allPokemonList: allPokemonList,
+                    regionPokemonList: regionPokemonList,
+                    regionName: sliderTitle,
+                    addValue: addValue,),
+                ),
+                ),
+            child: Image.asset(
+              'images/arrowIcon.png',
+              height: 50,
+              width: 60,
+              fit: BoxFit.fitHeight,
+            ),
+          ),
         ],
-      )
     );
   }
 }

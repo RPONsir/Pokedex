@@ -1,7 +1,7 @@
 class PokemonNameChecker {
   // Checks if the name has no more text after an "-" and removes it
   // For special pokemon name cases vs GIF URL - Name fas fixed to match Database
-  lineChecker(pokemon) {
+  nameCheckerGetImageURL(pokemon) {
     final pokemonName = pokemon;
     // Special Case Mr Mime
     if (pokemonName == ('mr-mime')) {
@@ -43,7 +43,6 @@ class PokemonNameChecker {
       // If therese an index of "-" remove string since the character
       if (pokemonLine > 0) {
         final pokemonFinalName = pokemonName.substring(0, pokemonLine);
-        //final imageUrl = 'https://professorlotus.com/Sprites/$pokemonFinalName.gif';
         final imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
         final imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
         return [pokemonFinalName, imageUrl, imageUrl2];
@@ -51,7 +50,6 @@ class PokemonNameChecker {
       // No "-" was found - name remains the same
       else{
         final pokemonFinalName = pokemonName;
-        //final imageUrl = 'https://professorlotus.com/Sprites/$pokemonFinalName.gif';
         final imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
         final imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
         return [pokemonFinalName, imageUrl, imageUrl2];
@@ -68,7 +66,7 @@ class PokemonNameChecker {
       final pokemon = allPokemonList[i];
       String pokemonNameOnList= pokemon['name'].toString();
       // Check Name to match the Current Input and Displayed Name on the ListView
-      final newName = lineChecker(pokemonNameOnList);
+      final newName = nameCheckerGetImageURL(pokemonNameOnList);
       pokemonNameOnList = newName[0];
       // Compare - if matches return True
       if(pokemonName==pokemonNameOnList){

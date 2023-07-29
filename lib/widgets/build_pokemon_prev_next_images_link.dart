@@ -24,7 +24,7 @@ class PokemonPrevNextImagesWithTitleAndLink extends StatelessWidget{
       children: [
         PokemonDetailsInfoTitle(pokeTitle.toUpperCase()),
         const SizedBox(height: 20,),
-        //Display Different Pokemon's (to be enhanced)
+        //Display Different Pokemon's
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -20,7 +20,6 @@ class PokemonBoxImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: 150,
-        // Espacio entre Containers de manera vertical
         margin: const EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
@@ -30,7 +29,6 @@ class PokemonBoxImage extends StatelessWidget {
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: [
-            // Agregamos Asset para que carge de una sin problemas
             Image.asset(
               'images/listBackground.jpeg',
               width: 150,
@@ -40,9 +38,7 @@ class PokemonBoxImage extends StatelessWidget {
               children: [
                 PokemonIdText(pokemonId, 18),
                 const SizedBox(height: 8),
-                // Generacion animacion - mientras cargan GIFS
                 PokemonGif(imageUrl, imageUrl2, 150, 110, true),
-                // Espacio entre GIF y Nombre del Pokemon
                 const SizedBox(height: 3),
                 PokemonNameText(pokemonFinalName, 18),
                 const SizedBox(height: 6),

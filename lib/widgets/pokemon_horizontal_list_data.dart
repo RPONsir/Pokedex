@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_list/logic/type_to_color_logic.dart';
 import '../logic/api_data_logic.dart';
 
 class HorizontalDataDisplay extends StatelessWidget{
 
   final PokemonDataFetchLogic typesLogic = PokemonDataFetchLogic();
+  final TypeToColor typeToColor = TypeToColor();
 
   final List<dynamic> data;
 
@@ -11,7 +13,6 @@ class HorizontalDataDisplay extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: 70,
       width: 300,
@@ -31,7 +32,7 @@ class HorizontalDataDisplay extends StatelessWidget{
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
           children:
           List.generate(data.length, (index) {
-            final Color typeColor = typesLogic.textToColor(data[index]);
+            final Color typeColor = typeToColor.textToColor(data[index]);
             return Container(
               alignment: Alignment.topCenter,
               margin: const EdgeInsets.all(10),

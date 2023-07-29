@@ -17,10 +17,8 @@ class BuildPokemonSlider extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Column(
-      // Separador con nombre de Region
       children: [
         SeparatingTitleSpaceSliders(allPokemonList, regionalPokemonList, sliderTitle, addValueList),
-        // Generaxion recuadros con Imagen y Nombre del Slider
         Container(
           color: Colors.black,
           height: 180,
@@ -28,39 +26,30 @@ class BuildPokemonSlider extends StatelessWidget{
             scrollDirection: Axis.horizontal,
             itemCount: regionalPokemonList.length,
             itemBuilder: (context, index) {
-              // Del API se pokemon que proviene con 2 valores
+              // Obtain Pokemon Data
               final pokemon = regionalPokemonList[index];
-              // ID de POKEMON
+              // Obtain Pokemon ID
               final pokemonId = index+addValueList;
-              // Obtenemos el Nombre
+              // Obtain pokemon Name
               final pokemonName = pokemon['name'].toString();
-              // Validamos el Nombre que este bien escrito y se edita de ser necesario
-              final pokemonFinalData = pokemonChecker.lineChecker(pokemonName);
-              // Obtenemos nombre final del pokemon
-              final pokemonFinalName = pokemonFinalData[0];
-              // Obtenemos URL del GIF
-              final imageUrl = pokemonFinalData[1];
-              // Obtenemos URL del Segundo GIF
-              final imageUrl2 = pokemonFinalData[2];
-              // URL de GIFS
-              //'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
-              // final String imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/${pokemonFinalName[0]}.gif';
+              // Correct pokemon name if necessary and returns pokemon images/gifs URLs
+              final pokemonFinalData = pokemonChecker.nameCheckerGetImageURL(pokemonName);
+
               return GestureDetector(
-                  // Al hacer click navegara al Pokemon Details
                   onTap: () =>
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
                           PokemonDetailsScreen(
-                            pokemon: pokemonFinalName,
-                            imageUrl: imageUrl,
-                            imageUrl2: imageUrl2,
+                            pokemon: pokemonFinalData[0],
+                            imageUrl: pokemonFinalData[1],
+                            imageUrl2: pokemonFinalData[2],
                             pokemonId: pokemonId,
                           ),
                     ),
                   ),
-                child: PokemonBoxImage(pokemonFinalName, imageUrl, imageUrl2, pokemonId),
+                child: PokemonBoxImage(pokemonFinalData[0], pokemonFinalData[1], pokemonFinalData[2], pokemonId),
               );
             },
           ),
