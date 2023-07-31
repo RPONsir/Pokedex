@@ -38,6 +38,20 @@ class PokemonNameChecker {
       const imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
       return [pokemonFinalName, imageUrl, imageUrl2];
     }
+    // Special case Porygon2 that does not need to be removed the name after the "-"
+    else if (pokemonName == ('porygon2')) {
+      const pokemonFinalName = 'porygon2';
+      const imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/porygon2.gif';
+      const imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/porygon2.gif';
+      return [pokemonFinalName, imageUrl, imageUrl2];
+    }
+    // Special case Porygon-Z that does not need to be removed the name after the "-"
+    else if (pokemonName == ('porygon-z')) {
+      const pokemonFinalName = 'porygon-z';
+      const imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
+      const imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+      return [pokemonFinalName, imageUrl, imageUrl2];
+    }
     else {
       final pokemonLine = pokemonName.indexOf("-");
       // If therese an index of "-" remove string since the character

@@ -21,7 +21,7 @@ class PokemonDataFetchLogic{
     return obtainedData;
   }
   // Obtains data for second evolution(s) that is/are available and id is not above 721 limit
-  dataFetchSecondEvolutionIsAvailable(data , String layer1, String layer2, String pokemonName){
+  dataFetchSecondEvolutionDataIsAvailable(data , String layer1, String layer2, String pokemonName){
     final List obtainedData = [];
     // Obtain length of available Pokemon 2nd Evolution
     List pokemonsUrl = dataFetchTwoLayers(data,'species',"url");
@@ -48,7 +48,7 @@ class PokemonDataFetchLogic{
 
   }
   // Obtains data for third evolution(s) that is/are available and id is not above 721 limit
-  dataFetchThirdEvolutionIsAvailable(data , String layer1, String layer2, String layer3){
+  dataFetchThirdEvolutionDataIsAvailable(data , String layer1, String layer2, String layer3){
     final List obtainedData = [];
     // Data found on the First Position
     final datalayer = data[0];
@@ -114,11 +114,11 @@ class PokemonDataFetchLogic{
         pokemonEvolutionChain.add([1, pokemonName1]);
 
         // Check and Add 2nd Evolution(s)
-        List pokemonName2 = dataFetchSecondEvolutionIsAvailable(data['evolves_to'],'species',"name",pokemonName1);
+        List pokemonName2 = dataFetchSecondEvolutionDataIsAvailable(data['evolves_to'],'species',"name",pokemonName1);
         pokemonEvolutionChain.add([2,pokemonName2.join(', ').toString()]);
 
         // Check and Add 3rd Evolution(s) if available
-        List pokemonName3 = dataFetchThirdEvolutionIsAvailable(data['evolves_to'],'evolves_to','species','name');
+        List pokemonName3 = dataFetchThirdEvolutionDataIsAvailable(data['evolves_to'],'evolves_to','species','name');
         if(pokemonName3.isEmpty){
           // as an empty value is coming do nothing
         }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon_list/logic/api_data_logic.dart';
+import 'package:pokemon_list/screens/pokemon_evolution_details.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/error_message_no_internet.dart';
 import 'package:pokemon_list/widgets/pokemon_id_with_shadow.dart';
@@ -42,6 +43,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   late bool hasPokemonEvolutionChain;
   late List<dynamic> pokemonEvolutionsChain = [];
   late String pokemonEvolutionChainTitle;
+  late String pokemonEvolutionChainURL;
 
   late int pokemonId1;
   List<dynamic> pokemonName1WithUrl =[];
@@ -83,6 +85,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         stats = pokemonDataFetchLogic.dataFetchOneLayer(pokemonStatsData,"base_stat");
 
         // Pokemon Evolution parameters and logic
+        pokemonEvolutionChainURL = pokemonEvolutionURL['url'];
         hasPokemonEvolutionChain = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[0];
         pokemonEvolutionsChain = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[1];
         pokemonEvolutionChainTitle = (pokemonDataFetchLogic.dataFetchPokemonEvolution(pokemonEvolutionData))[2];
@@ -174,29 +177,17 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                             pokemon2Types,
                             pokePrevNextTitle,),
                         const SizedBox(height: 10,),
-                        PokemonDetailsInfoTitle(pokemonEvolutionChainTitle.toString()),
-                        const SizedBox(height: 30,),
-                        Container(
-                          width: 300,
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: Colors.lime,
-                            borderRadius: const BorderRadius.all(Radius.circular(20)),
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 3,
+                        GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    PokemonEvolutions(
+                                        pokemonEvolutionsChain,
+                                        pokemonEvolutionChainURL.toString()),
+                              ),
                             ),
-                          ),
-                          child: Text(pokemonEvolutionsChain.join(', ').toString().toUpperCase(),
-                              textWidthBasis: TextWidthBasis.parent,
-                              maxLines: 4,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              )),
+                            child: PokemonDetailsInfoTitle(pokemonEvolutionChainTitle.toString())
                         ),
                         const SizedBox(height: 30,),
                       ])

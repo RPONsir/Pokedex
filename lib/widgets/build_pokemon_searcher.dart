@@ -34,7 +34,7 @@ class BuildPokemonSearcher extends StatelessWidget{
             keyboardAppearance: Brightness.dark,
             inputFormatters: [
               // Limit Available Char to be Typed - Only Letters and the "-" symbol
-              FilteringTextInputFormatter.allow(RegExp("[a-zA-Z-]")),
+              FilteringTextInputFormatter.allow(RegExp("[a-zA-Z-2]")),
             ],
             style: const TextStyle(color: Colors.black,
                 fontSize: 24.0,
