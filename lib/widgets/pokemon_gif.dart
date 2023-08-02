@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class PokemonGif extends StatelessWidget{
@@ -21,45 +22,45 @@ class PokemonGif extends StatelessWidget{
       imageDisplayed = imageUrl2;
     }
     return FadeInImage(
-        width: width,
-        height: height,
-        placeholderFilterQuality: FilterQuality.high,
-        filterQuality: FilterQuality.high,
-        fadeInDuration: const Duration(seconds: 1),
-        fadeInCurve: Curves.linear,
-        imageErrorBuilder: (c, o, s) =>
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Image.asset(
-            'images/pokeErrorIcon.png',
-            height: height,
-            width: width,
-            fit: BoxFit.fitHeight,
-            alignment: Alignment.center,
-            ),
-            Text('Unable to Load',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = Colors.red,
-              ),
-            ),
-            const Text('Unable to Load',
-              style: TextStyle(
-                color: Colors.yellow,
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
-            )
-          ]
-        ),
-        placeholder: const AssetImage("images/pokeLoader.gif"), alignment: Alignment.bottomCenter,
-        image: NetworkImage(imageDisplayed, scale: ScaleGif,
-        ),
+      width: width,
+      height: height,
+      placeholderFilterQuality: FilterQuality.high,
+      filterQuality: FilterQuality.high,
+      fadeInDuration: const Duration(seconds: 1),
+      fadeInCurve: Curves.linear,
+      imageErrorBuilder: (c, o, s) =>
+          Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  'images/pokeErrorIcon.png',
+                  height: height,
+                  width: width,
+                  fit: BoxFit.fitHeight,
+                  alignment: Alignment.center,
+                ),
+                Text('Unable to Load',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2
+                      ..color = Colors.red,
+                  ),
+                ),
+                const Text('Unable to Load',
+                  style: TextStyle(
+                    color: Colors.yellow,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                )
+              ]
+          ),
+
+      placeholder: const AssetImage("images/pokeLoader.gif"), alignment: Alignment.bottomCenter,
+      image: CachedNetworkImageProvider(imageDisplayed, scale: ScaleGif,),
     );
   }
 }
