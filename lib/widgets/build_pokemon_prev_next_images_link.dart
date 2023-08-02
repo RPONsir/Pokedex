@@ -22,7 +22,7 @@ class PokemonPrevNextImagesWithTitleAndLink extends StatelessWidget{
   Widget build(BuildContext context){
     return Column(
       children: [
-        PokemonDetailsInfoTitle(pokeTitle.toUpperCase()),
+        PokemonDetailsInfoTitle(pokeTitle.toUpperCase(), Colors.grey),
         const SizedBox(height: 20,),
         //Display Different Pokemon's
         Row(

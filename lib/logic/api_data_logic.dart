@@ -111,11 +111,11 @@ class PokemonDataFetchLogic{
         //Obtain First Pokemon Evolution
         var pokemonChain1 = data['species'];
         String pokemonName1 = pokemonChain1['name'];
-        pokemonEvolutionChain.add([1, pokemonName1]);
+        pokemonEvolutionChain.add([pokemonName1]);
 
         // Check and Add 2nd Evolution(s)
         List pokemonName2 = dataFetchSecondEvolutionDataIsAvailable(data['evolves_to'],'species',"name",pokemonName1);
-        pokemonEvolutionChain.add([2,pokemonName2.join(', ').toString()]);
+        pokemonEvolutionChain.add(pokemonName2);
 
         // Check and Add 3rd Evolution(s) if available
         List pokemonName3 = dataFetchThirdEvolutionDataIsAvailable(data['evolves_to'],'evolves_to','species','name');
@@ -124,7 +124,7 @@ class PokemonDataFetchLogic{
         }
         else{
             //Third evolution found, add to list
-            pokemonEvolutionChain.add([3,pokemonName3.join(', ').toString()]);
+            pokemonEvolutionChain.add(pokemonName3);
         }
         return[hasPokemonEvolutionChain, pokemonEvolutionChain, "See Evolution Chain"];
       }

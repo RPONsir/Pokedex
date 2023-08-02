@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class PokemonDetailsInfoTitle extends StatelessWidget{
 
   final String pokeTitle;
-  const PokemonDetailsInfoTitle(this.pokeTitle, {super.key});
+  final Color backGroundColor;
+  const PokemonDetailsInfoTitle(this.pokeTitle, this.backGroundColor,{super.key});
 
   @override
   Widget build (BuildContext context){
@@ -18,7 +19,7 @@ class PokemonDetailsInfoTitle extends StatelessWidget{
           width: 5,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(10),),
-        color: Colors.grey,
+        color: backGroundColor,
       ),
       child: Text(
         pokeTitle,

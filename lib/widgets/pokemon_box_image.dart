@@ -38,7 +38,7 @@ class PokemonBoxImage extends StatelessWidget {
               children: [
                 PokemonIdText(pokemonId, 18),
                 const SizedBox(height: 8),
-                PokemonGif(imageUrl, imageUrl2, 150, 110, true),
+                PokemonGif(imageUrl, imageUrl2, 150, 110, true, 0.9),
                 const SizedBox(height: 3),
                 PokemonNameText(pokemonFinalName, 18),
                 const SizedBox(height: 6),

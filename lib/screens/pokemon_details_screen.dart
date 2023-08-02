@@ -177,17 +177,26 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                             pokemon2Types,
                             pokePrevNextTitle,),
                         const SizedBox(height: 10,),
-                        GestureDetector(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    PokemonEvolutions(
-                                        pokemonEvolutionsChain,
-                                        pokemonEvolutionChainURL.toString()),
-                              ),
-                            ),
-                            child: PokemonDetailsInfoTitle(pokemonEvolutionChainTitle.toString())
+                        Builder(
+                            builder: (BuildContext context){
+                            if(pokemonEvolutionsChain.length > 1){
+                              return GestureDetector(
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PokemonEvolutions(
+                                              pokemonEvolutionsChain,
+                                              pokemonEvolutionChainURL.toString()),
+                                    ),
+                                  ),
+                                  child: PokemonDetailsInfoTitle(pokemonEvolutionChainTitle.toString(), Colors.lightBlueAccent)
+                              );
+                            }
+                            else{
+                              return PokemonDetailsInfoTitle(pokemonEvolutionChainTitle.toString(), Colors.grey);
+                            }
+                          }
                         ),
                         const SizedBox(height: 30,),
                       ])

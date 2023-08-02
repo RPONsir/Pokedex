@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
+import 'package:pokemon_list/widgets/pokemon_vertical_slider.dart';
 
 import '../obtainData/pokemon_api_service.dart';
 import '../widgets/error_message_no_internet.dart';
@@ -79,13 +80,38 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
           future: pokemonData,
           builder: (context, snapshot){
             if((snapshot.connectionState == ConnectionState.done)&&(isAlertSet=='false')){
-              return Column(
-                children: [
-                  const SizedBox(height: 30,),
-                  Text(widget.pokemonList.toString(),),
-                  const SizedBox(height: 30,),
-                  Text(widget.pokemonChainURL,),
-                ],
+              return SingleChildScrollView(
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 30,),
+                      Text(widget.pokemonList.toString(),textAlign: TextAlign.center,),
+                      const SizedBox(height: 30,),
+                      Text(widget.pokemonChainURL,textAlign: TextAlign.center,),
+                      const SizedBox(height: 30,),
+                      PokemonVerticalSlider(widget.pokemonList, 0),
+                      const SizedBox(height: 30,),
+                      PokemonVerticalSlider(widget.pokemonList, 1),
+                      const SizedBox(height: 30,),
+                      Builder(
+                          builder: (BuildContext context){
+                            if(widget.pokemonList.length>2){
+                              return PokemonVerticalSlider(widget.pokemonList, 2);
+                            }
+                            else{
+                              return const SizedBox(height: 5,);
+                            }
+                          }
+                      ),
+                      const SizedBox(height: 30,),
+                    ],
+                  ),
+                ),
               );
             }
             else if(isAlertSet=='true'){

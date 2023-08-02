@@ -12,7 +12,7 @@ class PokemonStatsBaseAll extends StatelessWidget{
   Widget build(BuildContext context ){
     return Column(
       children: [
-        const PokemonDetailsInfoTitle("BASE STATS"),
+        const PokemonDetailsInfoTitle("BASE STATS", Colors.grey),
         const SizedBox(height: 20,),
         PokemonStatsBarSingle("HP", stats[0]),
         const SizedBox(height: 10,),

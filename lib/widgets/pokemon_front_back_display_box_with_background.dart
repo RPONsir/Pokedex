@@ -59,6 +59,7 @@ class _PokemonGifVisualWithBackground extends State<PokemonGifVisualWithBackgrou
               (widget.boxWidth-20),
               (widget.boxHeight-40),
               widget.imageFrontDisplayed,
+              0.9,
             ),
           ],
         ),

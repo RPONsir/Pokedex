@@ -7,8 +7,9 @@ class PokemonGif extends StatelessWidget{
   final double width;
   final double height;
   final bool frontImage;
+  final double ScaleGif;
 
-  const PokemonGif(this.imageUrl, this.imageUrl2, this.width, this.height, this.frontImage, {super.key});
+  const PokemonGif(this.imageUrl, this.imageUrl2, this.width, this.height, this.frontImage, this.ScaleGif, {super.key});
 
   @override
   Widget build(BuildContext context,) {
@@ -57,7 +58,7 @@ class PokemonGif extends StatelessWidget{
           ]
         ),
         placeholder: const AssetImage("images/pokeLoader.gif"), alignment: Alignment.bottomCenter,
-        image: NetworkImage(imageDisplayed, scale: 0.9,
+        image: NetworkImage(imageDisplayed, scale: ScaleGif,
         ),
     );
   }
