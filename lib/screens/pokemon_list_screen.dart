@@ -8,6 +8,8 @@ import 'package:pokemon_list/obtainData/pokemon_api_service.dart';
 import 'package:pokemon_list/widgets/error_message_no_internet.dart';
 import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
 
+import '../obtainData/check_internet_connection.dart';
+
 class PokemonListScreen extends StatefulWidget {
   const PokemonListScreen({super.key});
   @override
@@ -17,6 +19,7 @@ class PokemonListScreen extends StatefulWidget {
 class PokemonListScreenState extends State<PokemonListScreen> {
 
   final PokemonApiService apiService = PokemonApiService();
+  ConnectionStatusListener connectionStatusListener = ConnectionStatusListener();
 
   late Future<dynamic> pokemonFirstData;
   late bool isDeviceConnected = false;
@@ -30,10 +33,54 @@ class PokemonListScreenState extends State<PokemonListScreen> {
   List<dynamic> pokemonList5 = [];
   List<dynamic> pokemonList6 = [];
 
+  var listener;
+
   @override
   void initState() {
     super.initState();
     pokemonFirstData = fetchPokemonData();
+    internetCheckingStatus();
+  }
+
+  void internetCheckingStatus() async {
+    // Simple check to see if we have internet
+    print("The statement 'this machine is connected to the Internet' is: ");
+    print(await InternetConnectionChecker().hasConnection);
+    print("Current status: ${await InternetConnectionChecker().connectionStatus}");
+    listener = InternetConnectionChecker().onStatusChange.listen((status) {
+      switch (status) {
+        case InternetConnectionStatus.connected:
+          print('Data connection is available.');
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          break;
+        case InternetConnectionStatus.disconnected:
+          print('You are disconnected from the internet.');
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                padding: EdgeInsets.all(10),
+                content: Text('No Internet Connection Detected',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                showCloseIcon: true,
+                backgroundColor: Colors.blueGrey,
+                closeIconColor: Colors.white,
+                duration: Duration(hours: 1),
+              )
+          );
+          break;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    listener.cancel();
+    super.dispose();
   }
 
   Future<void> fetchPokemonData() async {
