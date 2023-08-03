@@ -8,8 +8,6 @@ import 'package:pokemon_list/obtainData/pokemon_api_service.dart';
 import 'package:pokemon_list/widgets/error_message_no_internet.dart';
 import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
 
-import '../obtainData/check_internet_connection.dart';
-
 class PokemonListScreen extends StatefulWidget {
   const PokemonListScreen({super.key});
   @override
@@ -19,7 +17,6 @@ class PokemonListScreen extends StatefulWidget {
 class PokemonListScreenState extends State<PokemonListScreen> {
 
   final PokemonApiService apiService = PokemonApiService();
-  ConnectionStatusListener connectionStatusListener = ConnectionStatusListener();
 
   late Future<dynamic> pokemonFirstData;
   late bool isDeviceConnected = false;
