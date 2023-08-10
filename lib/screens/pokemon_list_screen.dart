@@ -5,7 +5,6 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon_list/widgets/build_pokemon_searcher.dart';
 import 'package:pokemon_list/widgets/build_pokemon_slider.dart';
 import 'package:pokemon_list/obtainData/pokemon_api_service.dart';
-import 'package:pokemon_list/widgets/error_message_no_internet.dart';
 import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
 
 class PokemonListScreen extends StatefulWidget {
@@ -30,7 +29,7 @@ class PokemonListScreenState extends State<PokemonListScreen> {
   List<dynamic> pokemonList5 = [];
   List<dynamic> pokemonList6 = [];
 
-  var listener;
+  late StreamSubscription listener;
 
   @override
   void initState() {
@@ -41,17 +40,18 @@ class PokemonListScreenState extends State<PokemonListScreen> {
 
   void internetCheckingStatus() async {
     // Simple check to see if we have internet
-    print("The statement 'this machine is connected to the Internet' is: ");
-    print(await InternetConnectionChecker().hasConnection);
-    print("Current status: ${await InternetConnectionChecker().connectionStatus}");
+    //print("The statement 'this machine is connected to the Internet' is: ");
+    //print(await InternetConnectionChecker().hasConnection);
+    //print("Current status: ${await InternetConnectionChecker().connectionStatus}");
     listener = InternetConnectionChecker().onStatusChange.listen((status) {
       switch (status) {
         case InternetConnectionStatus.connected:
-          print('Data connection is available.');
+          //print('Data connection is available.');
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          //fetchPokemonData();
           break;
         case InternetConnectionStatus.disconnected:
-          print('You are disconnected from the internet.');
+          //print('You are disconnected from the internet.');
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 padding: EdgeInsets.all(10),
@@ -130,9 +130,10 @@ class PokemonListScreenState extends State<PokemonListScreen> {
 
       ),
       body: FutureBuilder(
-        future: pokemonFirstData,
+        future: Future.delayed(const Duration(seconds: 4)),
         builder: (context, snapshot){
           if((snapshot.connectionState == ConnectionState.done)&&(isAlertSet=='false')){
+            Future.delayed(const Duration(seconds: 5));
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,17 +144,59 @@ class PokemonListScreenState extends State<PokemonListScreen> {
                   BuildPokemonSlider('Sinnoh', allPokemonList, pokemonList4, 387),
                   BuildPokemonSlider('Teselia', allPokemonList, pokemonList5, 494),
                   BuildPokemonSlider('Kalos', allPokemonList, pokemonList6, 650),
-                  Container(height: 40, width: double.infinity,color: Colors.black,
-                  ),
+                  Container(height: 40, width: double.infinity,color: Colors.black,),
                 ],
               ),
             );
           }
           else if(isAlertSet=='true'){
-            return const InternetErrorMessage();
+            return SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 50,),
+                    Image.asset('images/loaderrorImage.gif', height: 300,),
+                    const Text("No internet Connection Detected",
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        letterSpacing: 2,
+                      ),
+                    ),
+                    const SizedBox(height: 30,),
+                    GestureDetector(
+                      onTap: () => {
+                        setState(() {}),
+                        fetchPokemonData(),
+                      },
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Please Try Again",
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              letterSpacing: 2,
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          //Image.asset('images/refreshIcon.jpeg', height: 50,),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 100,),
+                  ]
+              ),
+            );
           }
           else{
-            return const ScreenLoader();
+              return const ScreenLoader();
           }
         }
       ),

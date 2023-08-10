@@ -6,7 +6,6 @@ class ScreenLoader extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    const Duration(milliseconds: 2000);
     return Center(
       widthFactor: double.infinity,
       child: Image.asset('images/loader1.gif',
