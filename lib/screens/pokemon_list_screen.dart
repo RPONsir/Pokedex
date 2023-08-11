@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:pokemon_list/logic/internet_checker.dart';
 import 'package:pokemon_list/widgets/build_pokemon_searcher.dart';
 import 'package:pokemon_list/widgets/build_pokemon_slider.dart';
 import 'package:pokemon_list/obtainData/pokemon_api_service.dart';
 import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
+import 'package:pokemon_list/widgets/pokemon_weak_connection.dart';
+import 'package:pokemon_list/widgets/pokemon_weak_connection_retry.dart';
 
 class PokemonListScreen extends StatefulWidget {
   const PokemonListScreen({super.key});
@@ -16,8 +19,8 @@ class PokemonListScreen extends StatefulWidget {
 class PokemonListScreenState extends State<PokemonListScreen> {
 
   final PokemonApiService apiService = PokemonApiService();
+  final InternetChecker internetChecker = InternetChecker();
 
-  late Future<dynamic> pokemonFirstData;
   late bool isDeviceConnected = false;
   late String isAlertSet = 'unknown';
 
@@ -34,50 +37,23 @@ class PokemonListScreenState extends State<PokemonListScreen> {
   @override
   void initState() {
     super.initState();
-    pokemonFirstData = fetchPokemonData();
-    internetCheckingStatus();
-  }
-
-  void internetCheckingStatus() async {
-    // Simple check to see if we have internet
-    //print("The statement 'this machine is connected to the Internet' is: ");
-    //print(await InternetConnectionChecker().hasConnection);
-    //print("Current status: ${await InternetConnectionChecker().connectionStatus}");
-    listener = InternetConnectionChecker().onStatusChange.listen((status) {
-      switch (status) {
-        case InternetConnectionStatus.connected:
-          //print('Data connection is available.');
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          //fetchPokemonData();
-          break;
-        case InternetConnectionStatus.disconnected:
-          //print('You are disconnected from the internet.');
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                padding: EdgeInsets.all(10),
-                content: Text('No Internet Connection Detected',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                showCloseIcon: true,
-                backgroundColor: Colors.blueGrey,
-                closeIconColor: Colors.white,
-                duration: Duration(hours: 1),
-              )
-          );
-          break;
-      }
-    });
+    internetStatus();
+    fetchPokemonData();
   }
 
   @override
   void dispose() {
     listener.cancel();
     super.dispose();
+  }
+
+  Future<void> internetStatus() async {
+    try {
+      listener = await internetChecker.internetCheckingStatus(context);
+    } catch (e) {
+      // Handle error
+      // print('Failed to fetch Pokemon list: $e');
+      }
   }
 
   Future<void> fetchPokemonData() async {
@@ -155,40 +131,15 @@ class PokemonListScreenState extends State<PokemonListScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 50,),
-                    Image.asset('images/loaderrorImage.gif', height: 300,),
-                    const Text("No internet Connection Detected",
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        letterSpacing: 2,
-                      ),
-                    ),
-                    const SizedBox(height: 30,),
+                    const PokemonWeakConnectionImage(),
                     GestureDetector(
                       onTap: () => {
-                        setState(() {}),
+                        setState(() {
+                          isAlertSet = 'unknown';
+                        }),
                         fetchPokemonData(),
                       },
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text("Please Try Again",
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                              letterSpacing: 2,
-                            ),
-                          ),
-                          SizedBox(width: 10,),
-                          //Image.asset('images/refreshIcon.jpeg', height: 50,),
-                        ],
-                      ),
+                      child: const PokemonWeakConnectionRetry(),
                     ),
                     const SizedBox(height: 100,),
                   ]

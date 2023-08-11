@@ -4,9 +4,10 @@ import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/pokemon_vertical_slider.dart';
 
 import '../obtainData/pokemon_api_service.dart';
-import '../widgets/error_message_no_internet.dart';
 import '../widgets/pokemon_screen_loader.dart';
 import '../widgets/pokemon_text_title_with_shadow.dart';
+import '../widgets/pokemon_weak_connection.dart';
+import '../widgets/pokemon_weak_connection_retry.dart';
 
 class PokemonEvolutions extends StatefulWidget{
   final List<dynamic> pokemonList;
@@ -19,8 +20,6 @@ class PokemonEvolutions extends StatefulWidget{
 class _PokemonEvolutions extends State<PokemonEvolutions>{
 
   final PokemonApiService apiService = PokemonApiService();
-
-  late Future<dynamic> pokemonData;
 
   late bool isDeviceConnected = false;
   late String isAlertSet = 'unknown';
@@ -48,7 +47,7 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
   @override
   void initState() {
     super.initState();
-    pokemonData = fetchPokemonData();
+    fetchPokemonData();
   }
 
   @override
@@ -77,7 +76,7 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
       ),
 
       body: FutureBuilder(
-          future: pokemonData,
+          future: Future.delayed(const Duration(seconds: 4)),
           builder: (context, snapshot){
             if((snapshot.connectionState == ConnectionState.done)&&(isAlertSet=='false')){
               return SingleChildScrollView(
@@ -115,7 +114,26 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
               );
             }
             else if(isAlertSet=='true'){
-              return const InternetErrorMessage();
+              return SingleChildScrollView(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 50,),
+                      const PokemonWeakConnectionImage(),
+                      GestureDetector(
+                        onTap: () => {
+                          setState(() {
+                            isAlertSet = 'unknown';
+                          }),
+                          fetchPokemonData(),
+                        },
+                        child: const PokemonWeakConnectionRetry(),
+                      ),
+                      const SizedBox(height: 100,),
+                    ]
+                ),
+              );
             }
             else{
               return const ScreenLoader();

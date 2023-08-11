@@ -1,41 +1,53 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class PokemonGif extends StatelessWidget{
+class PokemonGif extends StatefulWidget{
 
   final String imageUrl;
   final String imageUrl2;
   final double width;
   final double height;
   final bool frontImage;
-  final double ScaleGif;
+  final double scaleGif;
 
-  const PokemonGif(this.imageUrl, this.imageUrl2, this.width, this.height, this.frontImage, this.ScaleGif, {super.key});
+  const PokemonGif(this.imageUrl, this.imageUrl2, this.width, this.height, this.frontImage, this.scaleGif, {super.key});
+  @override
+  State<PokemonGif> createState() => _PokemonGif();
+}
+
+class _PokemonGif extends State<PokemonGif>{
+
+  late String imageDisplayed;
 
   @override
   Widget build(BuildContext context,) {
-    final String imageDisplayed;
-    if(frontImage==true){
-      imageDisplayed = imageUrl;
+    if(widget.frontImage==true){
+      setState(() {
+        imageDisplayed = widget.imageUrl;
+      });
     }
     else{
-      imageDisplayed = imageUrl2;
+      setState(() {
+        imageDisplayed = widget.imageUrl2;
+      });
     }
     return FadeInImage(
-      width: width,
-      height: height,
+      width: widget.width,
+      height: widget.height,
       placeholderFilterQuality: FilterQuality.high,
       filterQuality: FilterQuality.high,
       fadeInDuration: const Duration(seconds: 1),
       fadeInCurve: Curves.linear,
+      image: CachedNetworkImageProvider(imageDisplayed, scale: widget.scaleGif,),
+      placeholder: const AssetImage("images/pokeLoader.gif"), alignment: Alignment.bottomCenter,
       imageErrorBuilder: (c, o, s) =>
           Stack(
               alignment: Alignment.center,
               children: [
                 Image.asset(
                   'images/pokeErrorIcon.png',
-                  height: height,
-                  width: width,
+                  height: widget.height,
+                  width: widget.width,
                   fit: BoxFit.fitHeight,
                   alignment: Alignment.center,
                 ),
@@ -58,9 +70,6 @@ class PokemonGif extends StatelessWidget{
                 )
               ]
           ),
-
-      placeholder: const AssetImage("images/pokeLoader.gif"), alignment: Alignment.bottomCenter,
-      image: CachedNetworkImageProvider(imageDisplayed, scale: ScaleGif,),
     );
   }
 }

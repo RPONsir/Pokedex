@@ -4,7 +4,6 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon_list/logic/api_data_logic.dart';
 import 'package:pokemon_list/screens/pokemon_evolution_details.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
-import 'package:pokemon_list/widgets/error_message_no_internet.dart';
 import 'package:pokemon_list/widgets/pokemon_id_with_shadow.dart';
 import 'package:pokemon_list/widgets/build_pokemon_prev_next_images_link.dart';
 import 'package:pokemon_list/widgets/pokemon_front_back_display_box_with_background.dart';
@@ -15,6 +14,8 @@ import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
 import '../logic/pokemon_name_checker.dart';
 import '../obtainData/pokemon_api_service.dart';
 import '../widgets/pokemon_details_info_title.dart';
+import '../widgets/pokemon_weak_connection.dart';
+import '../widgets/pokemon_weak_connection_retry.dart';
 
 class PokemonDetailsScreen extends StatefulWidget {
   final dynamic pokemon;
@@ -32,8 +33,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   final PokemonApiService apiService = PokemonApiService();
   final PokemonDataFetchLogic pokemonDataFetchLogic = PokemonDataFetchLogic();
   final PokemonNameChecker pokemonChecker = PokemonNameChecker();
-
-  late Future<dynamic> pokemonData;
 
   List<dynamic> pokemonTypes = [];
   List<dynamic> pokemonWeight = ["Weight"];
@@ -61,7 +60,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    pokemonData = fetchPokemonData();
+    fetchPokemonData();
   }
 
   Future<void> fetchPokemonData() async {
@@ -143,7 +142,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       ),
 
       body: FutureBuilder(
-        future: pokemonData,
+        future: Future.delayed(const Duration(seconds: 4)),
         builder: (context, snapshot){
           if((snapshot.connectionState == ConnectionState.done)&&(isAlertSet=='false')){
             return
@@ -204,7 +203,26 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
               );
           }
           else if(isAlertSet=='true'){
-            return const InternetErrorMessage();
+            return SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 50,),
+                    const PokemonWeakConnectionImage(),
+                    GestureDetector(
+                      onTap: () => {
+                        setState(() {
+                          isAlertSet = 'unknown';
+                        }),
+                        fetchPokemonData(),
+                      },
+                      child: const PokemonWeakConnectionRetry(),
+                    ),
+                    const SizedBox(height: 100,),
+                  ]
+              ),
+            );
           }
           else{
             return const ScreenLoader();

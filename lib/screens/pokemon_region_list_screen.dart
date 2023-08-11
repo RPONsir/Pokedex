@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/build_pokemon_grid.dart';
 import 'package:pokemon_list/widgets/build_pokemon_searcher.dart';
 import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
+
+import '../widgets/pokemon_screen_loader.dart';
 
 class PokemonRegionList extends StatefulWidget{
 
@@ -19,9 +22,25 @@ class PokemonRegionList extends StatefulWidget{
 
 class _PokemonRegionList extends State<PokemonRegionList>{
 
+  late bool isDeviceConnected;
+  late String isAlertSet = 'unknown';
+
   @override
   void initState() {
+    dataChecker();
     super.initState();
+  }
+
+  Future<String> dataChecker()async {
+    isDeviceConnected = await InternetConnectionChecker().hasConnection;
+    if(isDeviceConnected ==true){
+        isAlertSet = 'false';
+        return isAlertSet;
+    }
+    else{
+        isAlertSet = 'true';
+        return isAlertSet;
+    }
   }
 
   @override
@@ -53,13 +72,82 @@ class _PokemonRegionList extends State<PokemonRegionList>{
             ),
           ],
         ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            BuildPokemonGrid(widget.regionPokemonList, widget.addValue),
-          ],
-        ),
+      body: FutureBuilder(
+        future: Future.delayed(const Duration(seconds: 4)),
+        builder: (context, snapshot){
+          if(isAlertSet=='false'){
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BuildPokemonGrid(widget.regionPokemonList, widget.addValue),
+                ],
+              ),
+            );
+          }
+          else if(isAlertSet=='true'){
+            return SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 50,),
+                    Image.asset('images/loaderrorImage.gif', height: 300,),
+                    const Text("No internet Connection Detected",
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        letterSpacing: 2,
+                      ),
+                    ),
+                    const SizedBox(height: 30,),
+                    GestureDetector(
+                      onTap: () async =>  {
+                        setState((){
+                          isAlertSet = 'unknown';
+                        }),
+                        isDeviceConnected = await InternetConnectionChecker().hasConnection,
+                        if(isDeviceConnected == true){
+                            isAlertSet = 'false',
+                        }
+                        else{
+                            isAlertSet = 'true',
+                        },
+                        Future.delayed(const Duration(seconds: 4)),(){
+                          setState(() {
+                            isAlertSet;
+                          });
+                        }
+                      },
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Please Try Again",
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              letterSpacing: 2,
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          //Image.asset('images/refreshIcon.jpeg', height: 50,),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 100,),
+                  ]
+              ),
+            );
+          }
+          else{
+            return const ScreenLoader();
+          }
+        }
       ),
 
       bottomNavigationBar: BottomNavigationBar (
