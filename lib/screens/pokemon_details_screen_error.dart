@@ -25,6 +25,9 @@ class _PokemonDetailsScreenError extends State<PokemonDetailsScreenError> {
         elevation: 10,
         backgroundColor: Colors.redAccent,
         centerTitle: true,
+        leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new), onPressed: () {
+          Navigator.pop(context);
+        },),
         title:
         const TitleWithShadow('Poke-Error', 40),
       ),

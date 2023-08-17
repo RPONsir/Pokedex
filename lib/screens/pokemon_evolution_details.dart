@@ -58,6 +58,9 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
         backgroundColor: Colors.redAccent,
         elevation: 10,
         centerTitle: true,
+        leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new), onPressed: () {
+          Navigator.pop(context);
+        },),
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,

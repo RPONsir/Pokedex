@@ -51,6 +51,9 @@ class _PokemonRegionList extends State<PokemonRegionList>{
           backgroundColor: Colors.redAccent,
           elevation: 10,
           centerTitle: true,
+          leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new), onPressed: () {
+            Navigator.pop(context);
+          },),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,

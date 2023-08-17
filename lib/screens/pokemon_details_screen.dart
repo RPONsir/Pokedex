@@ -128,6 +128,9 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         backgroundColor: Colors.redAccent,
         centerTitle: true,
         elevation: 10,
+        leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new), onPressed: () {
+          Navigator.pop(context);
+        },),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
