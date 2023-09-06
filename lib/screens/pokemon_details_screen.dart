@@ -14,7 +14,6 @@ import 'package:pokemon_list/widgets/pokemon_horizontal_list_data.dart';
 import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
 import '../logic/pokemon_name_checker.dart';
 import '../obtainData/pokemon_api_service.dart';
-import '../widgets/pokemon_details_info_title.dart';
 import '../widgets/pokemon_weak_connection.dart';
 import '../widgets/pokemon_weak_connection_retry.dart';
 
@@ -183,8 +182,16 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                         Builder(
                             builder: (BuildContext context){
                             if(pokemonEvolutionsChain.length > 1){
-                              return GestureDetector(
-                                  onTap: () => Navigator.push(
+                              return ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.lightBlueAccent,
+                                    elevation: 4,
+                                    side: const BorderSide(width:3, color:Colors.black),
+                                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                    shadowColor: Colors.black,
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
@@ -192,12 +199,35 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                                               pokemonEvolutionsChain,
                                               pokemonEvolutionChainURL.toString()),
                                     ),
+                                  );
+                                },
+                                child: Text(pokemonEvolutionChainTitle.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
                                   ),
-                                  child: PokemonDetailsInfoTitle(pokemonEvolutionChainTitle.toString(), Colors.lightBlueAccent)
+                                ),
                               );
                             }
                             else{
-                              return PokemonDetailsInfoTitle(pokemonEvolutionChainTitle.toString(), Colors.grey);
+                              return ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.grey,
+                                  elevation: 4,
+                                  side: const BorderSide(width:3, color:Colors.black),
+                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                  shadowColor: Colors.black,
+                                ),
+                                onPressed: () {
+                                },
+                                child: Text(pokemonEvolutionChainTitle.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                              );
                             }
                           }
                         ),
