@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon_list/screens/pokemon_favorites_screen.dart';
+import 'package:pokemon_list/screens/pokemon_favourites_screen.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/pokemon_error_screen_image.dart';
 import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
@@ -73,7 +73,7 @@ class _PokemonDetailsScreenError extends State<PokemonDetailsScreenError> {
             Navigator.push(
               context, MaterialPageRoute(
               builder: (context) =>
-              const PokemonFavoriteListScreen(),
+              const PokemonFavouriteListScreen(),
               maintainState: false,
             ),
             );

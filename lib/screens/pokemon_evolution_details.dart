@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:pokemon_list/screens/pokemon_favorites_screen.dart';
+import 'package:pokemon_list/screens/pokemon_favourites_screen.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/pokemon_vertical_slider.dart';
 
@@ -172,7 +172,7 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
             Navigator.push(
               context, MaterialPageRoute(
               builder: (context) =>
-              const PokemonFavoriteListScreen(),
+              const PokemonFavouriteListScreen(),
               maintainState: false,
             ),
             );
