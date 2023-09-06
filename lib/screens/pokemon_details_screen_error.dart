@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_list/screens/pokemon_favorites_screen.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/pokemon_error_screen_image.dart';
 import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
@@ -69,7 +70,13 @@ class _PokemonDetailsScreenError extends State<PokemonDetailsScreenError> {
             );
           }
           else if(index==1){
-            // To be Included to add Favorites Page
+            Navigator.push(
+              context, MaterialPageRoute(
+              builder: (context) =>
+              const PokemonFavoriteListScreen(),
+              maintainState: false,
+            ),
+            );
           }
         },
       ),

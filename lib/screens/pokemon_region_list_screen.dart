@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:pokemon_list/screens/pokemon_favorites_screen.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/build_pokemon_grid.dart';
 import 'package:pokemon_list/widgets/build_pokemon_searcher.dart';
@@ -178,7 +179,13 @@ class _PokemonRegionList extends State<PokemonRegionList>{
             );
           }
           else if(index==1){
-            // To be Included to add Favorites Page
+            Navigator.push(
+              context, MaterialPageRoute(
+              builder: (context) =>
+              const PokemonFavoriteListScreen(),
+              maintainState: false,
+            ),
+            );
           }
         },
       ),

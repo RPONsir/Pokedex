@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon_list/logic/api_data_logic.dart';
 import 'package:pokemon_list/screens/pokemon_evolution_details.dart';
+import 'package:pokemon_list/screens/pokemon_favorites_screen.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 import 'package:pokemon_list/widgets/pokemon_id_with_shadow.dart';
 import 'package:pokemon_list/widgets/build_pokemon_prev_next_images_link.dart';
@@ -257,7 +258,13 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
             );
           }
           else if(index==1){
-            // To be Included to add Favorites Page
+            Navigator.push(
+              context, MaterialPageRoute(
+              builder: (context) =>
+              const PokemonFavoriteListScreen(),
+              maintainState: false,
+            ),
+            );
           }
         },
       ),
