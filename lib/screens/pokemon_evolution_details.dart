@@ -10,16 +10,17 @@ import '../widgets/pokemon_text_title_with_shadow.dart';
 import '../widgets/pokemon_weak_connection.dart';
 import '../widgets/pokemon_weak_connection_retry.dart';
 
-class PokemonEvolutions extends StatefulWidget{
+class PokemonEvolutions extends StatefulWidget {
   final List<dynamic> pokemonList;
   final String pokemonChainURL;
+
   const PokemonEvolutions(this.pokemonList, this.pokemonChainURL, {super.key});
+
   @override
   State<PokemonEvolutions> createState() => _PokemonEvolutions();
 }
 
-class _PokemonEvolutions extends State<PokemonEvolutions>{
-
+class _PokemonEvolutions extends State<PokemonEvolutions> {
   final PokemonApiService apiService = PokemonApiService();
 
   late bool isDeviceConnected = false;
@@ -28,15 +29,14 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
   Future<void> fetchPokemonData() async {
     try {
       isDeviceConnected = await InternetConnectionChecker().hasConnection;
-      if(isDeviceConnected == true){
+      if (isDeviceConnected == true) {
         //final pokemonData = await apiService.fetchPokemonData(url: 'https://pokeapi.co/api/v2/pokemon?limit=721', characteristics: 'results',);
         setState(() {
           // Obtain Entire Pokemon List and Divide Per Region
           isAlertSet = 'false';
         });
         return;
-      }
-      else{
+      } else {
         setState(() => isAlertSet = 'true');
       }
     } catch (e) {
@@ -59,9 +59,12 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
         backgroundColor: Colors.redAccent,
         elevation: 10,
         centerTitle: true,
-        leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new), onPressed: () {
-          Navigator.pop(context);
-        },),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
@@ -74,15 +77,19 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
           Container(
             alignment: Alignment.centerRight,
             width: 70,
-            child: Image.asset('images/Poke_Ball.webp', width:60, height:50,),
+            child: Image.asset(
+              'images/Poke_Ball.webp',
+              width: 60,
+              height: 50,
+            ),
           ),
         ],
       ),
-
       body: FutureBuilder(
           future: Future.delayed(const Duration(seconds: 4)),
-          builder: (context, snapshot){
-            if((snapshot.connectionState == ConnectionState.done)&&(isAlertSet=='false')){
+          builder: (context, snapshot) {
+            if ((snapshot.connectionState == ConnectionState.done) &&
+                (isAlertSet == 'false')) {
               return SingleChildScrollView(
                 child: Container(
                   width: double.infinity,
@@ -92,38 +99,56 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 30,),
-                      Text(widget.pokemonList.toString(),textAlign: TextAlign.center,),
-                      const SizedBox(height: 30,),
-                      Text(widget.pokemonChainURL,textAlign: TextAlign.center,),
-                      const SizedBox(height: 30,),
-                      PokemonVerticalSlider(widget.pokemonList, 0),
-                      const SizedBox(height: 30,),
-                      PokemonVerticalSlider(widget.pokemonList, 1),
-                      const SizedBox(height: 30,),
-                      Builder(
-                          builder: (BuildContext context){
-                            if(widget.pokemonList.length>2){
-                              return PokemonVerticalSlider(widget.pokemonList, 2);
-                            }
-                            else{
-                              return const SizedBox(height: 5,);
-                            }
-                          }
+                      const SizedBox(
+                        height: 30,
                       ),
-                      const SizedBox(height: 30,),
+                      Text(
+                        widget.pokemonList.toString(),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        widget.pokemonChainURL,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      PokemonVerticalSlider(widget.pokemonList, 0),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      PokemonVerticalSlider(widget.pokemonList, 1),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Builder(builder: (BuildContext context) {
+                        if (widget.pokemonList.length > 2) {
+                          return PokemonVerticalSlider(widget.pokemonList, 2);
+                        } else {
+                          return const SizedBox(
+                            height: 5,
+                          );
+                        }
+                      }),
+                      const SizedBox(
+                        height: 30,
+                      ),
                     ],
                   ),
                 ),
               );
-            }
-            else if(isAlertSet=='true'){
+            } else if (isAlertSet == 'true') {
               return SingleChildScrollView(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 50,),
+                      const SizedBox(
+                        height: 50,
+                      ),
                       const PokemonWeakConnectionImage(),
                       GestureDetector(
                         onTap: () => {
@@ -134,17 +159,16 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
                         },
                         child: const PokemonWeakConnectionRetry(),
                       ),
-                      const SizedBox(height: 100,),
-                    ]
-                ),
+                      const SizedBox(
+                        height: 100,
+                      ),
+                    ]),
               );
-            }
-            else{
+            } else {
               return const ScreenLoader();
             }
-          }
-      ) ,
-      bottomNavigationBar: BottomNavigationBar (
+          }),
+      bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.grey,
         unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
@@ -158,23 +182,22 @@ class _PokemonEvolutions extends State<PokemonEvolutions>{
           ),
         ],
         onTap: (index) {
-          if(index==0){
+          if (index == 0) {
             Navigator.pushAndRemoveUntil(
-              context, MaterialPageRoute(
-              builder: (context) =>
-              const PokemonListScreen(),
-              maintainState: false,
-            ),
-                  (Route<dynamic> route) => false,
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PokemonListScreen(),
+                maintainState: false,
+              ),
+              (Route<dynamic> route) => false,
             );
-          }
-          else if(index==1){
+          } else if (index == 1) {
             Navigator.pushReplacement(
-              context, MaterialPageRoute(
-              builder: (context) =>
-              const PokemonFavouriteListScreen(),
-              maintainState: false,
-            ),
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PokemonFavouriteListScreen(),
+                maintainState: false,
+              ),
             );
           }
         },

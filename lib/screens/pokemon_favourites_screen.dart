@@ -9,12 +9,14 @@ import '../widgets/pokemon_text_title_with_shadow.dart';
 
 class PokemonFavouriteListScreen extends StatefulWidget {
   const PokemonFavouriteListScreen({super.key});
+
   @override
-  PokemonFavouriteListScreenState createState() => PokemonFavouriteListScreenState();
+  PokemonFavouriteListScreenState createState() =>
+      PokemonFavouriteListScreenState();
 }
 
-class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> {
-
+class PokemonFavouriteListScreenState
+    extends State<PokemonFavouriteListScreen> {
   late bool isDeviceConnected;
   late String isAlertSet = 'unknown';
   late List favoritePokemonList = [];
@@ -26,19 +28,18 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
     super.initState();
   }
 
-  Future<String> dataChecker()async {
+  Future<String> dataChecker() async {
     isDeviceConnected = await InternetConnectionChecker().hasConnection;
-    if(isDeviceConnected ==true){
+    if (isDeviceConnected == true) {
       isAlertSet = 'false';
       return isAlertSet;
-    }
-    else{
+    } else {
       isAlertSet = 'true';
       return isAlertSet;
     }
   }
 
-  Future getFavoritePokemon() async{
+  Future getFavoritePokemon() async {
     favoritePokemonList = await DataBaseHelper.instance.getFavouritePokemon();
   }
 
@@ -50,8 +51,11 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
           backgroundColor: Colors.redAccent,
           centerTitle: true,
           elevation: 10,
-          leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new),
-            onPressed: () {Navigator.pop(context);},
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
           title: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -63,36 +67,46 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
           ),
           actions: [
             Container(
-            alignment: Alignment.centerRight,
-            width: 70,
-            child: Image.asset('images/Poke_Ball.webp', width:60, height:50,),
+              alignment: Alignment.centerRight,
+              width: 70,
+              child: Image.asset(
+                'images/Poke_Ball.webp',
+                width: 60,
+                height: 50,
+              ),
             ),
-          ]
-      ),
+          ]),
       body: FutureBuilder(
           future: Future.delayed(const Duration(seconds: 4)),
-          builder: (context, snapshot){
-            if(isAlertSet=='false'){
-              if(favoritePokemonList.isNotEmpty){
+          builder: (context, snapshot) {
+            if (isAlertSet == 'false') {
+              if (favoritePokemonList.isNotEmpty) {
                 return SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 30,),
+                      const SizedBox(
+                        height: 30,
+                      ),
                       BuildPokemonFavoriteGrid(favoritePokemonList),
                     ],
                   ),
                 );
-              }
-              else{
+              } else {
                 return SingleChildScrollView(
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 50,),
-                        Image.asset('images/pikachuWalk.gif', height: 300,),
-                        const Text("No favourites pokemon are on List",
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        Image.asset(
+                          'images/pikachuWalk.gif',
+                          height: 300,
+                        ),
+                        const Text(
+                          "No favourites pokemon are on List",
                           maxLines: 2,
                           style: TextStyle(
                             fontSize: 18,
@@ -101,20 +115,26 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
                             letterSpacing: 2,
                           ),
                         ),
-                        const SizedBox(height: 30,),
+                        const SizedBox(
+                          height: 30,
+                        ),
                         GestureDetector(
-                          onTap: () async =>  {
-                            setState((){
+                          onTap: () async => {
+                            setState(() {
                               isAlertSet = 'unknown';
                             }),
-                            isDeviceConnected = await InternetConnectionChecker().hasConnection,
-                            if(isDeviceConnected == true){
-                              isAlertSet = 'false',
-                            }
-                            else{
-                              isAlertSet = 'true',
-                            },
-                            Future.delayed(const Duration(seconds: 4)),(){
+                            isDeviceConnected =
+                                await InternetConnectionChecker().hasConnection,
+                            if (isDeviceConnected == true)
+                              {
+                                isAlertSet = 'false',
+                              }
+                            else
+                              {
+                                isAlertSet = 'true',
+                              },
+                            Future.delayed(const Duration(seconds: 4)),
+                            () {
                               setState(() {
                                 isAlertSet;
                               });
@@ -124,7 +144,8 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text("Please add a Pokemon and come back.",
+                              Text(
+                                "Please add a Pokemon and come back.",
                                 maxLines: 2,
                                 style: TextStyle(
                                   fontSize: 13,
@@ -133,26 +154,34 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
                                   letterSpacing: 2,
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               //Image.asset('images/refreshIcon.jpeg', height: 50,),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 100,),
-                      ]
-                  ),
+                        const SizedBox(
+                          height: 100,
+                        ),
+                      ]),
                 );
               }
-            }
-            else if(isAlertSet=='true'){
+            } else if (isAlertSet == 'true') {
               return SingleChildScrollView(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 50,),
-                      Image.asset('images/loaderrorImage.gif', height: 300,),
-                      const Text("No internet Connection Detected",
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      Image.asset(
+                        'images/loaderrorImage.gif',
+                        height: 300,
+                      ),
+                      const Text(
+                        "No internet Connection Detected",
                         maxLines: 2,
                         style: TextStyle(
                           fontSize: 18,
@@ -161,20 +190,26 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
                           letterSpacing: 2,
                         ),
                       ),
-                      const SizedBox(height: 30,),
+                      const SizedBox(
+                        height: 30,
+                      ),
                       GestureDetector(
-                        onTap: () async =>  {
-                          setState((){
+                        onTap: () async => {
+                          setState(() {
                             isAlertSet = 'unknown';
                           }),
-                          isDeviceConnected = await InternetConnectionChecker().hasConnection,
-                          if(isDeviceConnected == true){
-                            isAlertSet = 'false',
-                          }
-                          else{
-                            isAlertSet = 'true',
-                          },
-                          Future.delayed(const Duration(seconds: 4)),(){
+                          isDeviceConnected =
+                              await InternetConnectionChecker().hasConnection,
+                          if (isDeviceConnected == true)
+                            {
+                              isAlertSet = 'false',
+                            }
+                          else
+                            {
+                              isAlertSet = 'true',
+                            },
+                          Future.delayed(const Duration(seconds: 4)),
+                          () {
                             setState(() {
                               isAlertSet;
                             });
@@ -184,7 +219,8 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text("Please Try Again",
+                            Text(
+                              "Please Try Again",
                               maxLines: 2,
                               style: TextStyle(
                                 fontSize: 16,
@@ -193,22 +229,23 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
                                 letterSpacing: 2,
                               ),
                             ),
-                            SizedBox(width: 10,),
+                            SizedBox(
+                              width: 10,
+                            ),
                             //Image.asset('images/refreshIcon.jpeg', height: 50,),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 100,),
-                    ]
-                ),
+                      const SizedBox(
+                        height: 100,
+                      ),
+                    ]),
               );
-            }
-            else{
+            } else {
               return const ScreenLoader();
             }
-          }
-      ),
-      bottomNavigationBar: BottomNavigationBar (
+          }),
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: 1,
         selectedItemColor: Colors.redAccent,
         unselectedItemColor: Colors.grey,
@@ -223,14 +260,14 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
           ),
         ],
         onTap: (index) {
-          if(index==0){
+          if (index == 0) {
             Navigator.pushAndRemoveUntil(
-              context, MaterialPageRoute(
-              builder: (context) =>
-              const PokemonListScreen(),
-              maintainState: false,
-            ),
-                  (Route<dynamic> route) => false,
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PokemonListScreen(),
+                maintainState: false,
+              ),
+              (Route<dynamic> route) => false,
             );
           }
         },

@@ -13,12 +13,12 @@ import 'package:pokemon_list/widgets/pokemon_weak_connection_retry.dart';
 
 class PokemonListScreen extends StatefulWidget {
   const PokemonListScreen({super.key});
+
   @override
   PokemonListScreenState createState() => PokemonListScreenState();
 }
 
 class PokemonListScreenState extends State<PokemonListScreen> {
-
   final PokemonApiService apiService = PokemonApiService();
   final InternetChecker internetChecker = InternetChecker();
 
@@ -54,14 +54,17 @@ class PokemonListScreenState extends State<PokemonListScreen> {
     } catch (e) {
       // Handle error
       // print('Failed to fetch Pokemon list: $e');
-      }
+    }
   }
 
   Future<void> fetchPokemonData() async {
     try {
       isDeviceConnected = await InternetConnectionChecker().hasConnection;
-      if(isDeviceConnected == true){
-        final pokemonData = await apiService.fetchPokemonData(url: 'https://pokeapi.co/api/v2/pokemon?limit=721', characteristics: 'results',);
+      if (isDeviceConnected == true) {
+        final pokemonData = await apiService.fetchPokemonData(
+          url: 'https://pokeapi.co/api/v2/pokemon?limit=721',
+          characteristics: 'results',
+        );
         setState(() {
           // Obtain Entire Pokemon List and Divide Per Region
           allPokemonList = pokemonData;
@@ -74,8 +77,7 @@ class PokemonListScreenState extends State<PokemonListScreen> {
           isAlertSet = 'false';
         });
         return;
-      }
-      else{
+      } else {
         setState(() => isAlertSet = 'true');
       }
     } catch (e) {
@@ -92,88 +94,94 @@ class PokemonListScreenState extends State<PokemonListScreen> {
         toolbarHeight: 70,
         elevation: 10,
         centerTitle: true,
-        title:
-        Image.asset(
+        title: Image.asset(
           'images/International_Pokémon_logo.svg.png',
           height: 65,
           fit: BoxFit.fitHeight,
         ),
         backgroundColor: Colors.redAccent,
         bottom: PreferredSize(
-          preferredSize:
-          const Size.fromHeight(80.0),
-          child: BuildPokemonSearcher(context, allPokemonList, allPokemonList.length, 1),
+          preferredSize: const Size.fromHeight(80.0),
+          child: BuildPokemonSearcher(
+              context, allPokemonList, allPokemonList.length, 1),
         ),
-
       ),
       body: FutureBuilder(
-        future: Future.delayed(const Duration(seconds: 4)),
-        builder: (context, snapshot){
-          if((snapshot.connectionState == ConnectionState.done)&&(isAlertSet=='false')){
-            Future.delayed(const Duration(seconds: 5));
-            return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BuildPokemonSlider('Kanto', allPokemonList, pokemonList1, 1),
-                  BuildPokemonSlider('Johto', allPokemonList, pokemonList2, 152),
-                  BuildPokemonSlider('Hoenn', allPokemonList, pokemonList3, 252),
-                  BuildPokemonSlider('Sinnoh', allPokemonList, pokemonList4, 387),
-                  BuildPokemonSlider('Teselia', allPokemonList, pokemonList5, 494),
-                  BuildPokemonSlider('Kalos', allPokemonList, pokemonList6, 650),
-                  Container(height: 40, width: double.infinity,color: Colors.black,),
-                ],
-              ),
-            );
-          }
-          else if(isAlertSet=='true'){
-            return SingleChildScrollView(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
+          future: Future.delayed(const Duration(seconds: 4)),
+          builder: (context, snapshot) {
+            if ((snapshot.connectionState == ConnectionState.done) &&
+                (isAlertSet == 'false')) {
+              Future.delayed(const Duration(seconds: 5));
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const PokemonWeakConnectionImage(),
-                    GestureDetector(
-                      onTap: () => {
-                        setState(() {
-                          isAlertSet = 'unknown';
-                        }),
-                        fetchPokemonData(),
-                      },
-                      child: const PokemonWeakConnectionRetry(),
+                    BuildPokemonSlider(
+                        'Kanto', allPokemonList, pokemonList1, 1),
+                    BuildPokemonSlider(
+                        'Johto', allPokemonList, pokemonList2, 152),
+                    BuildPokemonSlider(
+                        'Hoenn', allPokemonList, pokemonList3, 252),
+                    BuildPokemonSlider(
+                        'Sinnoh', allPokemonList, pokemonList4, 387),
+                    BuildPokemonSlider(
+                        'Teselia', allPokemonList, pokemonList5, 494),
+                    BuildPokemonSlider(
+                        'Kalos', allPokemonList, pokemonList6, 650),
+                    Container(
+                      height: 40,
+                      width: double.infinity,
+                      color: Colors.black,
                     ),
-                    const SizedBox(height: 100,),
-                  ]
-              ),
-            );
-          }
-          else{
+                  ],
+                ),
+              );
+            } else if (isAlertSet == 'true') {
+              return SingleChildScrollView(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const PokemonWeakConnectionImage(),
+                      GestureDetector(
+                        onTap: () => {
+                          setState(() {
+                            isAlertSet = 'unknown';
+                          }),
+                          fetchPokemonData(),
+                        },
+                        child: const PokemonWeakConnectionRetry(),
+                      ),
+                      const SizedBox(
+                        height: 100,
+                      ),
+                    ]),
+              );
+            } else {
               return const ScreenLoader();
-          }
-        }
-      ),
-
-      bottomNavigationBar: BottomNavigationBar (
+            }
+          }),
+      bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.redAccent,
         unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home_filled),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.catching_pokemon),
-          label: 'Favourite',
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_filled),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.catching_pokemon),
+            label: 'Favourite',
+          ),
         ],
         onTap: (index) {
-          if(index==1){
+          if (index == 1) {
             Navigator.push(
-              context, MaterialPageRoute(
-              builder: (context) =>
-              const PokemonFavouriteListScreen(),
-              maintainState: false,
-            ),
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PokemonFavouriteListScreen(),
+                maintainState: false,
+              ),
             );
           }
         },

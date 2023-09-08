@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokemon_list/logic/type_to_color_logic.dart';
 import '../logic/api_data_logic.dart';
 
-class HorizontalDataDisplay extends StatelessWidget{
-
+class HorizontalDataDisplay extends StatelessWidget {
   final PokemonDataFetchLogic typesLogic = PokemonDataFetchLogic();
   final TypeToColor typeToColor = TypeToColor();
 
@@ -17,7 +16,7 @@ class HorizontalDataDisplay extends StatelessWidget{
       height: 70,
       width: 300,
       alignment: Alignment.topCenter,
-      padding: const EdgeInsets.fromLTRB(0,0,0,10),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       decoration: const BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -30,8 +29,7 @@ class HorizontalDataDisplay extends StatelessWidget{
           mainAxisSpacing: 0,
           shrinkWrap: true,
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-          children:
-          List.generate(data.length, (index) {
+          children: List.generate(data.length, (index) {
             final Color typeColor = typeToColor.textToColor(data[index]);
             return Container(
               alignment: Alignment.topCenter,
@@ -42,7 +40,7 @@ class HorizontalDataDisplay extends StatelessWidget{
               ),
               child: Center(
                 heightFactor: 1.8,
-                child:  Text(
+                child: Text(
                   data[index].toString(),
                   textAlign: TextAlign.center,
                   textScaleFactor: 2,
@@ -53,8 +51,7 @@ class HorizontalDataDisplay extends StatelessWidget{
                 ),
               ),
             );
-          })
-      ),
+          })),
     );
   }
 }

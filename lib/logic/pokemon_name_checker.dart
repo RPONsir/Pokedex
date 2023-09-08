@@ -6,15 +6,19 @@ class PokemonNameChecker {
     // Special Case Mr Mime
     if (pokemonName == ('mr-mime')) {
       const pokemonFinalName = 'mr-mime';
-      const imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/mr._mime.gif';
-      const imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+      const imageUrl =
+          'https://www.pkparaiso.com/imagenes/xy/sprites/animados/mr._mime.gif';
+      const imageUrl2 =
+          'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
       return [pokemonFinalName, imageUrl, imageUrl2];
     }
     // Special Case Mime Jr
     if (pokemonName == ('mime-jr')) {
       const pokemonFinalName = 'mime-jr';
-      const imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/mime_jr.gif';
-      const imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+      const imageUrl =
+          'https://www.pkparaiso.com/imagenes/xy/sprites/animados/mime_jr.gif';
+      const imageUrl2 =
+          'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
       return [pokemonFinalName, imageUrl, imageUrl2];
     }
     // Special case Nidoran male
@@ -34,61 +38,73 @@ class PokemonNameChecker {
     // Special case Ho-Oh that does not need to be removed the name after the "-"
     else if (pokemonName == ('ho-oh')) {
       const pokemonFinalName = 'ho-oh';
-      const imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
-      const imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+      const imageUrl =
+          'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
+      const imageUrl2 =
+          'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
       return [pokemonFinalName, imageUrl, imageUrl2];
     }
     // Special case Porygon2 that does not need to be removed the name after the "-"
     else if (pokemonName == ('porygon2')) {
       const pokemonFinalName = 'porygon2';
-      const imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/porygon2.gif';
-      const imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/porygon2.gif';
+      const imageUrl =
+          'https://www.pkparaiso.com/imagenes/xy/sprites/animados/porygon2.gif';
+      const imageUrl2 =
+          'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/porygon2.gif';
       return [pokemonFinalName, imageUrl, imageUrl2];
     }
     // Special case Porygon-Z that does not need to be removed the name after the "-"
     else if (pokemonName == ('porygon-z')) {
       const pokemonFinalName = 'porygon-z';
-      const imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
-      const imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+      const imageUrl =
+          'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
+      const imageUrl2 =
+          'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
       return [pokemonFinalName, imageUrl, imageUrl2];
-    }
-    else {
+    } else {
       final pokemonLine = pokemonName.indexOf("-");
       // If therese an index of "-" remove string since the character
       if (pokemonLine > 0) {
         final pokemonFinalName = pokemonName.substring(0, pokemonLine);
-        final imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
-        final imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+        final imageUrl =
+            'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
+        final imageUrl2 =
+            'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
         return [pokemonFinalName, imageUrl, imageUrl2];
       }
       // No "-" was found - name remains the same
-      else{
+      else {
         final pokemonFinalName = pokemonName;
-        final imageUrl = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
-        final imageUrl2 = 'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
+        final imageUrl =
+            'https://www.pkparaiso.com/imagenes/xy/sprites/animados/$pokemonFinalName.gif';
+        final imageUrl2 =
+            'https://www.pkparaiso.com/imagenes/xy/sprites/animados-espalda/$pokemonFinalName.gif';
         return [pokemonFinalName, imageUrl, imageUrl2];
       }
     }
   }
+
   // Compares Name to si if the Searched Pokemon matches to any on the Pokemon DB
-  pokemonListComparison(List<dynamic> allPokemonList, String pokemonName, int initPokemonValue, int finalPokemonValue){
-    bool isFound=false;
-    int currentPokemonId=0;
+  pokemonListComparison(List<dynamic> allPokemonList, String pokemonName,
+      int initPokemonValue, int finalPokemonValue) {
+    bool isFound = false;
+    int currentPokemonId = 0;
     // Search if the received name matches with the Api Pokemon List name
     for (int i = initPokemonValue; i < finalPokemonValue; i++) {
       // Retrieve Pokemon name as String from API
       final pokemon = allPokemonList[i];
-      String pokemonNameOnList= pokemon['name'].toString();
+      String pokemonNameOnList = pokemon['name'].toString();
       // Check Name to match the Current Input and Displayed Name on the ListView
       final newName = nameCheckerGetImageURL(pokemonNameOnList);
       pokemonNameOnList = newName[0];
       // Compare - if matches return True
-      if(pokemonName==pokemonNameOnList){
+      if (pokemonName == pokemonNameOnList) {
         isFound = true;
-        currentPokemonId = i+1;
+        currentPokemonId = i + 1;
         return [isFound, currentPokemonId];
       }
       // If no match found after navigating all pokemon names on list, return False
-    }return [isFound, currentPokemonId];
+    }
+    return [isFound, currentPokemonId];
   }
 }

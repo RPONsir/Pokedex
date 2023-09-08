@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PokemonWeakConnectionImage extends StatelessWidget{
-
+class PokemonWeakConnectionImage extends StatelessWidget {
   const PokemonWeakConnectionImage({super.key});
 
   @override
@@ -10,9 +9,15 @@ class PokemonWeakConnectionImage extends StatelessWidget{
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(height: 50,),
-        Image.asset('images/loaderrorImage.gif', height: 300,),
-        const Text("No internet Connection Detected",
+        const SizedBox(
+          height: 50,
+        ),
+        Image.asset(
+          'images/loaderrorImage.gif',
+          height: 300,
+        ),
+        const Text(
+          "No internet Connection Detected",
           maxLines: 2,
           style: TextStyle(
             fontSize: 18,
@@ -21,7 +26,9 @@ class PokemonWeakConnectionImage extends StatelessWidget{
             letterSpacing: 2,
           ),
         ),
-        const SizedBox(height: 30,),
+        const SizedBox(
+          height: 30,
+        ),
       ],
     );
   }

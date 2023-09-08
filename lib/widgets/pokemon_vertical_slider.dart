@@ -3,10 +3,10 @@ import 'package:pokemon_list/widgets/pokemon_gif.dart';
 
 import '../logic/pokemon_name_checker.dart';
 
-class PokemonVerticalSlider extends StatelessWidget{
-
+class PokemonVerticalSlider extends StatelessWidget {
   final List pokemonList;
   final int listIndex;
+
   PokemonVerticalSlider(this.pokemonList, this.listIndex, {super.key});
 
   final PokemonNameChecker pokemonChecker = PokemonNameChecker();
@@ -30,7 +30,8 @@ class PokemonVerticalSlider extends StatelessWidget{
         itemCount: pokemonList[listIndex].length,
         itemBuilder: (context, index) {
           final secondEvolution = (pokemonList[listIndex]);
-          final pokemonFinalData = pokemonChecker.nameCheckerGetImageURL(secondEvolution[index].toString());
+          final pokemonFinalData = pokemonChecker
+              .nameCheckerGetImageURL(secondEvolution[index].toString());
           return Container(
             width: 180,
             height: 180,
@@ -41,7 +42,8 @@ class PokemonVerticalSlider extends StatelessWidget{
               color: Colors.teal,
               borderRadius: BorderRadius.circular(70),
             ),
-            child: PokemonGif(pokemonFinalData[1], pokemonFinalData[2], 150, 120, true, 0.9),
+            child: PokemonGif(
+                pokemonFinalData[1], pokemonFinalData[2], 150, 120, true, 0.9),
           );
         },
       ),

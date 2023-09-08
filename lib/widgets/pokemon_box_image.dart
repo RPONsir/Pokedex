@@ -10,42 +10,40 @@ class PokemonBoxImage extends StatelessWidget {
   final int pokemonId;
 
   const PokemonBoxImage(
-      this.pokemonFinalName,
-      this.imageUrl,
-      this.imageUrl2,
-      this.pokemonId,
+      this.pokemonFinalName, this.imageUrl, this.imageUrl2, this.pokemonId,
       {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 150,
-        margin: const EdgeInsets.symmetric(horizontal: 5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(color: Colors.black),
-          color: Colors.black,
-        ),
-        child: Stack(
-          alignment: AlignmentDirectional.bottomCenter,
-          children: [
-            Image.asset(
-              'images/listBackground.jpeg',
-              width: 150,
-              fit: BoxFit.fitWidth,),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                PokemonIdText(pokemonId, 18),
-                const SizedBox(height: 8),
-                PokemonGif(imageUrl, imageUrl2, 150, 110, true, 0.9),
-                const SizedBox(height: 3),
-                PokemonNameText(pokemonFinalName, 18),
-                const SizedBox(height: 6),
-              ],
-            ),
-          ],
-        ),
+      width: 150,
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(color: Colors.black),
+        color: Colors.black,
+      ),
+      child: Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+        children: [
+          Image.asset(
+            'images/listBackground.jpeg',
+            width: 150,
+            fit: BoxFit.fitWidth,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              PokemonIdText(pokemonId, 18),
+              const SizedBox(height: 8),
+              PokemonGif(imageUrl, imageUrl2, 150, 110, true, 0.9),
+              const SizedBox(height: 3),
+              PokemonNameText(pokemonFinalName, 18),
+              const SizedBox(height: 6),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

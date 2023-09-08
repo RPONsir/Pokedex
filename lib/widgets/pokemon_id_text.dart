@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class PokemonIdText extends StatelessWidget{
-
+class PokemonIdText extends StatelessWidget {
   final int pokemonId;
   final double fontSize;
+
   const PokemonIdText(this.pokemonId, this.fontSize, {super.key});
 
   @override
-  Widget build(BuildContext context,){
+  Widget build(
+    BuildContext context,
+  ) {
     return Text(
       '#$pokemonId',
       style: TextStyle(
@@ -24,5 +26,4 @@ class PokemonIdText extends StatelessWidget{
       ),
     );
   }
-
 }

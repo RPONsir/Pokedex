@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
-class PokemonIdWithShadow extends StatelessWidget{
-
+class PokemonIdWithShadow extends StatelessWidget {
   final String pokemonId;
   final double fontSize;
 
-  const PokemonIdWithShadow(this.pokemonId,this.fontSize, {super.key});
+  const PokemonIdWithShadow(this.pokemonId, this.fontSize, {super.key});
 
   @override
-  Widget build (BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       width: 80,
-      child:
-      Text("#${pokemonId.toString()}",
+      child: Text(
+        "#${pokemonId.toString()}",
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: fontSize,

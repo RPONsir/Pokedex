@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class PokemonNameText extends StatelessWidget{
-
+class PokemonNameText extends StatelessWidget {
   final String pokemonFinalName;
   final double fontSize;
+
   const PokemonNameText(this.pokemonFinalName, this.fontSize, {super.key});
 
   @override
-  Widget build(BuildContext context,){
+  Widget build(
+    BuildContext context,
+  ) {
     return Text(
       pokemonFinalName.toUpperCase(),
       style: TextStyle(
@@ -24,5 +26,4 @@ class PokemonNameText extends StatelessWidget{
       ),
     );
   }
-
 }

@@ -3,8 +3,7 @@ import 'package:pokemon_list/widgets/pokemon_box_image.dart';
 import '../logic/pokemon_name_checker.dart';
 import '../screens/pokemon_details_screen.dart';
 
-class BuildPokemonFavoriteGrid extends StatelessWidget{
-
+class BuildPokemonFavoriteGrid extends StatelessWidget {
   final List<dynamic> pokemonFavoriteList;
 
   final PokemonNameChecker pokemonChecker = PokemonNameChecker();
@@ -17,8 +16,7 @@ class BuildPokemonFavoriteGrid extends StatelessWidget{
         scrollDirection: Axis.vertical,
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        gridDelegate:
-        const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisExtent: 200,
             childAspectRatio: 1,
@@ -33,25 +31,24 @@ class BuildPokemonFavoriteGrid extends StatelessWidget{
           // Obtain pokemon Name
           final pokemonName = pokemon['pokemonName'].toString();
           // Correct pokemon name if necessary and returns pokemon images/gifs URLs
-          final pokemonFinalData = pokemonChecker.nameCheckerGetImageURL(pokemonName);
+          final pokemonFinalData =
+              pokemonChecker.nameCheckerGetImageURL(pokemonName);
 
           return GestureDetector(
-            onTap: () =>
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        PokemonDetailsScreen(
-                          pokemon: pokemonFinalData[0],
-                          imageUrl: pokemonFinalData[1],
-                          imageUrl2: pokemonFinalData[2],
-                          pokemonId: pokemonId,
-                        ),
-                  ),
+            onTap: () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PokemonDetailsScreen(
+                  pokemon: pokemonFinalData[0],
+                  imageUrl: pokemonFinalData[1],
+                  imageUrl2: pokemonFinalData[2],
+                  pokemonId: pokemonId,
                 ),
-            child: PokemonBoxImage(pokemonFinalData[0], pokemonFinalData[1], pokemonFinalData[2], pokemonId),
+              ),
+            ),
+            child: PokemonBoxImage(pokemonFinalData[0], pokemonFinalData[1],
+                pokemonFinalData[2], pokemonId),
           );
-        }
-    );
+        });
   }
 }

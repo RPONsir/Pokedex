@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ErrorImage extends StatelessWidget{
+class ErrorImage extends StatelessWidget {
   final String imageUrl;
 
   const ErrorImage(this.imageUrl, {super.key});
