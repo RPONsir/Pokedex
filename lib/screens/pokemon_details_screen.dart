@@ -13,6 +13,7 @@ import 'package:pokemon_list/widgets/build_pokemon_details_base_stats_data.dart'
 import 'package:pokemon_list/widgets/pokemon_text_title_with_shadow.dart';
 import 'package:pokemon_list/widgets/pokemon_horizontal_list_data.dart';
 import 'package:pokemon_list/widgets/pokemon_screen_loader.dart';
+import '../logic/favourite_checker.dart';
 import '../logic/pokemon_name_checker.dart';
 import '../obtainData/pokemon_api_service.dart';
 import '../widgets/pokemon_weak_connection.dart';
@@ -34,6 +35,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   final PokemonApiService apiService = PokemonApiService();
   final PokemonDataFetchLogic pokemonDataFetchLogic = PokemonDataFetchLogic();
   final PokemonNameChecker pokemonChecker = PokemonNameChecker();
+  final FavouritePokemonChecker favouritePokemonChecker = FavouritePokemonChecker();
 
   List<dynamic> pokemonTypes = [];
   List<dynamic> pokemonWeight = ["Weight"];
@@ -58,7 +60,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   late bool isDeviceConnected;
   late String isAlertSet = 'unknown';
 
-  bool isPokemonFavourite = true ;
+  late bool isPokemonFavourite;
 
   @override
   void initState() {
@@ -79,6 +81,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
         final double pokemonWeightData2ble = pokemonWeightData.toDouble() / 10;
         final double pokemonHeightData2ble = pokemonHeightData.toDouble() / 10;
+
+        isPokemonFavourite = await favouritePokemonChecker.isPokemonFavourite(widget.pokemonId);
 
         //Values Logic - data Obtained to be worked with
         pokemonTypes = pokemonDataFetchLogic.dataFetchTwoLayers(pokemonTypesData,"type","name");
@@ -122,6 +126,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       //print('Failed to fetch Pokemon list: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +242,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                         const SizedBox(height: 30,),
                         Builder(
                             builder: (BuildContext context){
-                              if(isPokemonFavourite == true){
+                              if(isPokemonFavourite == false){
                                 return ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.lightBlueAccent,
@@ -254,7 +259,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                                         )
                                     );
                                     // ignore: use_build_context_synchronously
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context, MaterialPageRoute(
                                       builder: (context) =>
                                       const PokemonFavouriteListScreen(),
@@ -280,12 +285,20 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                     shadowColor: Colors.black,
                                   ),
-                                  onPressed: () {
-
+                                  onPressed: () async{
+                                    await DataBaseHelper.instance.remove(widget.pokemonId);
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.pushReplacement(
+                                      context, MaterialPageRoute(
+                                      builder: (context) =>
+                                      const PokemonFavouriteListScreen(),
+                                      maintainState: false,
+                                    ),
+                                    );
                                   },
                                   child: const Text('Remove Pokemon from Favourite',
                                     style: TextStyle(
-                                        fontSize: 24,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black),
                                   ),
@@ -335,7 +348,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.catching_pokemon),
-              label: 'Pokemon',
+              label: 'Favourite',
             ),
           ],
         onTap: (index) {
@@ -350,7 +363,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
             );
           }
           else if(index==1){
-            Navigator.push(
+            Navigator.pushReplacement(
               context, MaterialPageRoute(
               builder: (context) =>
               const PokemonFavouriteListScreen(),

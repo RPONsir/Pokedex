@@ -164,7 +164,7 @@ class _PokemonRegionList extends State<PokemonRegionList>{
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.catching_pokemon),
-              label: 'Pokemon',
+              label: 'Favourite',
             ),
           ],
         onTap: (index) {
@@ -179,7 +179,7 @@ class _PokemonRegionList extends State<PokemonRegionList>{
             );
           }
           else if(index==1){
-            Navigator.push(
+            Navigator.pushReplacement(
               context, MaterialPageRoute(
               builder: (context) =>
               const PokemonFavouriteListScreen(),

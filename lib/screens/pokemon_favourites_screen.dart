@@ -219,7 +219,7 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.catching_pokemon),
-            label: 'Pokemon',
+            label: 'Favourite',
           ),
         ],
         onTap: (index) {

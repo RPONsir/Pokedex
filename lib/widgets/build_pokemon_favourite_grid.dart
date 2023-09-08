@@ -38,7 +38,7 @@ class BuildPokemonFavoriteGrid extends StatelessWidget{
 
           return GestureDetector(
             onTap: () =>
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) =>

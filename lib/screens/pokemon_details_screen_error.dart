@@ -55,7 +55,7 @@ class _PokemonDetailsScreenError extends State<PokemonDetailsScreenError> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.catching_pokemon),
-              label: 'Pokemon',
+              label: 'Favourite',
             ),
           ],
         onTap: (index) {
@@ -70,7 +70,7 @@ class _PokemonDetailsScreenError extends State<PokemonDetailsScreenError> {
             );
           }
           else if(index==1){
-            Navigator.push(
+            Navigator.pushReplacement(
               context, MaterialPageRoute(
               builder: (context) =>
               const PokemonFavouriteListScreen(),
