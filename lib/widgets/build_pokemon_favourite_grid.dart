@@ -28,7 +28,6 @@ class BuildPokemonFavoriteGrid extends StatelessWidget{
         itemBuilder: (context, index) {
           // Obtain Pokemon Data
           final pokemon = pokemonFavoriteList[index];
-          print(pokemon);
           // Obtain Pokemon ID
           final pokemonId = pokemon['pokemonId'];
           // Obtain pokemon Name

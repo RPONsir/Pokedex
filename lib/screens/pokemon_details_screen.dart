@@ -38,8 +38,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   final FavouritePokemonChecker favouritePokemonChecker = FavouritePokemonChecker();
 
   List<dynamic> pokemonTypes = [];
-  List<dynamic> pokemonWeight = ["Weight"];
-  List<dynamic> pokemonHeight = ["Height"];
+  late String pokemonWeight;
+  late String pokemonHeight;
   List<dynamic> stats = [];
   bool imageFrontDisplayed = true;
   late bool hasPokemonEvolutionChain;
@@ -86,8 +86,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
         //Values Logic - data Obtained to be worked with
         pokemonTypes = pokemonDataFetchLogic.dataFetchTwoLayers(pokemonTypesData,"type","name");
-        pokemonWeight.add('$pokemonWeightData2ble kg');
-        pokemonHeight.add('$pokemonHeightData2ble m');
+        pokemonWeight = ('$pokemonWeightData2ble kg');
+        pokemonHeight = ('$pokemonHeightData2ble m');
         stats = pokemonDataFetchLogic.dataFetchOneLayer(pokemonStatsData,"base_stat");
 
         // Pokemon Evolution parameters and logic
@@ -173,9 +173,9 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                         const SizedBox(height: 20,),
                         HorizontalDataDisplay(pokemonTypes),
                         const SizedBox(height: 10,),
-                        HorizontalDataDisplay(pokemonWeight),
+                        HorizontalDataDisplay(['Weight', pokemonWeight]),
                         const SizedBox(height: 10,),
-                        HorizontalDataDisplay(pokemonHeight),
+                        HorizontalDataDisplay(['Height', pokemonHeight]),
                         const SizedBox(height: 30,),
                         PokemonStatsBaseAll(stats),
                         PokemonPrevNextImagesWithTitleAndLink(
@@ -251,7 +251,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                     shadowColor: Colors.black,
                                   ),
-                                  onPressed: () async {
+                                  onPressed: () async{
                                     await DataBaseHelper.instance.add(
                                         FavouritePokemon(
                                           pokemonId: widget.pokemonId,
@@ -259,12 +259,25 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                                         )
                                     );
                                     // ignore: use_build_context_synchronously
-                                    Navigator.pushReplacement(
-                                      context, MaterialPageRoute(
-                                      builder: (context) =>
-                                      const PokemonFavouriteListScreen(),
-                                      maintainState: false,
-                                    ),
+                                    showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: const Text('SUCCESS'),
+                                          content: const Text('Pokemon was saved successfully!'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: (){
+                                                  Navigator.pop(context);
+                                                  setState(() {
+                                                    isAlertSet = 'unknown';
+                                                  });
+                                                  fetchPokemonData();
+                                                },
+                                                child: const Text('OK'),
+                                            )
+                                          ],
+                                        )
                                     );
                                   },
                                   child: const Text('Add Pokemon to Favourite',
@@ -285,15 +298,35 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                     shadowColor: Colors.black,
                                   ),
-                                  onPressed: () async{
-                                    await DataBaseHelper.instance.remove(widget.pokemonId);
+                                  onPressed: () {
                                     // ignore: use_build_context_synchronously
-                                    Navigator.pushReplacement(
-                                      context, MaterialPageRoute(
-                                      builder: (context) =>
-                                      const PokemonFavouriteListScreen(),
-                                      maintainState: false,
-                                    ),
+                                    showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: const Text('CONFIRM'),
+                                          content: const Text('Do you want to remove the Pokemon from the Favourite List?'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text('NO'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                await DataBaseHelper.instance.remove(widget.pokemonId);
+                                                // ignore: use_build_context_synchronously
+                                                Navigator.pop(context);
+                                                setState(() {
+                                                  isAlertSet = 'unknown';
+                                                });
+                                                fetchPokemonData();
+                                              },
+                                              child: const Text('YES'),
+                                            ),
+                                          ],
+                                        )
                                     );
                                   },
                                   child: const Text('Remove Pokemon from Favourite',
