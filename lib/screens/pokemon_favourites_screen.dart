@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:pokemon_list/obtainData/pokemon_db.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
 
 import '../widgets/build_pokemon_favourite_grid.dart';
@@ -16,20 +17,12 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
 
   late bool isDeviceConnected;
   late String isAlertSet = 'unknown';
-  List favoritePokemonList = [
-    {
-      "name": "bulbasaur",
-      "value": "1"
-    },
-    {
-      "name": "charmander",
-      "value": "4"
-    }
-    ];
+  late List favoritePokemonList = [];
 
   @override
   void initState() {
     dataChecker();
+    getFavoritePokemon();
     super.initState();
   }
 
@@ -43,6 +36,10 @@ class PokemonFavouriteListScreenState extends State<PokemonFavouriteListScreen> 
       isAlertSet = 'true';
       return isAlertSet;
     }
+  }
+
+  Future getFavoritePokemon() async{
+    favoritePokemonList = await DataBaseHelper.instance.getFavouritePokemon();
   }
 
   @override

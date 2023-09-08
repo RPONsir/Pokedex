@@ -28,10 +28,11 @@ class BuildPokemonFavoriteGrid extends StatelessWidget{
         itemBuilder: (context, index) {
           // Obtain Pokemon Data
           final pokemon = pokemonFavoriteList[index];
+          print(pokemon);
           // Obtain Pokemon ID
-          final pokemonId = int.parse(pokemon['value']);
+          final pokemonId = pokemon['pokemonId'];
           // Obtain pokemon Name
-          final pokemonName = pokemon['name'].toString();
+          final pokemonName = pokemon['pokemonName'].toString();
           // Correct pokemon name if necessary and returns pokemon images/gifs URLs
           final pokemonFinalData = pokemonChecker.nameCheckerGetImageURL(pokemonName);
 

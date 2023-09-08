@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pokemon_list/logic/api_data_logic.dart';
+import 'package:pokemon_list/obtainData/pokemon_db.dart';
 import 'package:pokemon_list/screens/pokemon_evolution_details.dart';
 import 'package:pokemon_list/screens/pokemon_favourites_screen.dart';
 import 'package:pokemon_list/screens/pokemon_list_screen.dart';
@@ -18,10 +19,10 @@ import '../widgets/pokemon_weak_connection.dart';
 import '../widgets/pokemon_weak_connection_retry.dart';
 
 class PokemonDetailsScreen extends StatefulWidget {
-  final dynamic pokemon;
-  final dynamic imageUrl;
-  final dynamic imageUrl2;
-  final dynamic pokemonId;
+  final String pokemon;
+  final String imageUrl;
+  final String imageUrl2;
+  final int pokemonId;
 
   const PokemonDetailsScreen({Key? key, required this.pokemon, required this.imageUrl, required this.imageUrl2, required this.pokemonId,}) : super(key: key);
   @override
@@ -56,6 +57,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   late bool isDeviceConnected;
   late String isAlertSet = 'unknown';
+
+  bool isPokemonFavourite = true ;
 
   @override
   void initState() {
@@ -230,6 +233,65 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                               );
                             }
                           }
+                        ),
+                        const SizedBox(height: 30,),
+                        Builder(
+                            builder: (BuildContext context){
+                              if(isPokemonFavourite == true){
+                                return ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.lightBlueAccent,
+                                    elevation: 4,
+                                    side: const BorderSide(width:3, color:Colors.black),
+                                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                    shadowColor: Colors.black,
+                                  ),
+                                  onPressed: () async {
+                                    await DataBaseHelper.instance.add(
+                                        FavouritePokemon(
+                                          pokemonId: widget.pokemonId,
+                                          pokemonName: widget.pokemon,
+                                        )
+                                    );
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.push(
+                                      context, MaterialPageRoute(
+                                      builder: (context) =>
+                                      const PokemonFavouriteListScreen(),
+                                      maintainState: false,
+                                    ),
+                                    );
+                                  },
+                                  child: const Text('Add Pokemon to Favourite',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                );
+                              }
+                              else{
+                                return ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.grey,
+                                    elevation: 4,
+                                    side: const BorderSide(width:3, color:Colors.black),
+                                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                    shadowColor: Colors.black,
+                                  ),
+                                  onPressed: () {
+
+                                  },
+                                  child: const Text('Remove Pokemon from Favourite',
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                );
+                              }
+                            }
                         ),
                         const SizedBox(height: 30,),
                       ])
